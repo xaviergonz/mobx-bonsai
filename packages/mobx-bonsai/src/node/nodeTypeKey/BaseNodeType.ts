@@ -41,11 +41,13 @@ export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TO
    * wrapped in MobX actions for proper state tracking.
    *
    * @template TActions - Record of action methods
-   * @param actions - Function that receives a node and returns an object of action methods
+   *
+   * @param actions - An object of action methods
+   *
    * @returns The same NodeType with added action methods that accept a node as their first parameter
    */
-  actions<TActions extends Record<string, (...args: any) => any>>(
-    actions: (n: TNode) => TActions
+  actions<TActions extends Record<string, (this: TNode, ...args: any) => any>>(
+    actions: TActions
   ): BaseNodeType<
     TNode,
     TOptional,
@@ -60,11 +62,13 @@ export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TO
    * Getters are methods that derive values from the node state without modifying it.
    *
    * @template TGetters - Record of getter methods
-   * @param getters - Function that receives a node and returns an object of getter methods
+   *
+   * @param getters - An object of getter methods
+   *
    * @returns The same NodeType with added getter methods that accept a node as their first parameter
    */
-  getters<TGetters extends Record<string, (...args: any) => any>>(
-    getters: (n: TNode) => TGetters
+  getters<TGetters extends Record<string, (this: TNode, ...args: any) => any>>(
+    getters: TGetters
   ): BaseNodeType<
     TNode,
     TOptional,
@@ -83,15 +87,15 @@ export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TO
    * @param computeds - Function that receives a node and returns an object of computed accessor methods
    * @returns The same NodeType with added computed methods that accept a node as their first parameter
    */
-  computeds<TComputeds extends Record<string, ComputedEntry<any>>>(
-    computeds: (n: TNode) => TComputeds
+  computeds<TComputeds extends Record<string, ComputedEntry<TNode, any>>>(
+    computeds: TComputeds
   ): BaseNodeType<
     TNode,
     TOptional,
     TOther & {
       [k in keyof TComputeds]: TComputeds[k] extends () => any
         ? PrependArgument<TComputeds[k], TNode>
-        : TComputeds[k] extends ComputedFnWithOptions<any>
+        : TComputeds[k] extends ComputedFnWithOptions<TNode, any>
           ? PrependArgument<TComputeds[k]["get"], TNode>
           : never
     }
@@ -132,9 +136,10 @@ export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TO
 /**
  * Configuration for a computed property with options
  *
+ * @template TThis - This type for the computed function
  * @template T - Return type of the computed value
  */
-export type ComputedFnWithOptions<T> = { get: () => T } & Omit<
+export type ComputedFnWithOptions<TThis, T> = { get: (this: TThis) => T } & Omit<
   IComputedValueOptions<T>,
   "get" | "set"
 >
@@ -142,9 +147,10 @@ export type ComputedFnWithOptions<T> = { get: () => T } & Omit<
 /**
  * Computed property definition that can be a function or configuration object
  *
+ * @template TThis - This type for the computed function
  * @template T - Return type of the computed value
  */
-export type ComputedEntry<T> = (() => T) | ComputedFnWithOptions<T>
+export type ComputedEntry<TThis, T> = ((this: TThis) => T) | ComputedFnWithOptions<TThis, T>
 
 /**
  * Generates accessor methods for volatile properties

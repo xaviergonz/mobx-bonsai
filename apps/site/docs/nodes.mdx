@@ -139,16 +139,16 @@ Notable features of unique nodes:
 
 #### `.getters(getterDefinitions)`
 
-Add getter functions that can take parameters:
+Add getter functions that can take parameters. Use "this" to access node properties:
 
 ```ts
 const TList = nodeType<List>()
-  .getters((list) => ({
+  .getters({
     getItemAtIndex(index: number) {
-      return list.items[index];
+      return this.items[index];
     },
     findItemById(id: string) {
-      return list.items.find(item => item.id === id);
+      return this.items.find(item => item.id === id);
     }
   }));
 
@@ -158,17 +158,17 @@ const item = TList.getItemAtIndex(list, 0);
 
 #### `.computeds(computedDefinitions)`
 
-Add computed properties that are cached when observed:
+Add computed properties that are cached when observed. Use "this" to access node properties:
 
 ```ts
 const TTypedTodo = nodeType<TypedTodo>()
-  .computeds((todo) => ({
+  .computeds({
     formattedText() {
-      return `${todo.done ? '✓' : '○'} ${todo.text}`;
+      return `${this.done ? '✓' : '○'} ${this.text}`;
     },
     displayText: {
       get() {
-        return todo.done ? `Completed: ${todo.text}` : `Todo: ${todo.text}`;
+        return this.done ? `Completed: ${this.text}` : `Todo: ${this.text}`;
       },
       equals: (a, b) => a === b, // Optional equality function
     }
@@ -180,18 +180,18 @@ const formattedText = TTypedTodo.getFormattedText(todo);
 
 #### `.actions(actionDefinitions)`
 
-Add actions that modify nodes:
+Add actions that modify nodes. Use "this" to access node properties:
 
 ```ts
 const TTodoList = nodeType<TodoList>()
-  .actions((list) => ({
+  .actions({
     addTodo(text: string) {
-      list.todos.push(TTypedTodo({ text, done: false }));
+      this.todos.push(TTypedTodo({ text, done: false }));
     },
     removeTodo(id: string) {
-      const index = list.todos.findIndex(todo => todo.id === id);
+      const index = this.todos.findIndex(todo => todo.id === id);
       if (index >= 0) {
-        list.todos.splice(index, 1);
+        this.todos.splice(index, 1);
       }
     }
   }));
@@ -215,13 +215,17 @@ TTodo.setDone(todo, true);
 
 #### `.volatile(volatileProps)`
 
-Add non-serialized state to nodes:
+Add non-serialized state to nodes.
 
 ```ts
 const TTodo = nodeType<Todo>()
   .volatile({
-    isSelected: () => false,
-    editMode: () => false,
+    isSelected() {
+      return false;
+    },
+    editMode() {
+      return false;
+    },
   });
 
 // Access and modify volatile properties

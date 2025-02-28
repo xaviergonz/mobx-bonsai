@@ -136,27 +136,27 @@ test("typed nodes with actions/getters/computeds/volatile", () => {
     .volatile({
       x: () => 3,
     })
-    .getters((t) => ({
+    .getters({
       getTitleLengthPlusXPlusParam(param: number) {
-        return tTodo.getTitleLength(t) + tTodo.getX(t) + param
+        return tTodo.getTitleLength(this) + tTodo.getX(this) + param
       },
-    }))
-    .computeds((t) => ({
+    })
+    .computeds({
       getTitleLength() {
-        return t.title.length
+        return this.title.length
       },
       getTitleLength2: {
         get() {
-          return t.title.length
+          return this.title.length
         },
         equals: (a, b) => a === b,
       },
-    }))
-    .actions((t) => ({
+    })
+    .actions({
       setTitle(title: string) {
-        t.title = title
+        this.title = title
       },
-    }))
+    })
 
   const node = tTodo({
     title: "Test Todo",
@@ -184,27 +184,27 @@ test("untyped nodes with actions/getters/computeds/volatile", () => {
     .volatile({
       x: () => 3,
     })
-    .getters((t) => ({
+    .getters({
       getTitleLengthPlusXPlusParam(param: number) {
-        return tTodo.getTitleLength(t) + tTodo.getX(t) + param
+        return tTodo.getTitleLength(this) + tTodo.getX(this) + param
       },
-    }))
-    .computeds((t) => ({
+    })
+    .computeds({
       getTitleLength() {
-        return t.title.length
+        return this.title.length
       },
       getTitleLength2: {
         get() {
-          return t.title.length
+          return this.title.length
         },
         equals: (a, b) => a === b,
       },
-    }))
-    .actions((t) => ({
+    })
+    .actions({
       setTitle(title: string) {
-        t.title = title
+        this.title = title
       },
-    }))
+    })
 
   const node = tTodo({
     title: "Test Todo",
@@ -435,11 +435,11 @@ test("generic node type", () => {
     .defaults({
       data: () => 0,
     })
-    .actions((t) => ({
+    .actions({
       setData(data: number) {
-        t.data = data
+        this.data = data
       },
-    }))
+    })
 
   const genericNode = TObj({ data: 100 })
   expect(genericNode.data).toBe(100)
@@ -456,11 +456,11 @@ test("generic node type factory", () => {
       .defaults({
         else: () => "hello",
       })
-      .actions((t) => ({
+      .actions({
         setData(data: T) {
-          t.data = data
+          this.data = data
         },
-      }))
+      })
 
   const TObj = createTObj<number>()
 
