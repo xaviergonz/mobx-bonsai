@@ -204,7 +204,7 @@ export function nodeType<TNode extends object = never>(): UntypedNodeType<TNode>
 export function nodeType<TNode extends object = never>(
   type?: TNode extends NodeWithAnyType ? TNode[NodeTypeKey] : never
 ): TNode extends NodeWithAnyType ? TypedNodeType<TNode> : UntypedNodeType<TNode> {
-  return type !== undefined ? (typedNodeType<NodeWithAnyType>(type) as any) : untypedNodeType()
+  return (type !== undefined ? typedNodeType<NodeWithAnyType>(type) : untypedNodeType()) as any
 }
 
 /**
