@@ -36,19 +36,22 @@ export const TodoListView = observer(({ list }: { list: TodoList }) => {
     />
   )
 
+  const pendingTodos = TTodoList.getPending(list)
+  const doneTodos = TTodoList.getDone(list)
+
   return (
     <div>
-      {TTodoList.getPending(list).length > 0 && (
+      {pendingTodos.length > 0 && (
         <>
           <h5>TODO</h5>
-          {TTodoList.getPending(list).map((t) => renderTodo(t))}
+          {pendingTodos.map((t) => renderTodo(t))}
         </>
       )}
 
-      {TTodoList.getDone(list).length > 0 && (
+      {doneTodos.length > 0 && (
         <>
           <h5>DONE</h5>
-          {TTodoList.getDone(list).map((t) => renderTodo(t))}
+          {doneTodos.map((t) => renderTodo(t))}
         </>
       )}
       <br />

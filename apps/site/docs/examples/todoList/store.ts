@@ -26,26 +26,26 @@ export const TTodoList = nodeType<TodoList>(todoListType)
   .defaults({
     todos: () => [],
   })
-  .getters((todoList) => ({
+  .getters({
     getPending() {
-      return todoList.todos.filter((t) => !t.done)
+      return this.todos.filter((t) => !t.done)
     },
     getDone() {
-      return todoList.todos.filter((t) => t.done)
+      return this.todos.filter((t) => t.done)
     },
-  }))
-  .actions((todoList) => ({
+  })
+  .actions({
     add(todo: Todo) {
-      todoList.todos.push(todo)
+      this.todos.push(todo)
     },
 
     remove(todo: Todo) {
-      const index = todoList.todos.indexOf(todo)
+      const index = this.todos.indexOf(todo)
       if (index >= 0) {
-        todoList.todos.splice(index, 1)
+        this.todos.splice(index, 1)
       }
     },
-  }))
+  })
 
 export function createDefaultTodoList(): TodoList {
   // the parameter is the initial data for the model
