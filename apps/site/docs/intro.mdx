@@ -30,27 +30,32 @@ slug: /
   </a>
 </p>
 
+<div className="hero-banner">
+  <h2>🚀 Supercharged State Management for Modern Applications</h2>
+  <p>Fast, type-safe, and elegantly simple reactive state management with deep MobX integration and optional Y.js two-way binding.</p>
+</div>
+
 ## Overview
 
-A fast lightweight alternative to `mobx-state-tree` that combines the simplicity of plain data with the power of MobX reactivity. Unlike `mobx-state-tree`, tree nodes in `mobx-bonsai` are always plain data objects with no embedded methods, getters, or setters. Instead, all interactions are managed via external functions—embracing a more functional approach that improves performance and memory usage.
+**mobx-bonsai** is a lightning-fast alternative to `mobx-state-tree` that combines the simplicity of plain data with the power of MobX reactivity. Unlike some state management solutions, tree nodes in `mobx-bonsai` are always plain data objects with no embedded methods, getters, or setters. Instead, all interactions are managed via external functions—embracing a more functional approach that dramatically improves performance and reduces memory footprint.
 
-## Key Features
+## Why Choose mobx-bonsai? ✨
 
-- **Lightweight and Fast**: Optimized for performance with significantly lower memory usage compared to similar libraries and - up to 3-9x faster than MobX-State-Tree.
+- **⚡️ Blazing Fast Performance**: Optimized for performance with a significantly lower memory footprint.
 
-- **Plain Data First**: Your application state remains simple observable objects and arrays without class-based overhead — work with your data using a functional approach.
+- **🧩 Plain Data First**: Work with simple observable objects and arrays using a clean functional approach—no class-based overhead or complex inheritance patterns.
 
-- **Superior TypeScript Support**: Enjoy first-class TypeScript integration with proper type inference and no need for complex type helpers or casting.
+- **🔍 Best-in-class TypeScript Support**: Enjoy seamless TypeScript integration with perfect type inference and zero need for complex type helpers or casting.
 
-- **Node Type System**: Define reusable node types with built-in defaults, actions, getters, and computed values—all while maintaining a clean separation between data and behavior.
+- **🌳 Powerful Node Type System**: Define reusable node types with built-in defaults, actions, getters, and computed values—while maintaining pristine separation of concerns.
 
-- **Tree Traversal**: Easily navigate and manipulate your state tree with powerful traversal methods like getParent, getRoot, and findChildren.
+- **🚶‍♂️ Tree Navigation**: Easily traverse your state tree with powerful helpers like `getParent`, `getRoot`, and `findChildren`.
 
-- **Immutable Snapshots**: Generate optimized immutable snapshots of your state for time-travel debugging, serialization, or rendering optimization.
+- **📸 Immutable Snapshots**: Generate immutable snapshots for time-travel debugging, serialization, or React rendering optimization.
 
-- **Reactive Patterns**: Full compatibility with MobX reactions, computeds, and actions for building reactive applications.
+- **⚛️ Full MobX Integration**: Complete compatibility with MobX reactions, computeds, and actions for building truly reactive applications.
 
-- **Y.js Integration**: Built-in two-way binding with Y.js for real-time collaboration, offline-first capabilities, and conflict-free data synchronization.
+- **🔄 Real-time Collaboration Ready**: Built-in two-way binding with Y.js for effortless real-time collaboration features.
 
 ## Installation
 
@@ -64,3 +69,51 @@ yarn add mobx-bonsai
 # Using pnpm
 pnpm add mobx-bonsai
 ```
+
+## Quick Example
+
+```tsx
+import { node, nodeType, TNode } from 'mobx-bonsai';
+import { observer } from 'mobx-react-lite';
+
+// Define your types with TypeScript
+type Todo = {
+  text: string
+  done: boolean
+};
+
+// Create a todo type with actions and so on
+const TTodo = nodeType<Todo>()
+  .getters({
+    getFormattedText() {
+      return `${this.done ? '✓' : '○'} ${this.text}`;
+    }
+  })
+  .actions({
+    toggle() {
+      this.done = !this.done;
+    }
+  });
+
+// Create a simple component
+const TodoItem = observer(({ todo }: { todo: Todo }) => (
+  <div onClick={() => TTodo.toggle(todo)}>
+    {TTodo.getFormattedText(todo)}
+  </div>
+));
+```
+
+<style jsx>{`
+  .hero-banner {
+    background: linear-gradient(90deg, #0d111705 0%, #161b2207 50%);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 30px 0;
+    border-left: 4px solid #238636;
+  }
+
+  .hero-banner h2 {
+    margin-top: 0;
+    color:rgb(252, 151, 68);
+  }
+`}</style>

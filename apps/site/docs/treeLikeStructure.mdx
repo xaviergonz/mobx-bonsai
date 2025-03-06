@@ -5,45 +5,68 @@ slug: /tree-like-structure
 
 ## Overview
 
-`mobx-bonsai`'s structure is based on a tree-like structure, where each node can be one of:
+### 📊 State as a Tree Structure
 
-- An (observable) plain object.
-- An (observable) array.
-- A primitive value (`string`, `boolean`, `number`, `null`, `undefined`).
+`mobx-bonsai` organizes your application state as an intuitive tree of observable nodes, providing a natural mental model that matches how most UI hierarchies work.
 
-Since the structure is a tree, this means these tree rules apply:
+Each node in your state tree can be one of:
 
-1. A non-primitive (object) node can have zero or one parent.
-2. A non-primitive (object) node can have zero to infinite children.
-3. From rule 1 and 2 we can extract that a same non-primitve node can only be in a single tree and only once.
-4. Primitive nodes are always copied by value (as usual in JavaScript), so none of the rules above apply.
+- 📦 An **observable plain object** (for structured data)
+- 📋 An **observable array** (for collections)
+- 💧 A **primitive value** (`string`, `boolean`, `number`, `null`, `undefined`)
+
+### Key Tree Rules
+
+This tree-based architecture follows these simple rules:
+
+1. 🔗 A non-primitive (object) node can have **zero or one parent**.
+2. 🌿 A non-primitive (object) node can have **zero to infinite children**.
+3. 🔄 From rules 1 and 2, a non-primitive node can exist in **only one place in the tree**.
+4. 📝 Primitive nodes are always **copied by value**, so they aren't subject to the rules above.
 
 ## Node Transformation
 
-An object/array is turned into a tree node under the following circumstances:
+Objects and arrays are automatically transformed into tree nodes when:
 
-- You call `node` upon them.
-- As soon as they become children of another tree node.
+- You explicitly call `node()` on them
+- They're added as children to an existing tree node
 
-Bear in mind that this means that, unless the object being attached to another node is already observable or a node, its reference will change, this is:
+> 💡 **Important Detail**: When a plain object is added to a tree, its reference changes as it becomes a node. This is standard behavior in MobX deep observables:
 
-```
-const todo: Todo = {...};
+```ts
+const todo = { text: "Buy milk", done: false };
 todoAppState.todoList.push(todo);
-// the last item of todoList will be converted to a node and therefore it WON'T be the same as todo
+// todoAppState.todoList[0] !== todo
 ```
 
-This is not really exclusive to this library, but that's how MobX deep observables work really.
+### Creating Nodes
 
-To check if a non-primitive has been turned into a tree node you can use `isNode(value: unknown): boolean`.
+```ts
+import { node } from 'mobx-bonsai';
 
-To turn a non-primitive into a tree node you can use `node` over it. If the object is already a tree node or an observable object then the same object will be returned.
+// Create a new node
+const todoNode = node({
+  text: 'Buy milk',
+  done: false
+});
+```
+
+### Checking if something is a node
+
+```ts
+import { isNode } from 'mobx-bonsai';
+
+// Returns true if value is a tree node
+const isTreeNode = isNode(someObject);
+```
 
 ## Traversal Methods
 
-When a non-primitive value is turned into a tree node it gains access to certain methods that allow traversing the data tree:
+### Parent-Child Navigation
 
-### `getParentPath`
+Nodes provide powerful methods to navigate the tree structure:
+
+#### `getParentPath`
 
 ```ts
 getParentPath<T extends object>(value: object): ParentPath<T> | undefined
@@ -51,7 +74,7 @@ getParentPath<T extends object>(value: object): ParentPath<T> | undefined
 
 Returns the parent of the target plus the path from the parent to the target, or `undefined` if it has no parent.
 
-### `getParent`
+#### `getParent`
 
 ```ts
 getParent<T extends object>(value: object): T | undefined
@@ -59,7 +82,7 @@ getParent<T extends object>(value: object): T | undefined
 
 Returns the parent object of the target object, or `undefined` if there's no parent.
 
-### `getParentToChildPath`
+#### `getParentToChildPath`
 
 ```ts
 getParentToChildPath(fromParent: object, toChild: object): Path | undefined
@@ -68,7 +91,7 @@ getParentToChildPath(fromParent: object, toChild: object): Path | undefined
 Gets the path to get from a parent to a given child.
 Returns an empty array if the child is actually the given parent or `undefined` if the child is not a child of the parent.
 
-### `getRootPath`
+#### `getRootPath`
 
 ```ts
 getRootPath<T extends object>(value: object): RootPath<T>
@@ -76,7 +99,7 @@ getRootPath<T extends object>(value: object): RootPath<T>
 
 Returns the root of the target, the path from the root to get to the target and the list of objects from root (included) until target (included).
 
-### `getRoot`
+#### `getRoot`
 
 ```ts
 getRoot<T extends object>(value: object): T
@@ -84,7 +107,7 @@ getRoot<T extends object>(value: object): T
 
 Returns the root of the target object, or itself if the target is a root.
 
-### `isRoot`
+#### `isRoot`
 
 ```ts
 isRoot(value: object): boolean
@@ -92,7 +115,7 @@ isRoot(value: object): boolean
 
 Returns `true` if a given object is a root object.
 
-### `isChildOfParent`
+#### `isChildOfParent`
 
 ```ts
 isChildOfParent(child: object, parent: object): boolean
@@ -100,7 +123,7 @@ isChildOfParent(child: object, parent: object): boolean
 
 Returns `true` if the target is a "child" of the tree of the given "parent" object.
 
-### `isParentOfChild`
+#### `isParentOfChild`
 
 ```ts
 isParentOfChild(parent: object, child: object): boolean
@@ -108,7 +131,9 @@ isParentOfChild(parent: object, child: object): boolean
 
 Returns `true` if the target is a "parent" that has in its tree the given "child" object.
 
-### `resolvePath`
+### Path Resolution and Finding
+
+#### `resolvePath`
 
 ```ts
 resolvePath<T extends object>(pathRootObject: object, path: Path): { resolved: true; value: T } | { resolved: false }
@@ -116,7 +141,7 @@ resolvePath<T extends object>(pathRootObject: object, path: Path): { resolved: t
 
 Resolves a path from an object, returning an object with `{ resolved: true, value: T }` or `{ resolved: false }`.
 
-### `findParent`
+#### `findParent`
 
 ```ts
 findParent<T extends object>(child: object, predicate: (parent: object) => boolean, maxDepth = 0): T | undefined
@@ -127,7 +152,7 @@ If the predicate is matched it will return the found node.
 If none is found it will return `undefined`.
 A max depth of 0 is infinite, but another one can be given.
 
-### `findParentPath`
+#### `findParentPath`
 
 ```ts
 findParentPath<T extends object>(child: object, predicate: (parent: object) => boolean, maxDepth = 0): FoundParentPath<T> | undefined
@@ -138,7 +163,7 @@ If the predicate is matched it will return the found node and the path from the 
 If none is found it will return `undefined`.
 A max depth of 0 is infinite, but another one can be given.
 
-### `findChildren`
+#### `findChildren`
 
 ```ts
 findChildren<T extends object>(root: object, predicate: (node: object) => boolean, options?: { deep?: boolean }): ReadonlySet<T>
@@ -148,7 +173,7 @@ Iterates through all children and collects them in a set if the given predicate 
 
 Pass the options object with the `deep` option (defaults to `false`) set to `true` to get the children deeply or `false` to get them shallowly.
 
-### `getChildrenObjects`
+#### `getChildrenObjects`
 
 ```ts
 getChildrenObjects(node: object, options?: { deep?: boolean }): ReadonlySet<object>
@@ -158,7 +183,9 @@ Returns a set with all the children objects (this is, excluding primitives) of a
 
 Pass the options object with the `deep` option (defaults to `false`) set to `true` to get the children deeply or `false` to get them shallowly.
 
-### `walkTree`
+### Tree Traversal
+
+#### `walkTree`
 
 ```ts
 walkTree<T = void>(target: object, predicate: (node: object) => T | undefined, mode: WalkTreeMode): T | undefined
@@ -174,7 +201,11 @@ The mode can be one of:
 
 ## Utility Methods
 
-### `onChildAttachedTo`
+### Child Attachment Tracking
+
+#### `onChildAttachedTo`
+
+Monitor when nodes are attached or detached from the tree:
 
 ```ts
 export function onChildAttachedTo<T extends object = object>({
@@ -195,7 +226,7 @@ export function onChildAttachedTo<T extends object = object>({
 Runs a callback every time a new object is attached to a given node.
 The callback can optionally return a disposer function which will be run when the child is detached.
 
-Parameters:
+**Parameters:**
 - `target`: Function that returns the node whose children should be tracked.
 - `childNodeType`: The node type (or array of types) for which the callback should be invoked, or `undefined` if it should be invoked for all node types.
 - `onChildAttached`: Callback called when a child is attached to the target node. Can return a cleanup function to run when the child is detached.
@@ -206,7 +237,7 @@ Returns a disposer function that accepts a boolean parameter:
 - When called with `true`, all pending detach disposers for children that had the attach event fired will be executed.
 - When called with `false`, the tracking stops but doesn't run detach disposers.
 
-Example:
+**Example:**
 
 ```ts
 const disposer = onChildAttachedTo({
@@ -218,7 +249,7 @@ const disposer = onChildAttachedTo({
     // Optional: Return a cleanup function
     return () => {
       console.log(`Todo "${todoNode.text}" was removed!`);
-    };
+          };
   },
   deep: false, // Only watch direct children
   fireForCurrentChildren: true // Run for existing todos
@@ -228,16 +259,17 @@ const disposer = onChildAttachedTo({
 disposer(true);
 ```
 
-### `deepEquals`
+### Deep Comparison
+
+#### `deepEquals`
 
 ```ts
 deepEquals(a: any, b: any): boolean
 ```
 
-Deeply compares two values.
+Deeply compares two values with optimized handling for mobx-bonsai nodes.
 
-Supported values are:
-
+Supported value types:
 - Primitives
 - Boxed observables
 - Objects, observable objects
@@ -248,3 +280,12 @@ Supported values are:
 - Tree nodes (optimized by using snapshot comparison internally)
 
 Note that in the case of models the result will be false if their model IDs are different.
+
+```ts
+import { deepEquals } from 'mobx-bonsai';
+
+// Compare two snapshots or nodes
+if (deepEquals(snapshot1, snapshot2)) {
+  console.log('The states are equivalent');
+}
+```
