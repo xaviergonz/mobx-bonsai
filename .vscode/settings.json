@@ -10,11 +10,11 @@
   "typescript.preferences.importModuleSpecifier": "relative",
   "workbench.colorCustomizations": {
     "commandCenter.border": "#e7e7e799",
-    "sash.hoverBorder": "#2f7c47",
-    "titleBar.activeBackground": "#215732",
+    "sash.hoverBorder": "#3da05e",
+    "titleBar.activeBackground": "#2f7b48",
     "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#21573299",
+    "titleBar.inactiveBackground": "#2f7b4899",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#215732"
+  "peacock.color": "#2f7b48"
 }
