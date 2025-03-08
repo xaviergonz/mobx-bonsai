@@ -13,16 +13,14 @@ export {
   nodeType,
   nodeTypeKey,
   onInit,
-} from "./node/nodeTypeKey/nodeType"
-export type {
-  AnyNodeType,
-  AnyTypedNodeType,
-  AnyUntypedNodeType,
-  NodeTypeKey,
-  NodeKeyValue,
-  NodeTypeValue,
-  NodeWithAnyType,
-  TNode,
+  type AnyNodeType,
+  type AnyTypedNodeType,
+  type AnyUntypedNodeType,
+  type NodeTypeKey,
+  type NodeKeyValue,
+  type NodeTypeValue,
+  type NodeWithAnyType,
+  type TNode,
 } from "./node/nodeTypeKey/nodeType"
 export type { TypedNodeType } from "./node/nodeTypeKey/TypedNodeType"
 export type { UntypedNodeType } from "./node/nodeTypeKey/UntypedNodeType"
@@ -50,25 +48,22 @@ export { walkTree, WalkTreeMode } from "./node/tree/walkTree"
 // node/snapshot
 export { applySnapshot } from "./node/snapshot/applySnapshot"
 export { getSnapshot } from "./node/snapshot/getSnapshot"
-export { onSnapshot } from "./node/snapshot/onSnapshot"
-export type { OnSnapshotListener } from "./node/snapshot/onSnapshot"
+export { onSnapshot, type OnSnapshotListener } from "./node/snapshot/onSnapshot"
 
 // node
 export { clone } from "./node/clone"
 export { computedProp } from "./node/computedProp"
+export { type Context, createContext } from "./node/context"
 export {
   assertIsNode,
   isNode,
   node,
   onDeepChange,
-} from "./node/node"
-export type {
-  NodeChange,
-  NodeChangeListener,
+  type NodeChange,
+  type NodeChangeListener,
 } from "./node/node"
 export type { NodeKeyGenerator } from "./node/utils/nodeKeyGenerator"
-export { volatileProp } from "./node/volatileProp"
-export type { VolatileProp } from "./node/volatileProp"
+export { volatileProp, type VolatileProp } from "./node/volatileProp"
 
 // plainTypes
 export type { Primitive } from "./plainTypes/types"

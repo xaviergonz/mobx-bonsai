@@ -68,7 +68,7 @@ function setParentNode(node: object, parentNode: ParentNode | undefined): void {
  * @param struct The object to check.
  * @returns `true` if the object is a MobX-Bonsai node, `false` otherwise.
  */
-export function isNode(struct: object): boolean {
+export function isNode(struct: unknown): boolean {
   return nodes.has(struct as object)
 }
 
