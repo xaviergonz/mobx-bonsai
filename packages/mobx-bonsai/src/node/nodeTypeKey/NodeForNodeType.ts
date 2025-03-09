@@ -5,10 +5,5 @@ import { BaseNodeType } from "./BaseNodeType"
  *
  * @template T - A NodeType instance
  */
-export type NodeForNodeType<T extends BaseNodeType<any, any, any>> = T extends BaseNodeType<
-  infer TNode,
-  any,
-  any
->
-  ? TNode
-  : never
+export type NodeForNodeType<T extends BaseNodeType<any, any, any, any, any>> =
+  T extends BaseNodeType<infer TNode, any, any, any, any> ? TNode : never

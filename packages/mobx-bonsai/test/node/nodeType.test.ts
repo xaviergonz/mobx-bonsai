@@ -347,10 +347,10 @@ test("node type with defaults and withKey should auto-generate keys", () => {
   >
 
   const TUser = nodeType<User>("user")
-    .withKey("id")
     .defaults({
       email: () => "default@example.com",
     })
+    .withKey("id")
 
   const user = TUser({
     name: "John Doe",

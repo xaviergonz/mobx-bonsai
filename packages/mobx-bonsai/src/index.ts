@@ -3,8 +3,6 @@ export { MobxBonsaiError } from "./error/MobxBonsaiError"
 
 // node/nodeTypeKey
 export type { BaseNodeType } from "./node/nodeTypeKey/BaseNodeType"
-export type { BaseTypedNodeType } from "./node/nodeTypeKey/BaseTypedNodeType"
-export type { KeyedNodeType } from "./node/nodeTypeKey/KeyedNodeType"
 export type { NodeForNodeType } from "./node/nodeTypeKey/NodeForNodeType"
 export {
   findNodeTypeById,

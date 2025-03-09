@@ -22,7 +22,6 @@ import {
   NodeWithAnyType,
   tryRegisterNodeByTypeAndKey,
 } from "./nodeTypeKey/nodeType"
-import { KeyedNodeType } from "./nodeTypeKey/KeyedNodeType"
 import { reconcileData } from "./reconcileData"
 
 type ParentNode = {
@@ -168,7 +167,7 @@ export const node = action(
     const keyProp = type && "key" in type ? type.key : undefined
 
     if (type !== undefined && key !== undefined) {
-      const existingNode = (type as KeyedNodeType<any, any>).findByKey(key) as T | undefined
+      const existingNode = "findByKey" in type ? (type.findByKey(key) as T | undefined) : undefined
       if (existingNode) {
         const result = reconcileData(existingNode, struct, existingNode)
         if (result !== existingNode) {

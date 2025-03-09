@@ -6,7 +6,6 @@ import { disposeOnce, makeDisposable } from "../../utils/disposable"
 import { assertIsNode, isNode, node } from "../node"
 import { volatileProp } from "../volatileProp"
 import { BaseNodeType } from "./BaseNodeType"
-import { KeyedNodeType } from "./KeyedNodeType"
 import { TypedNodeType } from "./TypedNodeType"
 import { UntypedNodeType } from "./UntypedNodeType"
 
@@ -112,12 +111,12 @@ export function tryRegisterNodeByTypeAndKey(node: object): boolean {
 /**
  * A type representing any untyped node type.
  */
-export type AnyUntypedNodeType = UntypedNodeType<any>
+export type AnyUntypedNodeType = BaseNodeType<any, "untyped", any, any, unknown>
 
 /**
  * Union of all possible typed node type objects
  */
-export type AnyTypedNodeType = TypedNodeType<any> | KeyedNodeType<any, any>
+export type AnyTypedNodeType = BaseNodeType<any, "typed" | "keyed", any, any, unknown>
 
 /**
  * Union of all possible node type objects
@@ -132,7 +131,7 @@ const registeredNodeTypes = new Map<NodeTypeValue, AnyTypedNodeType>()
  * @param typeId - The node type identifier to look up
  * @returns The node type object or undefined if not found
  */
-export function findNodeTypeById(typeId: NodeTypeValue): AnyNodeType | undefined {
+export function findNodeTypeById(typeId: NodeTypeValue): AnyTypedNodeType | undefined {
   return registeredNodeTypes.get(typeId)
 }
 
@@ -167,7 +166,7 @@ export function getNodeTypeAndKey(node: object): {
  * @returns Object containing the node's type and key
  */
 export function getNodeTypeAndKey(node: object): {
-  type: AnyNodeType | undefined
+  type: AnyTypedNodeType | undefined
   key: NodeKeyValue | undefined
 } {
   const typeValue = getNodeTypeId(node)
@@ -213,7 +212,7 @@ export function nodeType<TNode extends object = never>(
  * @param nodeTypeObj - The node type object to extend
  */
 function addNodeTypeExtensionMethods<TNode extends object>(
-  nodeTypeObj: Partial<BaseNodeType<TNode, any, unknown>>
+  nodeTypeObj: Partial<BaseNodeType<TNode, any, any, any, unknown>>
 ): void {
   nodeTypeObj.volatile = (volatiles) => {
     const result = nodeTypeObj as any
@@ -372,14 +371,23 @@ function typedNodeType<TNode extends NodeWithAnyType = never>(
     return sn
   }
 
-  const nodeTypeObj: Partial<TypedNodeType<TNode>> = (data: any) => {
+  const nodeTypeObj: Partial<BaseNodeType<TNode, "typed", keyof TNode, never, unknown>> = (
+    data: any
+  ) => {
     return node(snapshot(data)) as TNode
   }
-  const keyedNodeTypeObj = nodeTypeObj as unknown as KeyedNodeType<TNode, keyof TNode>
+
+  const keyedNodeTypeObj = nodeTypeObj as unknown as BaseNodeType<
+    TNode,
+    "keyed",
+    keyof TNode,
+    any,
+    unknown
+  >
 
   nodeTypeObj.snapshot = snapshot
 
-  nodeTypeObj.typeId = type
+  nodeTypeObj.typeId = type as any
 
   nodeTypeObj.withKey = (key) => {
     if (keyedNodeTypeObj.key !== undefined) {
@@ -389,9 +397,7 @@ function typedNodeType<TNode extends NodeWithAnyType = never>(
     keyedNodeTypeObj.key = key
 
     keyedNodeTypeObj.getKey = (node) => {
-      return keyedNodeTypeObj.key === undefined
-        ? undefined
-        : (node[keyedNodeTypeObj.key] as NodeKeyValue)
+      return keyedNodeTypeObj.key === undefined ? undefined : (node as any)[keyedNodeTypeObj.key]
     }
 
     keyedNodeTypeObj.findByKey = (key) => {

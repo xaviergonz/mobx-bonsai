@@ -5,4 +5,10 @@ import { BaseNodeType } from "./BaseNodeType"
  *
  * @template TNode - The object type that represents the node's data structure.
  */
-export type UntypedNodeType<TNode extends object> = BaseNodeType<TNode, never, unknown>
+export type UntypedNodeType<TNode extends object> = BaseNodeType<
+  TNode,
+  "untyped",
+  never,
+  never,
+  unknown
+>

@@ -1,25 +1,37 @@
 import { MarkOptional } from "ts-essentials"
 import { IComputedValueOptions } from "mobx"
 import { PrependArgument } from "../../utils/PrependArgument"
+import { nodeTypeKey, NodeTypeKey, NodeTypeValue } from "./nodeType"
+import { DisposableDispose } from "../../utils/disposable"
 
 /**
  * Base node type definition with core functionality
  *
  * @template TNode - Node structure that adheres to this type
  * @template TOptional - Optional keys in the node structure
+ * @template TCapabilities - Type of capabilities (untyped, typed or keyed)
+ * @template TKey - Key field in the node structure (if any)
  * @template TOther - Additional properties and methods
  */
-export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TOther> = {
+export type BaseNodeType<
+  TNode extends object,
+  TCapabilities extends "untyped" | "typed" | "keyed",
+  TOptional extends keyof TNode,
+  TKey extends keyof TNode | never,
+  TOther,
+> = {
+  capabilities: TCapabilities
+
   /**
    * Node constructor.
    * Requires all keys from TNode except those in TOptional (which may be omitted).
    */
-  (data: MarkOptional<TNode, TOptional>): TNode
+  (data: MarkOptional<TNode, TOptional | TKey>): TNode
 
   /**
    * Returns a snapshot based on the provided data.
    */
-  snapshot(data: MarkOptional<TNode, TOptional>): TNode
+  snapshot(data: MarkOptional<TNode, TOptional | TKey>): TNode
 
   /**
    * Adds volatile state properties to nodes of this type
@@ -32,7 +44,13 @@ export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TO
    */
   volatile<TVolatiles extends Record<string, () => any>>(
     volatile: TVolatiles
-  ): BaseNodeType<TNode, TOptional, TOther & VolatileAccessors<TVolatiles, TNode>>
+  ): BaseNodeType<
+    TNode,
+    TCapabilities,
+    TOptional,
+    TKey,
+    TOther & VolatileAccessors<TVolatiles, TNode>
+  >
 
   /**
    * Registers action methods for nodes of this type
@@ -50,7 +68,9 @@ export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TO
     actions: TActions
   ): BaseNodeType<
     TNode,
+    TCapabilities,
     TOptional,
+    TKey,
     TOther & {
       [k in keyof TActions]: PrependArgument<TActions[k], TNode>
     }
@@ -71,7 +91,9 @@ export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TO
     getters: TGetters
   ): BaseNodeType<
     TNode,
+    TCapabilities,
     TOptional,
+    TKey,
     TOther & {
       [k in keyof TGetters]: PrependArgument<TGetters[k], TNode>
     }
@@ -91,7 +113,9 @@ export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TO
     computeds: TComputeds
   ): BaseNodeType<
     TNode,
+    TCapabilities,
     TOptional,
+    TKey,
     TOther & {
       [k in keyof TComputeds]: TComputeds[k] extends () => any
         ? PrependArgument<TComputeds[k], TNode>
@@ -111,7 +135,9 @@ export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TO
     ...properties: readonly K[]
   ): BaseNodeType<
     TNode,
+    TCapabilities,
     TOptional,
+    TKey,
     TOther & {
       [P in K as `set${Capitalize<P>}`]: (node: TNode, value: Readonly<TNode[P]>) => void
     }
@@ -125,13 +151,92 @@ export type BaseNodeType<TNode extends object, TOptional extends keyof TNode, TO
    */
   defaults<TGen extends { [K in keyof TNode]?: () => TNode[K] }>(
     defaultGenerators: TGen
-  ): BaseNodeType<TNode, TOptional | (keyof TGen & keyof TNode), TOther>
+  ): BaseNodeType<TNode, TCapabilities, TOptional | (keyof TGen & keyof TNode), TKey, TOther>
 
   /**
    * Default generators defined so far.
    */
   defaultGenerators?: { [K in keyof TNode]?: () => TNode[K] }
-} & TOther
+} & TOther &
+  (TCapabilities extends "typed" | "keyed" // is it a typed node?
+    ? {
+        /**
+         * Unique identifier for this node type
+         */
+        typeId: TNode extends { [nodeTypeKey]: NodeTypeValue } ? TNode[NodeTypeKey] : undefined
+
+        /**
+         * Checks if the node is of a specific type
+         *
+         * @param node - Node to check
+         * @returns true if the node type matches, false otherwise
+         */
+        nodeIsOfType(node: object): node is TNode
+
+        /**
+         * Unregisters this node type
+         */
+        unregister(): void
+
+        /**
+         * Unregisters this node type (disposable pattern)
+         */
+        [Symbol.dispose](): void
+
+        /**
+         * Registers a callback to run when nodes of this type are initialized
+         *
+         * @param callback - Function to execute when a node is initialized
+         *
+         * @returns The same node type with the added initialization callback
+         */
+        onInit(
+          callback: (node: TNode) => void
+        ): BaseNodeType<TNode, TCapabilities, TOptional, TKey, TOther>
+
+        _initNode(node: TNode): void
+        _addOnInit(callback: (node: TNode) => void): DisposableDispose
+
+        /**
+         * Property name containing the node's unique key
+         */
+        key: undefined
+
+        /**
+         * Configures this type to use a specific property as the node key
+         *
+         * @template TKey - Property key in the node type
+         * @param key - Property name to use as the node key
+         * @returns A keyed node type using the specified property as key
+         */
+        withKey<TKey extends keyof TNode>(
+          key: TKey
+        ): BaseNodeType<TNode, TCapabilities | "keyed", TOptional, TKey, TOther>
+      } & (TCapabilities extends "keyed" // is it a keyed node?
+        ? {
+            /**
+             * Property name containing the node's unique key
+             */
+            key: TKey
+
+            /**
+             * Gets the unique key value for a node
+             *
+             * @param node - Node to get the key from
+             * @returns The node's key value or undefined
+             */
+            getKey(node: TNode): TNode[TKey] | undefined
+
+            /**
+             * Retrieves a node by its key (if it exists)
+             *
+             * @param key - Key to search for
+             * @returns The node with the specified key or undefined
+             */
+            findByKey(key: TNode[TKey]): TNode | undefined
+          }
+        : unknown)
+    : unknown)
 
 /**
  * Configuration for a computed property with options
