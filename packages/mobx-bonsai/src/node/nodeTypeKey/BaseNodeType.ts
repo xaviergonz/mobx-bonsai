@@ -5,6 +5,106 @@ import { nodeTypeKey, NodeTypeKey, NodeTypeValue } from "./nodeType"
 import { DisposableDispose } from "../../utils/disposable"
 
 /**
+ * Base interface for node types with type-specific capabilities.
+ *
+ * @template TNode - The object type representing a node
+ * @template TCapabilities - Node type capabilities, can be "typed" and/or "keyed"
+ * @template TOptional - Optional properties of the node type
+ * @template TKey - Property key used for node identification (if keyed)
+ * @template TOther - Additional type information
+ */
+interface BaseNodeTypeWithType<
+  TNode extends object,
+  TCapabilities extends "typed" | "keyed",
+  TOptional extends keyof TNode,
+  TKey extends keyof TNode | never,
+  TOther,
+> {
+  /**
+   * Unique identifier for this node type
+   */
+  typeId: TNode extends {
+    [nodeTypeKey]: NodeTypeValue
+  }
+    ? TNode[NodeTypeKey]
+    : undefined
+
+  /**
+   * Checks if the node is of a specific type
+   *
+   * @param node - Node to check
+   * @returns true if the node type matches, false otherwise
+   */
+  nodeIsOfType(node: object): node is TNode
+
+  /**
+   * Unregisters this node type
+   */
+  unregister(): void
+
+  /**
+   * Unregisters this node type (disposable pattern)
+   */
+  [Symbol.dispose](): void
+
+  /**
+   * Registers a callback to run when nodes of this type are initialized
+   *
+   * @param callback - Function to execute when a node is initialized
+   *
+   * @returns The same node type with the added initialization callback
+   */
+  onInit(
+    callback: (node: TNode) => void
+  ): BaseNodeType<TNode, TCapabilities, TOptional, TKey, TOther>
+
+  _initNode(node: TNode): void
+
+  _addOnInit(callback: (node: TNode) => void): DisposableDispose
+
+  /**
+   * Configures this type to use a specific property as the node key
+   *
+   * @template TKey - Property key in the node type
+   * @param key - Property name to use as the node key
+   * @returns A keyed node type using the specified property as key
+   */
+  withKey<TKey extends keyof TNode>(
+    key: TKey
+  ): BaseNodeType<TNode, TCapabilities | "keyed", TOptional, TKey, TOther>
+}
+
+/**
+ * Interface that represents a node type with a key property.
+ * Provides functionality for accessing and finding nodes by their unique keys.
+ *
+ * @template TNode - The node type
+ * @template TKey - The key of the node's unique identifier property
+ */
+interface BaseNodeTypeWithKey<TNode, TKey extends keyof TNode> {
+  /**
+   * Property name containing the node's unique key
+   */
+  key: TKey
+
+  /**
+   * Gets the unique key value for a node
+   *
+   * @param node - Node to get the key from
+   * @returns The node's key value or undefined
+   */
+  getKey(node: TNode): TNode[TKey] | undefined
+
+  /**
+   * Retrieves a node by its key (if it exists)
+   *
+   * @param key - Key to search for
+   * @returns The node with the specified key or undefined
+   */
+  findByKey(key: TNode[TKey]): TNode | undefined
+}
+
+/**
  * Base node type definition with core functionality
  *
  * @template TNode - Node structure that adheres to this type
@@ -155,86 +255,13 @@ export type BaseNodeType<
    * Default generators defined so far.
    */
   defaultGenerators?: { [K in keyof TNode]?: () => TNode[K] }
-} & TOther &
-  (TCapabilities extends "typed" | "keyed" // is it a typed node?
-    ? {
-        /**
-         * Unique identifier for this node type
-         */
-        typeId: TNode extends { [nodeTypeKey]: NodeTypeValue } ? TNode[NodeTypeKey] : undefined
-
-        /**
-         * Checks if the node is of a specific type
-         *
-         * @param node - Node to check
-         * @returns true if the node type matches, false otherwise
-         */
-        nodeIsOfType(node: object): node is TNode
-
-        /**
-         * Unregisters this node type
-         */
-        unregister(): void
-
-        /**
-         * Unregisters this node type (disposable pattern)
-         */
-        [Symbol.dispose](): void
-
-        /**
-         * Registers a callback to run when nodes of this type are initialized
-         *
-         * @param callback - Function to execute when a node is initialized
-         *
-         * @returns The same node type with the added initialization callback
-         */
-        onInit(
-          callback: (node: TNode) => void
-        ): BaseNodeType<TNode, TCapabilities, TOptional, TKey, TOther>
-
-        _initNode(node: TNode): void
-        _addOnInit(callback: (node: TNode) => void): DisposableDispose
-
-        /**
-         * Property name containing the node's unique key
-         */
-        key: undefined
-
-        /**
-         * Configures this type to use a specific property as the node key
-         *
-         * @template TKey - Property key in the node type
-         * @param key - Property name to use as the node key
-         * @returns A keyed node type using the specified property as key
-         */
-        withKey<TKey extends keyof TNode>(
-          key: TKey
-        ): BaseNodeType<TNode, TCapabilities | "keyed", TOptional, TKey, TOther>
-      } & (TCapabilities extends "keyed" // is it a keyed node?
-        ? {
-            /**
-             * Property name containing the node's unique key
-             */
-            key: TKey
-
-            /**
-             * Gets the unique key value for a node
-             *
-             * @param node - Node to get the key from
-             * @returns The node's key value or undefined
-             */
-            getKey(node: TNode): TNode[TKey] | undefined
-
-            /**
-             * Retrieves a node by its key (if it exists)
-             *
-             * @param key - Key to search for
-             * @returns The node with the specified key or undefined
-             */
-            findByKey(key: TNode[TKey]): TNode | undefined
-          }
+} & (TCapabilities extends "typed" | "keyed" // is it a typed node?
+  ? BaseNodeTypeWithType<TNode, TCapabilities, TOptional, TKey, TOther> &
+      (TCapabilities extends "keyed" // is it a keyed node?
+        ? BaseNodeTypeWithKey<TNode, TKey>
         : unknown)
-    : unknown)
+  : unknown) &
+  TOther
 
 /**
  * Configuration for a computed property with options
