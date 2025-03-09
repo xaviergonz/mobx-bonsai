@@ -3,7 +3,7 @@ import { IComputedValue, action, computed } from "mobx"
 import { failure } from "../../error/failure"
 import { getGlobalConfig } from "../../globalConfig"
 import { disposeOnce, makeDisposable } from "../../utils/disposable"
-import { assertIsNode, node } from "../node"
+import { assertIsNode, isNode, node } from "../node"
 import { volatileProp } from "../volatileProp"
 import { BaseNodeType } from "./BaseNodeType"
 import { KeyedNodeType } from "./KeyedNodeType"
@@ -410,6 +410,10 @@ function typedNodeType<TNode extends NodeWithAnyType = never>(
     } as any)
 
     return keyedNodeTypeObj as any
+  }
+
+  nodeTypeObj.nodeIs = (node: object): node is TNode => {
+    return isNode(node) && (node as TNode)[nodeTypeKey] === type
   }
 
   nodeTypeObj.unregister = disposeOnce(() => {

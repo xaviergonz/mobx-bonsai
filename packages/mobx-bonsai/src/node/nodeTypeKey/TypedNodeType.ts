@@ -19,5 +19,13 @@ export type TypedNodeType<TNode extends NodeWithAnyType> = BaseTypedNodeType<
      * @returns A keyed node type using the specified property as key
      */
     withKey<TKey extends keyof TNode>(key: TKey): KeyedNodeType<TNode, NodeTypeKey | TKey>
+
+    /**
+     * Checks if the node is of a specific type
+     *
+     * @param node - Node to check
+     * @returns true if the node type matches, false otherwise
+     */
+    nodeIs(node: object): node is TNode
   }
 >
