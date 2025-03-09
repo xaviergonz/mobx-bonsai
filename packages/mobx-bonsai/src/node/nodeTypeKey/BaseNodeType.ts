@@ -20,8 +20,6 @@ export type BaseNodeType<
   TKey extends keyof TNode | never,
   TOther,
 > = {
-  capabilities: TCapabilities
-
   /**
    * Node constructor.
    * Requires all keys from TNode except those in TOptional (which may be omitted).
