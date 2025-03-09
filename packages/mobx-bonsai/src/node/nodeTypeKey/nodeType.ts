@@ -412,7 +412,7 @@ function typedNodeType<TNode extends NodeWithAnyType = never>(
     return keyedNodeTypeObj as any
   }
 
-  nodeTypeObj.nodeIs = (node: object): node is TNode => {
+  nodeTypeObj.nodeIsOfType = (node: object): node is TNode => {
     return isNode(node) && (node as TNode)[nodeTypeKey] === type
   }
 

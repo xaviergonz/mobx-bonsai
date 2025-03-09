@@ -26,6 +26,6 @@ export type TypedNodeType<TNode extends NodeWithAnyType> = BaseTypedNodeType<
      * @param node - Node to check
      * @returns true if the node type matches, false otherwise
      */
-    nodeIs(node: object): node is TNode
+    nodeIsOfType(node: object): node is TNode
   }
 >
