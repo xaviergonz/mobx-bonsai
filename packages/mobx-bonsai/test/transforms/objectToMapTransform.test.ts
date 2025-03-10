@@ -1,5 +1,5 @@
 import { assert, _ } from "spec.ts"
-import { nodeType, objectToMap } from "../../src"
+import { nodeType, objectToMapTransform } from "../../src"
 import { runInAction } from "mobx"
 
 test("objectToMap", () => {
@@ -8,7 +8,7 @@ test("objectToMap", () => {
   }
 
   const TN = nodeType<N>().getters({
-    getMap: objectToMap("record"),
+    getMap: objectToMapTransform("record"),
   })
 
   assert(TN.getMap, _ as (n: N) => Map<string, number>)
@@ -33,7 +33,7 @@ test("objectToMap", () => {
 test("objectToMap with undefined and null", () => {
   type N = { record?: Record<string, number> | null }
   const TN = nodeType<N>().getters({
-    getMap: objectToMap("record"),
+    getMap: objectToMapTransform("record"),
   })
 
   assert(TN.getMap, _ as (n: N) => Map<string, number> | null | undefined)

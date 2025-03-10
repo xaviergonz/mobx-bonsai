@@ -68,8 +68,8 @@ export { volatileProp, type VolatileProp } from "./node/volatileProp"
 export type { Primitive } from "./plainTypes/types"
 
 // transforms
-export { arrayToSet } from "./transforms/arrayToSet"
-export { objectToMap } from "./transforms/objectToMap"
+export { arrayToSetTransform } from "./transforms/arrayToSetTransform"
+export { objectToMapTransform } from "./transforms/objectToMapTransform"
 export { asMap } from "./transforms/asMap"
 export { asSet } from "./transforms/asSet"
 

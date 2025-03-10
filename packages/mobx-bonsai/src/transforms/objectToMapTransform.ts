@@ -13,7 +13,7 @@ type ExtractRecordValue<T> = T extends Record<string, infer V> ? V : never
  * @param propName - The name of the property to transform into a Map
  * @returns A Map containing the key-value pairs from the record
  */
-export function objectToMap<
+export function objectToMapTransform<
   T extends { [k in K]?: Record<string, any> | null | undefined },
   K extends keyof T,
 >(

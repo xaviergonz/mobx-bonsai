@@ -1,5 +1,5 @@
 import { assert, _ } from "spec.ts"
-import { nodeType, arrayToSet } from "../../src"
+import { nodeType, arrayToSetTransform } from "../../src"
 import { runInAction } from "mobx"
 
 test("arrayToSet", () => {
@@ -8,7 +8,7 @@ test("arrayToSet", () => {
   }
 
   const TN = nodeType<N>().getters({
-    getSet: arrayToSet("list"),
+    getSet: arrayToSetTransform("list"),
   })
 
   assert(TN.getSet, _ as (n: N) => Set<number>)
@@ -28,7 +28,7 @@ test("arrayToSet with undefined and null", () => {
   }
 
   const TN = nodeType<N>().getters({
-    getSet: arrayToSet("list"),
+    getSet: arrayToSetTransform("list"),
   })
 
   assert(TN.getSet, _ as (n: N) => Set<number> | null | undefined)

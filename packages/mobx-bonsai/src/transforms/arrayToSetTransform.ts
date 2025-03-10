@@ -12,7 +12,7 @@ type ExtractArrayValue<T> = T extends Array<infer V> ? V : never
  * @param propName - The name of the property to transform into a Set
  * @returns A Set containing the values from the array
  */
-export function arrayToSet<
+export function arrayToSetTransform<
   T extends { [k in K]?: Array<any> | null | undefined },
   K extends keyof T,
 >(propName: K): (this: T) => Set<ExtractArrayValue<T[K]>> | Extract<T[K], undefined | null> {
