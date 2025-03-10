@@ -42,13 +42,13 @@ export const bindYjsToNode = action(
     node: T
 
     /**
-     * Resolves the corresponding YjsStructure for a given target node.
+     * Resolves the corresponding Y.js value for a given target node.
      *
      * @param node - The node to resolve in the bound Yjs structure.
-     * @returns The resolved YjsStructure.
+     * @returns The resolved Y.js value.
      * @throws Error if the target node is not found in the bound tree.
      */
-    getYjsObjectForNode: (node: object) => YjsStructure
+    getYjsValueForNode: (node: object) => unknown
 
     /**
      * Disposes the binding.
@@ -94,7 +94,7 @@ export const bindYjsToNode = action(
     const ret = {
       node,
 
-      getYjsObjectForNode: (target: object) => {
+      getYjsValueForNode: (target: object) => {
         if (target === node) {
           return yjsObject
         }

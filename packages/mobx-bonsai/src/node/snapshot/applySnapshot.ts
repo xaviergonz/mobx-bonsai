@@ -1,7 +1,7 @@
 import { action, isObservableObject } from "mobx"
 import { failure } from "../../error/failure"
 import { assertIsObject, isArray, isMap, isPlainObject, isSet } from "../../plainTypes/checks"
-import { assertIsNode } from "../node"
+import { assertIsNode, isFrozenNode } from "../node"
 import { getNodeTypeAndKey, nodeTypeKey } from "../nodeTypeKey/nodeType"
 import { reconcileData } from "../reconcileData"
 
@@ -34,6 +34,15 @@ export const applySnapshot = action(<T extends object>(node: T, snapshot: T): vo
   }
 
   if (isPlainObject(snapshot)) {
+    if (isFrozenNode(node)) {
+      // no reconciliation possible, unless it is the same ref
+      if (node === snapshot) {
+        return // no need to reconcile
+      } else {
+        throw failure("applySnapshot does not work on frozen nodes")
+      }
+    }
+
     if (!isObservableObject(node)) {
       // no reconciliation possible
       throw failure("if the snapshot is an object the target must be an object too")

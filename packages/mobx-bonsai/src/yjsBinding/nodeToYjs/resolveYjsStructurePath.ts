@@ -6,17 +6,15 @@ import { YjsStructure } from "../yjsTypes/types"
 export function resolveYjsStructurePath(
   yjsObject: YjsStructure,
   path: readonly (string | number)[]
-): YjsStructure {
+): unknown {
   let target = yjsObject
   assertIsYjsStructure(target)
 
   path.forEach((pathSegment, i) => {
     if (target instanceof Y.Array) {
       target = target.get(+pathSegment)
-      assertIsYjsStructure(target)
     } else if (target instanceof Y.Map) {
       target = target.get(String(pathSegment))
-      assertIsYjsStructure(target)
     } else {
       throw failure(
         `Y.Map or Y.Array was expected at path ${JSON.stringify(

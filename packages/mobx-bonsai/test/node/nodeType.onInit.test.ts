@@ -82,7 +82,7 @@ test("should pick up property changes during initialization for deep observation
   "init",
   {
     "change": {
-      "debugObjectName": "ObservableObject@9",
+      "debugObjectName": "ObservableObject@10",
       "name": "child",
       "newValue": {
         "$$type": "1",

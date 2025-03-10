@@ -4,6 +4,7 @@ import { failure } from "../../error/failure"
 import { isArray, isPlainObject, isPrimitive } from "../../plainTypes/checks"
 import { Primitive } from "../../plainTypes/types"
 import { YjsValue } from "../yjsTypes/types"
+import { getNodeTypeAndKey } from "../../node/nodeTypeKey/nodeType"
 
 /**
  * Converts a plain value to a Y.js value.
@@ -26,6 +27,11 @@ export function convertPlainToYjsValue(v: any): YjsValue {
     }
 
     if (isPlainObject(v) || isObservableObject(v)) {
+      const frozenData = !!getNodeTypeAndKey(v).type?.isFrozen
+      if (frozenData) {
+        return v // store as is
+      }
+
       const map = new Y.Map<YjsValue>()
       applyPlainObjectToYMap(map, v)
       return map as YjsValue

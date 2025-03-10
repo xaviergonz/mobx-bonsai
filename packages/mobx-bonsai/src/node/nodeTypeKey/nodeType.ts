@@ -389,6 +389,13 @@ function typedNodeType<TNode extends NodeWithAnyType = never>(
 
   nodeTypeObj.typeId = type as any
 
+  nodeTypeObj.isFrozen = false
+
+  nodeTypeObj.frozen = () => {
+    nodeTypeObj.isFrozen = true
+    return nodeTypeObj as any
+  }
+
   nodeTypeObj.withKey = (key) => {
     if (keyedNodeTypeObj.key !== undefined) {
       throw failure(`node type already has a key`)

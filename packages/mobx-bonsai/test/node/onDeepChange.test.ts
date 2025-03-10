@@ -21,7 +21,7 @@ it("should notify listener on object property changes", () => {
   expect(events).toMatchInlineSnapshot(`
 [
   {
-    "debugObjectName": "ObservableObject@1",
+    "debugObjectName": "ObservableObject@2",
     "name": "a",
     "newValue": 2,
     "object": {
@@ -39,7 +39,7 @@ it("should notify listener on object property changes", () => {
       1,
     ],
     "addedCount": 1,
-    "debugObjectName": "ObservableArray@3",
+    "debugObjectName": "ObservableArray@4",
     "index": 0,
     "object": [
       1,

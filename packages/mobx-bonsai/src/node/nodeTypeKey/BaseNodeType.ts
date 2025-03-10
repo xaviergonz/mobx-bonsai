@@ -72,6 +72,19 @@ interface BaseNodeTypeWithType<
   withKey<TKey extends keyof TNode>(
     key: TKey
   ): BaseNodeType<TNode, TCapabilities | "keyed", TOptional, TKey, TOther>
+
+  /**
+   * Makes this node type immutable.
+   *
+   * Immutable nodes cannot be modified after creation and sub-objects are not turned into nodes.
+   * This is useful for creating read-only nodes or for performance optimizations.
+   */
+  frozen(): BaseNodeType<TNode, TCapabilities, TOptional, TKey, TOther>
+
+  /**
+   * true if the node type is frozen, false otherwise
+   */
+  isFrozen: boolean
 }
 
 /**

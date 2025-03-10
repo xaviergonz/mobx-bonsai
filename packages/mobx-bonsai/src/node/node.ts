@@ -1,3 +1,4 @@
+import deepFreeze from "deep-freeze"
 import {
   IArrayDidChange,
   IAtom,
@@ -9,20 +10,22 @@ import {
   observable,
   observe,
   set,
+  toJS,
 } from "mobx"
-import { isArray, isObservablePlainStructure, isPrimitive } from "../plainTypes/checks"
 import { failure } from "../error/failure"
-import { invalidateSnapshotTreeToRoot } from "./snapshot/getSnapshot"
-import { buildNodeFullPath } from "./utils/buildNodeFullPath"
-import { getParent } from "./tree/getParent"
+import { isArray, isObservablePlainStructure, isPrimitive } from "../plainTypes/checks"
 import { DisposableDispose, makeDisposable } from "../utils/disposable"
+import { inDevMode } from "../utils/inDevMode"
 import {
+  NodeWithAnyType,
   getNodeTypeAndKey,
   nodeTypeKey,
-  NodeWithAnyType,
   tryRegisterNodeByTypeAndKey,
 } from "./nodeTypeKey/nodeType"
 import { reconcileData } from "./reconcileData"
+import { invalidateSnapshotTreeToRoot } from "./snapshot/getSnapshot"
+import { getParent } from "./tree/getParent"
+import { buildNodeFullPath } from "./utils/buildNodeFullPath"
 
 type ParentNode = {
   object: object
@@ -38,6 +41,7 @@ type NodeData = {
   parentAtom: IAtom | undefined
   onChangeListeners: NodeChangeListener[]
   childrenObjects: ObservableSet<object>
+  frozen: boolean
 }
 
 export function getNodeData(node: object): NodeData {
@@ -69,6 +73,17 @@ function setParentNode(node: object, parentNode: ParentNode | undefined): void {
  */
 export function isNode(struct: unknown): boolean {
   return nodes.has(struct as object)
+}
+
+/**
+ * Checks if the given node is frozen.
+ * A frozen node is a node that cannot be modified.
+ *
+ * @param node - The object to check.
+ * @returns `true` if the object is a node and is frozen, `false` otherwise.
+ */
+export function isFrozenNode(node: object): boolean {
+  return getNodeData(node).frozen
 }
 
 /**
@@ -177,15 +192,7 @@ export const node = action(
       }
     }
 
-    const observableStruct = (() => {
-      if (isObservablePlainStructure(struct)) {
-        return struct
-      }
-
-      return Array.isArray(struct)
-        ? observable.array(struct, { deep: false })
-        : observable.object(struct, undefined, { deep: false })
-    })()
+    const frozen = type && "isFrozen" in type ? type.isFrozen : false
 
     const nodeData: NodeData = {
       parent: undefined,
@@ -194,198 +201,231 @@ export const node = action(
       childrenObjects: observable.set([], {
         deep: false,
       }),
+      frozen,
     }
 
-    nodes.set(observableStruct, nodeData)
-    tryRegisterNodeByTypeAndKey(observableStruct)
+    let nodeStruct: object
 
-    const attachAsChildNode = (v: any, path: string, setIfConverted: (n: object) => void) => {
-      if (isPrimitive(v)) {
-        return
+    const registerNode = () => {
+      if (!nodeStruct) {
+        throw failure("nodeStruct is not defined")
       }
 
-      let n = v
-      if (isNode(n)) {
-        // ensure it is detached first or at same position
-        const parent = getNodeData(n).parent
-        if (parent && (parent.object !== observableStruct || parent.path !== path)) {
-          if (detachDuplicatedNodes > 0) {
-            set(parent.object, parent.path, undefined)
-          } else {
-            throw failure(
-              `The same node cannot appear twice in the same or different trees,` +
-                ` trying to assign it to ${JSON.stringify(buildNodeFullPath(observableStruct, path))},` +
-                ` but it already exists at ${JSON.stringify(buildNodeFullPath(parent.object, parent.path))}.` +
-                ` If you are moving the node then remove it from the tree first before moving it.` +
-                ` If you are copying the node then use 'cloneNode' to make a clone first.`
-            )
+      nodes.set(nodeStruct, nodeData)
+      tryRegisterNodeByTypeAndKey(nodeStruct)
+    }
+
+    if (frozen) {
+      const plainStruct = toJS(struct)
+
+      if (inDevMode) {
+        deepFreeze(plainStruct)
+      }
+
+      nodeStruct = plainStruct
+      registerNode()
+    } else {
+      const observableStruct = (() => {
+        if (isObservablePlainStructure(struct)) {
+          return struct
+        }
+
+        return Array.isArray(struct)
+          ? observable.array(struct, { deep: false })
+          : observable.object(struct, undefined, { deep: false })
+      })()
+
+      nodeStruct = observableStruct
+      registerNode()
+
+      const attachAsChildNode = (v: any, path: string, setIfConverted: (n: object) => void) => {
+        if (isPrimitive(v)) {
+          return
+        }
+
+        let n = v
+        if (isNode(n)) {
+          // ensure it is detached first or at same position
+          const parent = getNodeData(n).parent
+          if (parent && (parent.object !== observableStruct || parent.path !== path)) {
+            if (detachDuplicatedNodes > 0) {
+              set(parent.object, parent.path, undefined)
+            } else {
+              throw failure(
+                `The same node cannot appear twice in the same or different trees,` +
+                  ` trying to assign it to ${JSON.stringify(buildNodeFullPath(observableStruct, path))},` +
+                  ` but it already exists at ${JSON.stringify(buildNodeFullPath(parent.object, parent.path))}.` +
+                  ` If you are moving the node then remove it from the tree first before moving it.` +
+                  ` If you are copying the node then use 'cloneNode' to make a clone first.`
+              )
+            }
+          }
+        } else {
+          n = node(v)
+          if (n !== v) {
+            // actually needed conversion from plain object, or was a unique node that resolved to an existing node
+            setIfConverted(n)
           }
         }
+
+        nodeData.childrenObjects.add(n)
+
+        setParentNode(n, { object: observableStruct, path })
+      }
+
+      const detachAsChildNode = (v: any) => {
+        // might not be a node if we convert from observable struct to an existing unique node
+        if (!isPrimitive(v) && isNode(v)) {
+          setParentNode(v, undefined)
+          nodeData.childrenObjects.delete(v)
+        }
+      }
+
+      const isArrayNode = isArray(observableStruct)
+
+      // make current children nodes too (init)
+      if (isArrayNode) {
+        const array = observableStruct
+        array.forEach((v, i) => {
+          attachAsChildNode(v, i.toString(), (n) => {
+            set(array, i, n)
+          })
+        })
       } else {
-        n = node(v)
-        if (n !== v) {
-          // actually needed conversion from plain object, or was a unique node that resolved to an existing node
-          setIfConverted(n)
-        }
+        const object = observableStruct as any
+        Object.entries(object).forEach(([key, v]) => {
+          attachAsChildNode(v, key, (n) => {
+            set(object, key, n)
+          })
+        })
       }
 
-      nodeData.childrenObjects.add(n)
+      // and observe changes
+      if (isArrayNode) {
+        // we don't use change.object because it is bugged in some old versions of mobx
+        const array = observableStruct
 
-      setParentNode(n, { object: observableStruct, path })
-    }
-
-    const detachAsChildNode = (v: any) => {
-      // might not be a node if we convert from observable struct to an existing unique node
-      if (!isPrimitive(v) && isNode(v)) {
-        setParentNode(v, undefined)
-        nodeData.childrenObjects.delete(v)
-      }
-    }
-
-    const isArrayNode = isArray(observableStruct)
-
-    // make current children nodes too (init)
-    if (isArrayNode) {
-      const array = observableStruct
-      array.forEach((v, i) => {
-        attachAsChildNode(v, i.toString(), (n) => {
-          set(array, i, n)
-        })
-      })
-    } else {
-      const object = observableStruct as any
-      Object.entries(object).forEach(([key, v]) => {
-        attachAsChildNode(v, key, (n) => {
-          set(object, key, n)
-        })
-      })
-    }
-
-    // and observe changes
-    if (isArrayNode) {
-      // we don't use change.object because it is bugged in some old versions of mobx
-      const array = observableStruct
-
-      intercept(array, (change) => {
-        switch (change.type) {
-          case "update": {
-            const oldValue = array[change.index]
-            detachAsChildNode(oldValue)
-            attachAsChildNode(change.newValue, "" + change.index, (n) => {
-              change.newValue = n
-            })
-            break
-          }
-
-          case "splice": {
-            for (let i = 0; i < change.removedCount; i++) {
-              const removedValue = array[change.index + i]
-              detachAsChildNode(removedValue)
-            }
-
-            for (let i = 0; i < change.added.length; i++) {
-              attachAsChildNode(change.added[i], "" + (change.index + i), (n) => {
-                change.added[i] = n
-              })
-            }
-
-            // we might also need to update the parent of the next indexes
-            const oldNextIndex = change.index + change.removedCount
-            const newNextIndex = change.index + change.added.length
-
-            if (oldNextIndex !== newNextIndex) {
-              for (let i = oldNextIndex, j = newNextIndex; i < array.length; i++, j++) {
-                const value = array[i]
-                if (isPrimitive(value)) {
-                  continue
-                }
-                if (!isNode(value)) {
-                  throw failure("node expected")
-                }
-                setParentNode(
-                  array[i], // value
-                  {
-                    object: array,
-                    path: "" + j,
-                  } // parentPath
-                )
-              }
-            }
-            break
-          }
-
-          default:
-            throw failure(`unsupported change type`)
-        }
-
-        invalidateSnapshotTreeToRoot(observableStruct)
-
-        return change
-      })
-
-      observe(array, (change) => {
-        emitChangeToRoot(array, change)
-      })
-    } else {
-      const object = observableStruct
-
-      intercept(object, (change) => {
-        if (typeof change.name === "symbol") {
-          throw failure("symbol keys are not supported on a mobx-bonsai node")
-        }
-
-        const propKey = "" + change.name
-
-        if (propKey === nodeTypeKey || (keyProp !== undefined && propKey === keyProp)) {
-          throw failure(`the property ${change.name} cannot be modified`)
-        }
-
-        switch (change.type) {
-          case "add": {
-            attachAsChildNode(change.newValue, propKey, (n) => {
-              change.newValue = n
-            })
-            break
-          }
-
-          case "update": {
-            const oldValue = (object as any)[propKey]
-            const newValue = change.newValue
-            if (newValue !== oldValue) {
+        intercept(array, (change) => {
+          switch (change.type) {
+            case "update": {
+              const oldValue = array[change.index]
               detachAsChildNode(oldValue)
+              attachAsChildNode(change.newValue, "" + change.index, (n) => {
+                change.newValue = n
+              })
+              break
+            }
+
+            case "splice": {
+              for (let i = 0; i < change.removedCount; i++) {
+                const removedValue = array[change.index + i]
+                detachAsChildNode(removedValue)
+              }
+
+              for (let i = 0; i < change.added.length; i++) {
+                attachAsChildNode(change.added[i], "" + (change.index + i), (n) => {
+                  change.added[i] = n
+                })
+              }
+
+              // we might also need to update the parent of the next indexes
+              const oldNextIndex = change.index + change.removedCount
+              const newNextIndex = change.index + change.added.length
+
+              if (oldNextIndex !== newNextIndex) {
+                for (let i = oldNextIndex, j = newNextIndex; i < array.length; i++, j++) {
+                  const value = array[i]
+                  if (isPrimitive(value)) {
+                    continue
+                  }
+                  if (!isNode(value)) {
+                    throw failure("node expected")
+                  }
+                  setParentNode(
+                    array[i], // value
+                    {
+                      object: array,
+                      path: "" + j,
+                    } // parentPath
+                  )
+                }
+              }
+              break
+            }
+
+            default:
+              throw failure(`unsupported change type`)
+          }
+
+          invalidateSnapshotTreeToRoot(observableStruct)
+
+          return change
+        })
+
+        observe(array, (change) => {
+          emitChangeToRoot(array, change)
+        })
+      } else {
+        const object = observableStruct
+
+        intercept(object, (change) => {
+          if (typeof change.name === "symbol") {
+            throw failure("symbol keys are not supported on a mobx-bonsai node")
+          }
+
+          const propKey = "" + change.name
+
+          if (propKey === nodeTypeKey || (keyProp !== undefined && propKey === keyProp)) {
+            throw failure(`the property ${change.name} cannot be modified`)
+          }
+
+          switch (change.type) {
+            case "add": {
               attachAsChildNode(change.newValue, propKey, (n) => {
                 change.newValue = n
               })
+              break
             }
-            break
+
+            case "update": {
+              const oldValue = (object as any)[propKey]
+              const newValue = change.newValue
+              if (newValue !== oldValue) {
+                detachAsChildNode(oldValue)
+                attachAsChildNode(change.newValue, propKey, (n) => {
+                  change.newValue = n
+                })
+              }
+              break
+            }
+
+            case "remove": {
+              const oldValue = (object as any)[propKey]
+              detachAsChildNode(oldValue)
+              break
+            }
+
+            default:
+              throw failure(`unsupported change type`)
           }
 
-          case "remove": {
-            const oldValue = (object as any)[propKey]
-            detachAsChildNode(oldValue)
-            break
-          }
+          invalidateSnapshotTreeToRoot(observableStruct)
 
-          default:
-            throw failure(`unsupported change type`)
-        }
+          return change
+        })
 
-        invalidateSnapshotTreeToRoot(observableStruct)
-
-        return change
-      })
-
-      observe(observableStruct, (change) => {
-        emitChangeToRoot(observableStruct, change)
-      })
+        observe(observableStruct, (change) => {
+          emitChangeToRoot(observableStruct, change)
+        })
+      }
     }
 
     // init node if needed
     const skipInit = options?.skipInit ?? false
     if (!skipInit) {
-      type?._initNode(observableStruct as NodeWithAnyType)
+      type?._initNode(nodeStruct as NodeWithAnyType)
     }
 
-    return observableStruct as unknown as T
+    return nodeStruct as unknown as T
   }
 )

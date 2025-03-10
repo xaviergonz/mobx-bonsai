@@ -1,7 +1,7 @@
 import { IAtom, action, createAtom, isObservableArray, isObservableObject } from "mobx"
 import { failure } from "../../error/failure"
 import { isPrimitive } from "../../plainTypes/checks"
-import { assertIsNode } from "../node"
+import { assertIsNode, isFrozenNode } from "../node"
 import { getParentPath } from "../tree/getParentPath"
 
 const snapshots = new WeakMap<object, object>()
@@ -20,6 +20,10 @@ export const invalidateSnapshotTreeToRoot = action((node: object): void => {
 
 const createSnapshot = action(<T extends object>(node: T): T => {
   assertIsNode(node, "node")
+  if (isFrozenNode(node)) {
+    // the snapshot of a frozen node is the frozen node itself
+    return node
+  }
 
   if (isObservableArray(node)) {
     return node.map((v) => getSnapshotOrPrimitive(v, true)) as T

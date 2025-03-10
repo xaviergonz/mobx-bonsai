@@ -55,6 +55,7 @@ export { type Context, createContext } from "./node/context"
 export {
   assertIsNode,
   isNode,
+  isFrozenNode,
   node,
   onDeepChange,
   type NodeChange,

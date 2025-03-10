@@ -1,0 +1,35 @@
+---
+title: Frozen Nodes
+slug: /frozen-nodes
+---
+
+Frozen nodes in `mobx-bonsai` guarantee immutability. When a node type is created with the `.frozen()` modifier:
+- Its properties become read-only (although only enforced in dev mode).
+- It is kept as a plain JavaScript value with no MobX observability (so no conversion into nodes is needed for inner values).
+- Snapshots of a frozen node are exactly the same as the node itself.
+
+The example below demonstrates how a frozen node behaves.
+
+```typescript
+import { nodeType, node, applySnapshot, getSnapshot } from "mobx-bonsai";
+
+type FrozenPerson = TNode<"FrozenPerson",{
+  name: string;
+  hobbies: string[];
+}>;
+
+const TFrozenPerson = nodeType<FrozenPerson>("FrozenPerson").frozen();
+
+// create a frozen node instance
+const frozenPerson = TFrozenPerson({ name: "Alice", hobbies: ["cycling", "painting"] });
+
+// attempting to change a property results in an error (in dev mode)
+// frozenPerson.hobbies.push("singing");
+
+// snapshots return the same object reference
+console.log(getSnapshot(frozenPerson) === frozenPerson); // true
+
+// frozen node used inside another node retains its reference
+const parent = node({ person: frozenPerson });
+console.log(parent.person === frozenPerson); // true
+```

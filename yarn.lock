@@ -5753,6 +5753,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/deep-freeze@npm:^0.1.5":
+  version: 0.1.5
+  resolution: "@types/deep-freeze@npm:0.1.5"
+  checksum: 10c0/cb568f0adbbcb0f3af3533a522e67de357c7ec7a9049d6a7799c4825162c843431302874c1c63668e21f78d8ddad0562f9968011736f27c34d659d161ff64d4c
+  languageName: node
+  linkType: hard
+
 "@types/eslint-scope@npm:^3.7.7":
   version: 3.7.7
   resolution: "@types/eslint-scope@npm:3.7.7"
@@ -9151,6 +9158,13 @@ __metadata:
   version: 0.6.0
   resolution: "deep-extend@npm:0.6.0"
   checksum: 10c0/1c6b0abcdb901e13a44c7d699116d3d4279fdb261983122a3783e7273844d5f2537dc2e1c454a23fcf645917f93fbf8d07101c1d03c015a87faa662755212566
+  languageName: node
+  linkType: hard
+
+"deep-freeze@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "deep-freeze@npm:0.0.1"
+  checksum: 10c0/b32c878395df6ca0e07d065750e14bc1651ec76e99490bca25e5844f7321676d7045d4eb4123892a0d4f08c38e4b7fa46d6e834782c095723447c0ee2ad0340b
   languageName: node
   linkType: hard
 
@@ -15636,8 +15650,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "mobx-bonsai@workspace:packages/mobx-bonsai"
   dependencies:
+    "@types/deep-freeze": "npm:^0.1.5"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.13.9"
+    deep-freeze: "npm:^0.0.1"
     fast-deep-equal: "npm:^3.1.3"
     jest: "npm:^29.7.0"
     mitt: "npm:^3.0.1"

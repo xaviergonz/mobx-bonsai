@@ -36,8 +36,13 @@ function setIfDifferent(target: any, key: PropertyKey, value: unknown) {
 }
 
 export function reconcileData<T>(oldValue: any, newValue: T, reconciliationRoot: object): T {
+  if (oldValue === newValue) {
+    // same value, no need to reconcile
+    return oldValue
+  }
+
   if (isPrimitive(newValue) || isPrimitive(oldValue)) {
-    // no reconciliation possible
+    // one of them a primitive and the other is not, no reconciliation possible
     return newValue
   }
 
@@ -93,6 +98,11 @@ export function reconcileData<T>(oldValue: any, newValue: T, reconciliationRoot:
       newNodeTypeAndKey.type !== oldNodeTypeAndKey.type ||
       newNodeTypeAndKey.key !== oldNodeTypeAndKey.key
     ) {
+      return newValue
+    }
+
+    // frozen nodes should not be reconciled (unless they are the same ref, which is covered by the first check)
+    if (newNodeTypeAndKey.type?.isFrozen || oldNodeTypeAndKey.type?.isFrozen) {
       return newValue
     }
 

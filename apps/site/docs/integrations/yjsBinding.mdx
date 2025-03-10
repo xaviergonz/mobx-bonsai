@@ -78,6 +78,13 @@ applyPlainObjectToYMap(
 )
 ```
 
+### Frozen Nodes in Y.js Binding
+
+When using frozen nodes with the Y.js binding, the frozen node's value is stored as a plain JavaScript value rather than being converted to a Y.Map. In other words, since frozen nodes are immutable and non-observable, they remain as plain objects in the Y.js data store. This ensures that:
+- The underlying Y.js structure reflects the immutability of the node.
+- There is no extra mapping overhead, which can improve performance.
+- The snapshot of a frozen node is preserved as defined.
+
 ### Binding Limitations
 
 **`Y.js` binding limits**:
@@ -85,12 +92,11 @@ applyPlainObjectToYMap(
 - Changes in the MobX observable are replicated to `Y.js` only after the outermost MobX action has completed. Therefore, avoid executing any `Y.js` transactions until MobX actions finish.
 - `Y.js` changes are merged into the MobX observable only after all `Y.js` transactions have concluded. Consequently, do not initiate MobX actions that modify the bound object during an ongoing `Y.js` transaction.
 
-
 ## Utility Functions
 
-### `getYjsObjectForNode`
+### `getYjsValueForNode`
 
-The `getYjsObjectForNode` function returned by the bind function resolves a `Y.js` structure corresponding to a given node within a bound tree. This is useful when you need to map a node back to its `Y.js` counterpart.
+The `getYjsValueForNode` function returned by the bind function resolves a `Y.js` value corresponding to a given node within a bound tree. This is useful when you need to map a node back to its `Y.js` counterpart.
 
 If the target node is not part of the bound tree it throws an error.
 
@@ -98,9 +104,9 @@ If the target node is not part of the bound tree it throws an error.
 import * as Y from "yjs"
 import { bindYjsToNode } from "mobx-bonsai"
 
-const { node, getYjsObjectForNode } = bindYjsToNode<TodoAppState>({
+const { node, getYjsValueForNode } = bindYjsToNode<TodoAppState>({
   ...
 });
 
-const firstTodoYjs = getYjsObjectForNode(todoAppState.todoList[0]);
+const firstTodoYjs = getYjsValueForNode(todoAppState.todoList[0]);
 ```

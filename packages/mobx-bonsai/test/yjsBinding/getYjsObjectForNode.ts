@@ -3,29 +3,29 @@ import { node } from "../../src"
 import { createObjectTestbed } from "./testbed"
 
 it("should resolve a nodes to Y.js structures", () => {
-  const { mobxObservable, getYjsObjectForNode, yjsObject } = createObjectTestbed({
+  const { mobxObservable, getYjsValueForNode, yjsObject } = createObjectTestbed({
     childMap: { sub: {} },
     childArray: [{}],
   })
-  expect(getYjsObjectForNode(mobxObservable)).toBe(yjsObject)
+  expect(getYjsValueForNode(mobxObservable)).toBe(yjsObject)
 
-  expect(getYjsObjectForNode(mobxObservable.childMap)).toBe(yjsObject.get("childMap"))
-  expect(getYjsObjectForNode(mobxObservable.childMap.sub)).toBe(
+  expect(getYjsValueForNode(mobxObservable.childMap)).toBe(yjsObject.get("childMap"))
+  expect(getYjsValueForNode(mobxObservable.childMap.sub)).toBe(
     (yjsObject.get("childMap") as Y.Map<any>).get("sub")
   )
 
-  expect(getYjsObjectForNode(mobxObservable.childArray)).toBe(yjsObject.get("childArray"))
-  expect(getYjsObjectForNode(mobxObservable.childArray[0])).toBe(
+  expect(getYjsValueForNode(mobxObservable.childArray)).toBe(yjsObject.get("childArray"))
+  expect(getYjsValueForNode(mobxObservable.childArray[0])).toBe(
     (yjsObject.get("childArray") as Y.Array<any>).get(0)
   )
 })
 
 it("should throw when the target node is not in the bound tree", () => {
-  const { getYjsObjectForNode } = createObjectTestbed({
+  const { getYjsValueForNode } = createObjectTestbed({
     childMap: {},
     childArray: [],
   })
   const unknownNode = node({})
 
-  expect(() => getYjsObjectForNode(unknownNode)).toThrow("node not found in the bound tree")
+  expect(() => getYjsValueForNode(unknownNode)).toThrow("node not found in the bound tree")
 })
