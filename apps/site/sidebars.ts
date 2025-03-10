@@ -7,6 +7,7 @@ const sidebars: SidebarsConfig = {
     "nodes",
     "snapshots",
     "treeLikeStructure",
+    "transforms",
     "frozenNodes",
     "contexts",
     {

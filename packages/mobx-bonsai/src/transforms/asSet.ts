@@ -11,7 +11,7 @@ import {
   untracked,
 } from "mobx"
 import { failure } from "../error/failure"
-import { getMobxVersion } from "./getMobxVersion"
+import { getMobxVersion } from "../utils/getMobxVersion"
 import { isArray } from "../plainTypes/checks"
 
 class PlainArraySet<T> implements Set<T> {

@@ -1,0 +1,64 @@
+---
+title: Maps, Sets, Dates, BigInt
+slug: /transforms
+---
+
+## Overview
+
+Although `mobx-bonsai` doesn't support properties which are Maps/Sets directly (for JSON compatibility purposes), you can simulate them in three ways:
+
+1. The new property transforms.
+3. The `asSet` and `asMap` collection wrappers.
+
+## Transforms
+
+`mobx-bonsai` provides out of the box these transforms:
+
+- `objectToMapTransform()` - Transforms between a `Record<string, V>` and a `Map<string, V>` (Note: this uses `asMap` internally).
+- `arrayToSetTransform()` - Transforms between a `Array<V>` and a `Set<V>` (Note: this uses `asSet` internally).
+
+Example:
+
+```ts
+import { nodeType, objectToMapTransform } from 'mobx-bonsai';
+
+type MyType = {
+  record: Record<string, number>
+  array: Array<string>
+}
+
+const TMyType = nodeType<MyType>().getters({
+  getMap: objectToMapTransform("record"),
+  getSet: arrayToSetTransform("array")
+});
+
+const instance = TMyType({ record: { a: 1, b: 2 } }, array: ["a", "b"]);
+const map = TMyType.getMap(instance); // Map<string, number>
+const set = TMyType.getSet(instance); // Set<string>
+```
+
+## Collection wrappers
+
+### `asMap` collection wrapper
+
+The `asMap` function converts a plain object, an observable object or an object node into a `Map<string, V>` view that you can interact with as you would a standard Map.
+
+| Operation | Map  | asMap (observable object) | asMap (plain object) |
+|-----------|------|---------------------------|----------------------|
+| add       | O(1) | O(1)                      | O(1)                 |
+| delete    | O(1) | O(1)                      | O(1)                 |
+| has       | O(1) | O(1)                      | O(1)                 |
+| clear     | O(n) | O(n)                      | O(n)                 |
+| iteration | O(n) | O(n)                      | O(n)                 |
+
+### `asSet` collection wrapper
+
+The `asSet` function wraps a plain array, an observable array or an array node into a Set-like interface.
+
+| Operation | Set  | asSet (observable array) | asSet (plain array) |
+|-----------|------|--------------------------|---------------------|
+| add       | O(1) | O(1)                     | O(n)                |
+| delete    | O(1) | O(n)                     | O(n)                |
+| has       | O(1) | O(1)                     | O(n)                |
+| clear     | O(n) | O(n)                     | O(n)                |
+| iteration | O(n) | O(n)                     | O(n)                |

@@ -67,9 +67,13 @@ export { volatileProp, type VolatileProp } from "./node/volatileProp"
 // plainTypes
 export type { Primitive } from "./plainTypes/types"
 
-// utils
+// transforms
+export { arrayToSet } from "./transforms/arrayToSet"
+export { objectToMap } from "./transforms/objectToMap"
 export { asMap } from "./transforms/asMap"
 export { asSet } from "./transforms/asSet"
+
+// utils
 export { deepEquals } from "./utils/deepEquals"
 
 // yjsBinding

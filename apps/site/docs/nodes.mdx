@@ -607,30 +607,3 @@ This pattern ensures volatile state is reset when an item is detached from the r
 Use it to deeply clone a node before copying it into another part of the tree. If you are moving the node then consider removing it from the tree first before adding it back.
 
 Note that, when cloning, all node keys are replaced with new unique keys.
-
-### `asMap`
-
-The `asMap` function converts a plain object, an observable object or an object node into a `Map<string, value>` view that can be used to interact with the object as if it were a Map. Operations should be as fast as with a real Map:
-
-
-| Operation | Map  | asMap (observable object) | asMap (plain object) |
-|-----------|------|---------------------------|----------------------|
-| add       | O(1) | O(1)                      | O(1)                 |
-| delete    | O(1) | O(1)                      | O(1)                 |
-| has       | O(1) | O(1)                      | O(1)                 |
-| clear     | O(n) | O(n)                      | O(n)                 |
-| iteration | O(n) | O(n)                      | O(n)                 |
-
-### `asSet`
-
-The `asSet` function converts a plain array, an observable array or an array node into a Set-like view that can be used to interact with the array as if it were a Set. Note that since the backing store **for plain arrays** is an array some operations will be slower than with a real set or asSet with an observable array, namely:
-
-| Operation | Set  | asSet (observable array) | asSet (plain array) |
-|-----------|------|--------------------------|---------------------|
-| add       | O(1) | O(1)                     | O(n)                |
-| delete    | O(1) | O(n)                     | O(n)                |
-| has       | O(1) | O(1)                     | O(n)                |
-| clear     | O(n) | O(n)                     | O(n)                |
-| iteration | O(n) | O(n)                     | O(n)                |
-
-If speed is paramount and your values are strings consider using `asMap` with a record that saves true when the value exists and delete when it does not.
