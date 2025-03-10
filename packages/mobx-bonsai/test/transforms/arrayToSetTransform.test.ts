@@ -2,7 +2,7 @@ import { assert, _ } from "spec.ts"
 import { nodeType, arrayToSetTransform } from "../../src"
 import { runInAction } from "mobx"
 
-test("arrayToSet", () => {
+test("arrayToSetTransform", () => {
   type N = {
     list: number[]
   }

@@ -2,7 +2,7 @@ import { assert, _ } from "spec.ts"
 import { nodeType, objectToMapTransform } from "../../src"
 import { runInAction } from "mobx"
 
-test("objectToMap", () => {
+test("objectToMapTransform", () => {
   type N = {
     record: Record<string, number>
   }
