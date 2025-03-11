@@ -16,25 +16,37 @@ Although `mobx-bonsai` doesn't support properties which are Maps/Sets directly (
 
 - `objectToMapTransform()` - Transforms between a `Record<string, V>` and a `Map<string, V>` (Note: this uses `asMap` internally).
 - `arrayToSetTransform()` - Transforms between a `Array<V>` and a `Set<V>` (Note: this uses `asSet` internally).
+- `timestampToDateTransform()` - Transforms a timestamp number to an immutable Date (`ImmutableDate`), where all mutating methods will throw errors.
+- `dateToTimestampTransform()` - Transforms a Date to a timestamp number.
 
 Example:
 
 ```ts
-import { nodeType, objectToMapTransform } from 'mobx-bonsai';
+import { nodeType, objectToMapTransform, timestampToDateTransform, dateToTimestampTransform } from 'mobx-bonsai';
 
 type MyType = {
   record: Record<string, number>
   array: Array<string>
+  timestamp: number
 }
 
 const TMyType = nodeType<MyType>().getters({
   getMap: objectToMapTransform("record"),
-  getSet: arrayToSetTransform("array")
+  getSet: arrayToSetTransform("array"),
+  getTimestampDate: timestampToDateTransform("timestamp")
+}).actions({
+  setTimestampDate: dateToTimestampTransform("timestamp")
 });
 
-const instance = TMyType({ record: { a: 1, b: 2 } }, array: ["a", "b"]);
+const instance = TMyType({ record: { a: 1, b: 2 }, array: ["a", "b"], timestamp: 1633072800000 });
+
 const map = TMyType.getMap(instance); // Map<string, number>
+
 const set = TMyType.getSet(instance); // Set<string>
+
+const date = TMyType.getTimestampDate(instance); // ImmutableDate
+
+TMyType.setTimestampDate(instance, new Date());
 ```
 
 ## Collection wrappers

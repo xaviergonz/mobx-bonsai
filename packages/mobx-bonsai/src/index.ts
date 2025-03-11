@@ -70,8 +70,11 @@ export type { Primitive } from "./plainTypes/types"
 // transforms
 export { arrayToSetTransform } from "./transforms/arrayToSetTransform"
 export { objectToMapTransform } from "./transforms/objectToMapTransform"
+export { timestampToDateTransform } from "./transforms/timestampToDateTransform"
+export { dateToTimestampTransform } from "./transforms/dateToTimestampTransform"
 export { asMap } from "./transforms/asMap"
 export { asSet } from "./transforms/asSet"
+export { ImmutableDate } from "./transforms/ImmutableDate"
 
 // utils
 export { deepEquals } from "./utils/deepEquals"

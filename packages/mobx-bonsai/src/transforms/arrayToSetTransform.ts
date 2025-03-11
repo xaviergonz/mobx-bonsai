@@ -3,14 +3,14 @@ import { asSet } from "./asSet"
 type ExtractArrayValue<T> = T extends Array<infer V> ? V : never
 
 /**
- * Transforms an array (with values of type V) into a Set<V>.
+ * Transforms an array (with values of type V) into a Set<V> (getter).
  *
  * @template T - Type of the containing object
  * @template K - Type of the property key in T that will be transformed
  *
  * @param this - The object containing the property to transform
  * @param propName - The name of the property to transform into a Set
- * @returns A Set containing the values from the array
+ * @returns A function that returns a Set backed by the values from the array property
  */
 export function arrayToSetTransform<
   T extends { [k in K]?: Array<any> | null | undefined },
