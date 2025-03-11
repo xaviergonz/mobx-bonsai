@@ -18,35 +18,54 @@ Although `mobx-bonsai` doesn't support properties which are Maps/Sets directly (
 - `arrayToSetTransform()` - Transforms between a `Array<V>` and a `Set<V>` (Note: this uses `asSet` internally).
 - `timestampToDateTransform()` - Transforms a timestamp number to an immutable Date (`ImmutableDate`), where all mutating methods will throw errors.
 - `dateToTimestampTransform()` - Transforms a Date to a timestamp number.
+- `isoStringToDateTransform()` - Transforms an ISO date string to an immutable Date (`ImmutableDate`).
+- `dateToIsoStringTransform()` - Transforms a Date to an ISO date string.
 
 Example:
 
 ```ts
-import { nodeType, objectToMapTransform, timestampToDateTransform, dateToTimestampTransform } from 'mobx-bonsai';
+import {
+  nodeType,
+  objectToMapTransform,
+  timestampToDateTransform,
+  dateToTimestampTransform,
+  isoStringToDateTransform,
+  dateToIsoStringTransform
+} from 'mobx-bonsai';
 
 type MyType = {
   record: Record<string, number>
   array: Array<string>
   timestamp: number
+  isoDateString: string
 }
 
 const TMyType = nodeType<MyType>().getters({
   getMap: objectToMapTransform("record"),
   getSet: arrayToSetTransform("array"),
-  getTimestampDate: timestampToDateTransform("timestamp")
+  getTimestampDate: timestampToDateTransform("timestamp"),
+  getIsoStringDate: isoStringToDateTransform("isoDateString")
 }).actions({
-  setTimestampDate: dateToTimestampTransform("timestamp")
+  setTimestampDate: dateToTimestampTransform("timestamp"),
+  setIsoStringDate: dateToIsoStringTransform("isoDateString")
 });
 
-const instance = TMyType({ record: { a: 1, b: 2 }, array: ["a", "b"], timestamp: 1633072800000 });
+const instance = TMyType({
+  record: { a: 1, b: 2 },
+  array: ["a", "b"],
+  timestamp: 1633072800000,
+  isoDateString: "2021-10-01T00:00:00.000Z"
+});
 
 const map = TMyType.getMap(instance); // Map<string, number>
 
 const set = TMyType.getSet(instance); // Set<string>
 
-const date = TMyType.getTimestampDate(instance); // ImmutableDate
+const timestampDate = TMyType.getTimestampDate(instance); // ImmutableDate
+const isoStringDate = TMyType.getIsoStringDate(instance); // ImmutableDate
 
 TMyType.setTimestampDate(instance, new Date());
+TMyType.setIsoStringDate(instance, new Date());
 ```
 
 ## Collection wrappers

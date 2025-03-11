@@ -36,6 +36,8 @@ test("timestampToDateTransform returns undefined and null correctly", () => {
     getDate: timestampToDateTransform("timestamp"),
   })
 
+  assert(TN.getDate, _ as (n: N) => ImmutableDate | null | undefined)
+
   // valid timestamp case
   const t = 1633072800000
   const n = TN({ timestamp: t })

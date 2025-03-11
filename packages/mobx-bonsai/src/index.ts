@@ -75,6 +75,8 @@ export { dateToTimestampTransform } from "./transforms/dateToTimestampTransform"
 export { asMap } from "./transforms/asMap"
 export { asSet } from "./transforms/asSet"
 export { ImmutableDate } from "./transforms/ImmutableDate"
+export { isoStringToDateTransform } from "./transforms/isoStringToDateTransform"
+export { dateToIsoStringTransform } from "./transforms/dateToIsoStringTransform"
 
 // utils
 export { deepEquals } from "./utils/deepEquals"
