@@ -12,14 +12,18 @@ Although `mobx-bonsai` doesn't support properties which are Maps/Sets directly (
 
 ## Transforms
 
-`mobx-bonsai` provides out of the box these transforms:
+`mobx-bonsai` provides out of the box these getter transforms:
 
 - `objectToMapTransform()` - Transforms between a `Record<string, V>` and a `Map<string, V>` (Note: this uses `asMap` internally).
 - `arrayToSetTransform()` - Transforms between a `Array<V>` and a `Set<V>` (Note: this uses `asSet` internally).
 - `timestampToDateTransform()` - Transforms a timestamp number to an immutable Date (`ImmutableDate`), where all mutating methods will throw errors.
-- `dateToTimestampTransform()` - Transforms a Date to a timestamp number.
 - `isoStringToDateTransform()` - Transforms an ISO date string to an immutable Date (`ImmutableDate`).
+- `stringToBigIntTransform()` - Transforms a string to a BigInt.
+
+And these actions (setters) transforms:
+- `dateToTimestampTransform()` - Transforms a Date to a timestamp number.
 - `dateToIsoStringTransform()` - Transforms a Date to an ISO date string.
+- `bigIntToStringTransform()` - Transforms a BigInt to a string.
 
 Example:
 
@@ -30,7 +34,9 @@ import {
   timestampToDateTransform,
   dateToTimestampTransform,
   isoStringToDateTransform,
-  dateToIsoStringTransform
+  dateToIsoStringTransform,
+  stringToBigIntTransform,
+  bigIntToStringTransform
 } from 'mobx-bonsai';
 
 type MyType = {
@@ -38,34 +44,38 @@ type MyType = {
   array: Array<string>
   timestamp: number
   isoDateString: string
+  bigIntString: string
 }
 
 const TMyType = nodeType<MyType>().getters({
   getMap: objectToMapTransform("record"),
   getSet: arrayToSetTransform("array"),
   getTimestampDate: timestampToDateTransform("timestamp"),
-  getIsoStringDate: isoStringToDateTransform("isoDateString")
+  getIsoStringDate: isoStringToDateTransform("isoDateString"),
+  getBigInt: stringToBigIntTransform("bigIntString")
 }).actions({
   setTimestampDate: dateToTimestampTransform("timestamp"),
-  setIsoStringDate: dateToIsoStringTransform("isoDateString")
+  setIsoStringDate: dateToIsoStringTransform("isoDateString"),
+  setBigInt: bigIntToStringTransform("bigIntString")
 });
 
 const instance = TMyType({
   record: { a: 1, b: 2 },
   array: ["a", "b"],
   timestamp: 1633072800000,
-  isoDateString: "2021-10-01T00:00:00.000Z"
+  isoDateString: "2021-10-01T00:00:00.000Z",
+  bigIntString: "123456789012345678901234567890"
 });
 
 const map = TMyType.getMap(instance); // Map<string, number>
-
 const set = TMyType.getSet(instance); // Set<string>
-
 const timestampDate = TMyType.getTimestampDate(instance); // ImmutableDate
 const isoStringDate = TMyType.getIsoStringDate(instance); // ImmutableDate
+const bigInt = TMyType.getBigInt(instance); // bigint
 
 TMyType.setTimestampDate(instance, new Date());
 TMyType.setIsoStringDate(instance, new Date());
+TMyType.setBigInt(instance, BigInt("987654321098765432109876543210"));
 ```
 
 ## Collection wrappers
