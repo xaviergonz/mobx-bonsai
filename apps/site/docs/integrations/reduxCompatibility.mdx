@@ -1,0 +1,17 @@
+---
+title: Redux Compatibility
+slug: /integrations/redux-compatibility
+---
+
+## `asReduxStore`
+
+It is possible to transform a `mobx-keystone` tree node into a **read-only** Redux compatible store (this is, without an action dispatcher).
+
+```ts
+const todoListReduxStore = asReduxStore(todoList)
+```
+
+Such store will have some of the usual Redux store methods:
+
+- `getState()` is a thin wrapper over `getSnapshot(storeTarget)`.
+- `subscribe(listener)` will use `onSnapshot(storeTarget, listener)` and return a disposer.

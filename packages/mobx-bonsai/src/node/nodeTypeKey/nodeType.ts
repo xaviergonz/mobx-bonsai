@@ -2,7 +2,7 @@ import mitt from "mitt"
 import { IComputedValue, action, computed } from "mobx"
 import { failure } from "../../error/failure"
 import { getGlobalConfig } from "../../globalConfig"
-import { disposeOnce, makeDisposable } from "../../utils/disposable"
+import { disposeOnce } from "../../utils/disposable"
 import { assertIsNode, isNode, node } from "../node"
 import { volatileProp } from "../volatileProp"
 import { BaseNodeType } from "./BaseNodeType"
@@ -442,7 +442,7 @@ function typedNodeType<TNode extends NodeWithAnyType = never>(
 
     events.on("init", actionCallback)
 
-    return makeDisposable(() => {
+    return disposeOnce(() => {
       events.off("init", actionCallback)
     })
   }

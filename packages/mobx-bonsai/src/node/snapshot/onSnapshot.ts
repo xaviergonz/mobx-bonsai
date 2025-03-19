@@ -1,7 +1,7 @@
 import { reaction } from "mobx"
 import { getSnapshot } from "./getSnapshot"
 import { assertIsNode } from "../node"
-import { DisposableDispose, makeDisposable } from "../../utils/disposable"
+import { Dispose, disposeOnce } from "../../utils/disposable"
 
 /**
  * Listener function for onSnapshot.
@@ -19,7 +19,7 @@ export type OnSnapshotListener<T> = (sn: T, prevSn: T) => void
 export function onSnapshot<T extends object>(
   nodeOrFn: T | (() => T),
   listener: OnSnapshotListener<T>
-): DisposableDispose {
+): Dispose {
   const nodeFn = typeof nodeOrFn === "function" ? (nodeOrFn as () => T) : () => nodeOrFn
 
   const node = nodeFn()
@@ -36,5 +36,5 @@ export function onSnapshot<T extends object>(
     }
   )
 
-  return makeDisposable(disposeReaction)
+  return disposeOnce(disposeReaction)
 }

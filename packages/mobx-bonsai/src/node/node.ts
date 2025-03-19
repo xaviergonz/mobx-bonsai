@@ -14,7 +14,7 @@ import {
 } from "mobx"
 import { failure } from "../error/failure"
 import { isArray, isObservablePlainStructure, isPrimitive } from "../plainTypes/checks"
-import { DisposableDispose, makeDisposable } from "../utils/disposable"
+import { Dispose, disposeOnce } from "../utils/disposable"
 import { inDevMode } from "../utils/inDevMode"
 import {
   NodeWithAnyType,
@@ -131,11 +131,11 @@ function emitChangeToRoot(eventTarget: object, change: IObjectDidChange | IArray
  *
  * @returns A disposer function that, when invoked, unregisters the listener.
  */
-export function onDeepChange(node: object, listener: NodeChangeListener): DisposableDispose {
+export function onDeepChange(node: object, listener: NodeChangeListener): Dispose {
   const changeListeners = getNodeData(node).onChangeListeners
   changeListeners.push(listener)
 
-  return makeDisposable(() => {
+  return disposeOnce(() => {
     const index = changeListeners.indexOf(listener)
     if (index !== -1) {
       changeListeners.splice(index, 1)

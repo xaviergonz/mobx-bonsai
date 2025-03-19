@@ -2,7 +2,7 @@ import { MarkOptional } from "ts-essentials"
 import { IComputedValueOptions } from "mobx"
 import { PrependArgument } from "../../utils/PrependArgument"
 import { nodeTypeKey, NodeTypeKey, NodeTypeValue } from "./nodeType"
-import { DisposableDispose } from "../../utils/disposable"
+import { Dispose } from "../../utils/disposable"
 
 /**
  * Base interface for node types with type-specific capabilities.
@@ -60,7 +60,7 @@ interface BaseNodeTypeWithType<
 
   _initNode(node: TNode): void
 
-  _addOnInit(callback: (node: TNode) => void): DisposableDispose
+  _addOnInit(callback: (node: TNode) => void): Dispose
 
   /**
    * Configures this type to use a specific property as the node key

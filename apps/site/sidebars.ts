@@ -13,7 +13,7 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Integrations",
-      items: ["integrations/yjsBinding"],
+      items: ["integrations/yjsBinding", "integrations/reduxCompatibility"],
     },
     {
       type: "category",
