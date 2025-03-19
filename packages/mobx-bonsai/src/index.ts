@@ -69,6 +69,7 @@ export type { Primitive } from "./plainTypes/types"
 
 // redux
 export { asReduxStore, type ReduxStore } from "./redux/redux"
+export { connectReduxDevTools } from "./redux/connectReduxDevTools"
 
 // transforms
 export { arrayToSetTransform } from "./transforms/arrayToSetTransform"

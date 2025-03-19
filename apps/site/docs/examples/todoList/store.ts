@@ -1,4 +1,4 @@
-import { nodeType, TNode } from "mobx-bonsai"
+import { connectReduxDevTools, nodeType, TNode } from "mobx-bonsai"
 
 const todoType = "todoSample/Todo"
 
@@ -64,12 +64,12 @@ export function createRootStore(): TodoList {
   const rootStore = createDefaultTodoList()
 
   // we can also connect the store to the redux dev tools
-  // const remotedev = require("remotedev")
-  // const connection = remotedev.connectViaExtension({
-  //   name: "Todo List Example",
-  // })
+  const remotedev = require("remotedev")
+  const connection = remotedev.connectViaExtension({
+    name: "Todo List Example",
+  })
 
-  // connectReduxDevTools(remotedev, connection, rootStore)
+  connectReduxDevTools(remotedev, connection, rootStore)
 
   return rootStore
 }
