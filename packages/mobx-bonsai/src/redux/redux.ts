@@ -16,7 +16,7 @@ export interface ReduxStore<T> {
 /**
  * Generates a redux compatible store out of a mobx-bonsai object.
  *
- * @typeparam T Object type.
+ * @template T Object type.
  * @param target Root object.
  * @returns A redux compatible store.
  */
