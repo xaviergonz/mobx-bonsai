@@ -61,6 +61,7 @@ export {
   type NodeChange,
   type NodeChangeListener,
 } from "./node/node"
+export { substituteNodeKeys } from "./node/substituteNodeKeys"
 export type { NodeKeyGenerator } from "./node/utils/nodeKeyGenerator"
 export { volatileProp, type VolatileProp } from "./node/volatileProp"
 
