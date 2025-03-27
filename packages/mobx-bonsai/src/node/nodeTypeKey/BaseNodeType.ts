@@ -1,4 +1,4 @@
-import { MarkOptional } from "ts-essentials"
+import { Merge, SetOptional } from "type-fest"
 import { IComputedValueOptions } from "mobx"
 import { PrependArgument } from "../../utils/PrependArgument"
 import { nodeTypeKey, NodeTypeKey, NodeTypeValue } from "./nodeType"
@@ -137,12 +137,12 @@ export type BaseNodeType<
    * Node constructor.
    * Requires all keys from TNode except those in TOptional (which may be omitted).
    */
-  (data: MarkOptional<TNode, TOptional | TKey>): TNode
+  (data: SetOptional<TNode, TOptional | TKey>): TNode
 
   /**
    * Returns a snapshot based on the provided data.
    */
-  snapshot(data: MarkOptional<TNode, TOptional | TKey>): TNode
+  snapshot(data: SetOptional<TNode, TOptional | TKey>): TNode
 
   /**
    * Adds volatile state properties to nodes of this type
@@ -160,7 +160,7 @@ export type BaseNodeType<
     TCapabilities,
     TOptional,
     TKey,
-    TOther & VolatileAccessors<TVolatiles, TNode>
+    Merge<TOther, VolatileAccessors<TVolatiles, TNode>>
   >
 
   /**
@@ -175,16 +175,19 @@ export type BaseNodeType<
    *
    * @returns The same NodeType with added action methods that accept a node as their first parameter
    */
-  actions<TActions extends Record<string, (this: TNode, ...args: any) => any>>(
+  actions<TActions extends Record<string, (this: TNode, ...args: any[]) => any>>(
     actions: TActions
   ): BaseNodeType<
     TNode,
     TCapabilities,
     TOptional,
     TKey,
-    TOther & {
-      [k in keyof TActions]: PrependArgument<TActions[k], TNode>
-    }
+    Merge<
+      TOther,
+      {
+        [k in keyof TActions]: PrependArgument<TActions[k], TNode>
+      }
+    >
   >
 
   /**
@@ -198,16 +201,19 @@ export type BaseNodeType<
    *
    * @returns The same NodeType with added getter methods that accept a node as their first parameter
    */
-  getters<TGetters extends Record<string, (this: TNode, ...args: any) => any>>(
+  getters<TGetters extends Record<string, (this: TNode, ...args: any[]) => any>>(
     getters: TGetters
   ): BaseNodeType<
     TNode,
     TCapabilities,
     TOptional,
     TKey,
-    TOther & {
-      [k in keyof TGetters]: PrependArgument<TGetters[k], TNode>
-    }
+    Merge<
+      TOther,
+      {
+        [k in keyof TGetters]: PrependArgument<TGetters[k], TNode>
+      }
+    >
   >
 
   /**
@@ -227,13 +233,16 @@ export type BaseNodeType<
     TCapabilities,
     TOptional,
     TKey,
-    TOther & {
-      [k in keyof TComputeds]: TComputeds[k] extends () => any
-        ? PrependArgument<TComputeds[k], TNode>
-        : TComputeds[k] extends ComputedFnWithOptions<TNode, any>
-          ? PrependArgument<TComputeds[k]["get"], TNode>
-          : never
-    }
+    Merge<
+      TOther,
+      {
+        [k in keyof TComputeds]: TComputeds[k] extends () => any
+          ? PrependArgument<TComputeds[k], TNode>
+          : TComputeds[k] extends ComputedFnWithOptions<TNode, any>
+            ? PrependArgument<TComputeds[k]["get"], TNode>
+            : never
+      }
+    >
   >
 
   /**
@@ -249,9 +258,12 @@ export type BaseNodeType<
     TCapabilities,
     TOptional,
     TKey,
-    TOther & {
-      [P in K as `set${Capitalize<P>}`]: (node: TNode, value: Readonly<TNode[P]>) => void
-    }
+    Merge<
+      TOther,
+      {
+        [P in K as `set${Capitalize<P>}`]: (node: TNode, value: Readonly<TNode[P]>) => void
+      }
+    >
   >
 
   /**
@@ -268,6 +280,32 @@ export type BaseNodeType<
    * Default generators defined so far.
    */
   defaultGenerators?: { [K in keyof TNode]?: () => TNode[K] }
+
+  /**
+   * Extend this type from another untyped node type.
+   * The base node type can be a subset of the current node type.
+   *
+   * @template TBaseNode - Base node type (must be a subset of TNode)
+   * @template TExtendedOther - Additional properties and methods from the base type
+   * @param nodeType - Node type to extend from
+   */
+  extends<
+    TExtendedNode extends object,
+    TExtendedOptional extends keyof TExtendedNode,
+    TExtendedOther,
+  >(
+    nodeType: BaseNodeType<TExtendedNode, "untyped", TExtendedOptional, never, TExtendedOther>
+  ): TNode extends TExtendedNode
+    ? BaseNodeType<
+        TNode,
+        TCapabilities,
+        TOptional | TExtendedOptional,
+        TKey,
+        Merge<TOther, TExtendedOther>
+      >
+    : never
+
+  _extendsKeys: Set<string>
 } & (TCapabilities extends "typed" | "keyed" // is it a typed node?
   ? BaseNodeTypeWithType<TNode, TCapabilities, TOptional, TKey, TOther> &
       (TCapabilities extends "keyed" // is it a keyed node?

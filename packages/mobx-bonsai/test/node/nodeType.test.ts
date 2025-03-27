@@ -1,3 +1,4 @@
+import { _, assert } from "spec.ts"
 import { getSnapshot, isNode, node, nodeType, nodeTypeKey, TNode } from "../../src"
 
 it("should return the same node when the same type and key are used", () => {
@@ -466,4 +467,194 @@ test("generic node type factory", () => {
 
   const genericNode = TObj({ data: 100 })
   expect(genericNode.data).toBe(100)
+})
+
+test("node type extends", () => {
+  // Define a base node type with various features
+  type BaseType = {
+    name: string
+    count: number
+  }
+
+  const baseType = nodeType<BaseType>()
+    .defaults({
+      count: () => 0,
+    })
+    .volatile({
+      internalValue: () => 42,
+    })
+    .actions({
+      increment() {
+        this.count++
+      },
+    })
+    .getters({
+      displayName() {
+        return `Name: ${this.name}`
+      },
+    })
+    .computeds({
+      doubled() {
+        return this.count * 2
+      },
+    })
+
+  // Define an extended type that inherits from baseType
+  type ExtendedType = BaseType & {
+    description: string
+  }
+
+  const extendedType = nodeType<ExtendedType>()
+    .extends(baseType)
+    .defaults({
+      description: () => "No description",
+      // Override a default from baseType
+      count: () => 10,
+    })
+    .actions({
+      addToDescription(text: string) {
+        this.description += text
+      },
+    })
+    .getters({
+      summary() {
+        return `${this.name}: ${this.description}`
+      },
+    })
+
+  // Test base type functionality
+  const baseInstance = baseType({
+    name: "Base",
+  })
+  expect(baseInstance.name).toBe("Base")
+  expect(baseInstance.count).toBe(0)
+  expect(baseType.getInternalValue(baseInstance)).toBe(42)
+  baseType.increment(baseInstance)
+  expect(baseInstance.count).toBe(1)
+  expect(baseType.displayName(baseInstance)).toBe("Name: Base")
+  expect(baseType.doubled(baseInstance)).toBe(2)
+
+  // Test extended type functionality
+  const extendedInstance = extendedType({
+    name: "Extended",
+  })
+
+  // Should inherit defaults and override correctly
+  expect(extendedInstance.name).toBe("Extended")
+  expect(extendedInstance.count).toBe(10) // Overridden default
+  expect(extendedInstance.description).toBe("No description")
+
+  // Should inherit volatile properties
+  expect(extendedType.getInternalValue(extendedInstance)).toBe(42)
+
+  // Should inherit actions
+  extendedType.increment(extendedInstance)
+  expect(extendedInstance.count).toBe(11)
+
+  // Should inherit getters
+  expect(extendedType.displayName(extendedInstance)).toBe("Name: Extended")
+
+  // Should inherit computeds
+  expect(extendedType.doubled(extendedInstance)).toBe(22)
+
+  // Should have its own methods
+  extendedType.addToDescription(extendedInstance, " - updated")
+  expect(extendedInstance.description).toBe("No description - updated")
+  expect(extendedType.summary(extendedInstance)).toBe("Extended: No description - updated")
+})
+
+test("node type extends error cases", () => {
+  // Can't extend from a typed node type
+  type BaseType = { value: number }
+  type TypedBase = TNode<"typedBase", { value: number }>
+
+  const typedType = nodeType<TypedBase>("typedBase")
+
+  expect(() => {
+    nodeType<BaseType>().extends(typedType as any)
+  }).toThrow("cannot extend from a typed node type")
+
+  // Can't override existing keys
+  const base = nodeType<BaseType>().actions({
+    setValue(value: number) {
+      this.value = value
+    },
+  })
+
+  expect(() => {
+    nodeType<BaseType>()
+      .actions({
+        setValue(value: number) {
+          this.value = value * 2
+        },
+      })
+      .extends(base)
+  }).toThrow("cannot extend from node type since the current key")
+})
+
+test("node type extends with action override", () => {
+  // Define a base node type with a counter
+  type CounterType = {
+    count: number
+    history: number[]
+  }
+
+  const TBaseCounter = nodeType<CounterType>()
+    .defaults({
+      count: () => 0,
+      history: () => [],
+    })
+    .actions({
+      increment(amount: number) {
+        this.count += amount
+        this.history.push(this.count)
+      },
+    })
+    .getters({
+      getLastEntry() {
+        return this.history.length > 0 ? this.history[this.history.length - 1] : null
+      },
+    })
+
+  // Define an extended counter that multiplies the increment and tracks operations
+  type EnhancedCounterType = CounterType & {
+    operations: string[]
+  }
+
+  const TEnhancedCounter = nodeType<EnhancedCounterType>()
+    .extends(TBaseCounter)
+    .defaults({
+      operations: () => [],
+    })
+    .actions({
+      // Override the increment method but use the base implementation
+      increment(amount: number, mul: number) {
+        // First call the base implementation
+        assert(TBaseCounter.increment, _ as (first: CounterType, amount: number) => void)
+        TBaseCounter.increment(this, amount * mul) // Double the amount
+
+        // Then add extended functionality
+        this.operations.push(`incremented by ${amount * 2}`)
+      },
+    })
+
+  // Create an instance of the enhanced counter
+  const counter = TEnhancedCounter({})
+
+  // Test the overridden increment method
+  assert(
+    TEnhancedCounter.increment,
+    _ as (first: EnhancedCounterType, amount: number, mul: number) => void
+  )
+  TEnhancedCounter.increment(counter, 5, 2)
+
+  // Should have applied the base implementation with doubled amount
+  expect(counter.count).toBe(10) // 5 * 2
+  expect(counter.history).toEqual([10])
+
+  // Should have applied the extended functionality
+  expect(counter.operations).toEqual(["incremented by 10"])
+
+  // Test that the base getter still works
+  expect(TEnhancedCounter.getLastEntry(counter)).toBe(10)
 })

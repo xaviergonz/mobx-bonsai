@@ -15747,10 +15747,10 @@ __metadata:
     rollup-plugin-typescript2: "npm:^0.36.0"
     shx: "npm:^0.4.0"
     spec.ts: "npm:^1.1.3"
-    ts-essentials: "npm:^10.0.4"
     ts-jest: "npm:^29.2.6"
     ts-node: "npm:^10.9.2"
     tslib: "npm:^2.8.1"
+    type-fest: "npm:^4.38.0"
     typedoc: "npm:^0.28.1"
     typescript: "npm:^5.8.2"
     vite: "npm:^6.2.2"
@@ -21179,18 +21179,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-essentials@npm:^10.0.4":
-  version: 10.0.4
-  resolution: "ts-essentials@npm:10.0.4"
-  peerDependencies:
-    typescript: ">=4.5.0"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/99a5dd3ae6ed885e0f6cdb9556c07ba5c9e00d447a58a3308440739d624bcd92d370f8bb060ae7a2992023b4a03acdf669ac8f1e0427b3fbc792a2857f85ab0d
-  languageName: node
-  linkType: hard
-
 "ts-essentials@npm:^9.4.1":
   version: 9.4.2
   resolution: "ts-essentials@npm:9.4.2"
@@ -21415,6 +21403,13 @@ __metadata:
   version: 4.35.0
   resolution: "type-fest@npm:4.35.0"
   checksum: 10c0/7032a8a940c33d45947a4ff0f74e3aa43b6fd8bb4745b32bba8e61ee47c0dd088cacd102f8377e9e889362e1ae8e0292b64a4c0698c1e42fd297bf6f8899d220
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.38.0":
+  version: 4.38.0
+  resolution: "type-fest@npm:4.38.0"
+  checksum: 10c0/db9990d682a08697cf8ae67ac3cdbca734c742c96615e8888401d7d54e376b390e6a5d3be25fe3b4b439e1bb88a7da461da678a614ece8caccd9c0a07dd2e5f4
   languageName: node
   linkType: hard
 

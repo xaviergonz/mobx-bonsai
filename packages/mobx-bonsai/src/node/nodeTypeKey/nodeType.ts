@@ -188,9 +188,11 @@ export function getNodeTypeAndKey(node: object): {
   }
 }
 
+// typed nodeType function
 export function nodeType<TNode extends NodeWithAnyType = never>(
   type: TNode[NodeTypeKey]
 ): TypedNodeType<TNode>
+// untyped nodeType function
 export function nodeType<TNode extends object = never>(): UntypedNodeType<TNode>
 
 /**
@@ -214,45 +216,46 @@ export function nodeType<TNode extends object = never>(
 function addNodeTypeExtensionMethods<TNode extends object>(
   nodeTypeObj: Partial<BaseNodeType<TNode, any, any, any, unknown>>
 ): void {
-  nodeTypeObj.volatile = (volatiles) => {
-    const result = nodeTypeObj as any
+  const addKey = (key: string, value: unknown) => {
+    ;(nodeTypeObj as any)[key] = value
+    nodeTypeObj._extendsKeys!.add(key)
+  }
 
+  nodeTypeObj.volatile = (volatiles) => {
     for (const volatileKey of Object.keys(volatiles)) {
       const defaultValueGen = volatiles[volatileKey]
       const [getter, setter, resetter] = volatileProp(defaultValueGen)
 
       const capitalizedVolatileKey = volatileKey.charAt(0).toUpperCase() + volatileKey.slice(1)
-      result[`get${capitalizedVolatileKey}`] = getter
-      result[`set${capitalizedVolatileKey}`] = setter
-      result[`reset${capitalizedVolatileKey}`] = resetter
+
+      addKey(`get${capitalizedVolatileKey}`, getter)
+      addKey(`set${capitalizedVolatileKey}`, setter)
+      addKey(`reset${capitalizedVolatileKey}`, resetter)
     }
 
     return nodeTypeObj as any
   }
 
   nodeTypeObj.actions = (actions) => {
-    const result = nodeTypeObj as any
-
     for (const key of Object.keys(actions)) {
-      result[key] = action((n: TNode, ...args: any[]) => actions[key].apply(n, args))
+      addKey(
+        key,
+        action((n: TNode, ...args: any[]) => actions[key].apply(n, args))
+      )
     }
 
     return nodeTypeObj as any
   }
 
   nodeTypeObj.getters = (getters) => {
-    const result = nodeTypeObj as any
-
     for (const key of Object.keys(getters)) {
-      result[key] = (n: TNode, ...args: any[]) => getters[key].apply(n, args)
+      addKey(key, (n: TNode, ...args: any[]) => getters[key].apply(n, args))
     }
 
     return nodeTypeObj as any
   }
 
   nodeTypeObj.computeds = (computeds) => {
-    const result = nodeTypeObj as any
-
     const cachedComputedsByNode = new WeakMap<object, Map<string, IComputedValue<unknown>>>()
 
     function getOrCreateNodeCachedComputed(n: TNode, key: string) {
@@ -283,22 +286,22 @@ function addNodeTypeExtensionMethods<TNode extends object>(
     }
 
     for (const key of Object.keys(computeds)) {
-      result[key] = (n: TNode) => getOrCreateNodeCachedComputed(n, key).get()
+      addKey(key, (n: TNode) => getOrCreateNodeCachedComputed(n, key).get())
     }
 
     return nodeTypeObj as any
   }
 
   nodeTypeObj.settersFor = (...properties) => {
-    const result = nodeTypeObj as any
-
     for (const prop of properties) {
       const capitalizedProp = prop.charAt(0).toUpperCase() + prop.slice(1)
-      const setterName = `set${capitalizedProp}`
 
-      result[setterName] = action((node: TNode, value: any) => {
-        ;(node as any)[prop] = value
-      })
+      addKey(
+        `set${capitalizedProp}`,
+        action((node: TNode, value: any) => {
+          ;(node as any)[prop] = value
+        })
+      )
     }
 
     return nodeTypeObj as any
@@ -308,6 +311,32 @@ function addNodeTypeExtensionMethods<TNode extends object>(
     nodeTypeObj.defaultGenerators = {
       ...nodeTypeObj.defaultGenerators,
       ...defaultGenerators,
+    }
+
+    return nodeTypeObj as any
+  }
+
+  nodeTypeObj.extends = (otherNodeType) => {
+    if ("typeId" in otherNodeType && otherNodeType.typeId !== undefined) {
+      throw failure(`cannot extend from a typed node type`)
+    }
+
+    for (const key of otherNodeType._extendsKeys) {
+      if (!(key in otherNodeType)) {
+        throw failure(
+          `assertion error: '${key}' was expected to be in the extended node type, but it was not found`
+        )
+      }
+      if (key in nodeTypeObj) {
+        throw failure(
+          `cannot extend from node type since the current key '${key}' would be overwritten`
+        )
+      }
+      addKey(key, (otherNodeType as any)[key])
+    }
+
+    if (otherNodeType.defaultGenerators) {
+      nodeTypeObj.defaults!(otherNodeType.defaultGenerators as any)
     }
 
     return nodeTypeObj as any
@@ -385,6 +414,9 @@ function typedNodeType<TNode extends NodeWithAnyType = never>(
     unknown
   >
 
+  // used to keep track of which keys to carry over when extending
+  nodeTypeObj._extendsKeys = new Set()
+
   nodeTypeObj.snapshot = snapshot
 
   nodeTypeObj.typeId = type as any
@@ -458,9 +490,9 @@ function typedNodeType<TNode extends NodeWithAnyType = never>(
 
   addNodeTypeExtensionMethods(nodeTypeObj as any)
 
-  registeredNodeTypes.set(type, nodeTypeObj as AnyTypedNodeType)
+  registeredNodeTypes.set(type, nodeTypeObj as unknown as AnyTypedNodeType)
 
-  return nodeTypeObj as TypedNodeType<TNode>
+  return nodeTypeObj as unknown as TypedNodeType<TNode>
 }
 
 /**
@@ -484,6 +516,9 @@ function untypedNodeType<TNode extends object = never>(): UntypedNodeType<TNode>
   const snapshot = (data: any) => applyDefaultGenerators(data, nodeTypeObj.defaultGenerators)
 
   const nodeTypeObj: Partial<UntypedNodeType<TNode>> = (data: any) => node(snapshot(data))
+
+  // used to keep track of which keys to carry over when extending
+  nodeTypeObj._extendsKeys = new Set()
 
   nodeTypeObj.snapshot = snapshot
 

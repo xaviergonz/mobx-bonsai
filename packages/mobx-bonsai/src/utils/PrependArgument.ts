@@ -8,7 +8,7 @@
  * @template T - The type of the parameter to prepend
  */
 
-export type PrependArgument<F extends (...args: any) => any, T> = F extends (
+export type PrependArgument<F extends (...args: any[]) => any, T> = F extends (
   ...args: infer A
 ) => infer R
   ? (first: T, ...args: A) => R

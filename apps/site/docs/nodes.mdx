@@ -600,6 +600,91 @@ This pattern ensures volatile state is reset when an item is detached from the r
 - It eliminates errors from lingering transient settings
 - It helps maintain expected behavior throughout the lifecycle of nodes in your tree
 
+## Extending Node Types
+
+#### `.extends(baseNodeType)`
+
+Use the `.extends()` method to inherit functionality from another node type. This allows you to create base node types with common functionality and extend them with more specific features.
+This is particularly useful for creating a hierarchy of node types that share common properties or behaviors:
+
+```ts
+import { nodeType } from 'mobx-bonsai';
+
+// Define a base node type with common functionality
+type BaseItem = {
+  createdAt: Date
+}
+
+const TBaseItem = nodeType<BaseItem>()
+  .defaults({
+    createdAt: () => new Date()
+  })
+  .getters({
+    isNew() {
+      const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
+      return this.createdAt > tenMinutesAgo;
+    }
+  });
+
+// Create a specialized node type that extends the base type
+type TaskItem = BaseItem & {
+  title: string
+}
+
+const TTaskItem = nodeType<TaskItem>()
+  .extends(TBaseItem)  // Inherit all functionality from TBaseItem
+  .settersFor("title"); // Add setters for title
+
+// Create a task item
+const task = TTaskItem({
+  title: "Complete documentation"
+});
+
+// We can use both inherited and added functionality
+console.log(task.createdAt);        // From TBaseItem defaults
+console.log(TTaskItem.isNew(task)); // From TBaseItem getters
+TTaskItem.setTitle('New title');    // From TTaskItem actions
+```
+
+**Important limitations:**
+
+1. **Only untyped nodes can be extended**. You cannot extend from typed node types.
+2. **Cannot override existing keys**. If the extending node type already defines a key that exists in the base type, an error will be thrown:
+
+```ts
+const TBase = nodeType<{ value: number }>()
+  .actions({
+    setValue(value: number) {
+      this.value = value;
+    }
+  });
+
+// Will throw: "cannot extend from node type since the current key 'setValue' would be overwritten"
+const TDerived = nodeType<{ value: number }>()
+  .actions({
+    setValue(value: number) {
+      this.value = value * 2;
+    }
+  })
+  .extends(TBase); // ❌ Error
+```
+
+The correct approach is to apply `.extends()` first, then use the base action if needed:
+
+```ts
+// Correct way: first extend, then add your own actions
+const TDerived = nodeType<{ value: number }>()
+  .extends(TBase)
+  .actions({
+    setValue(value: number) {
+      // use the base action
+      TBase.setValue(this, this.value);
+    }
+  });
+```
+
+All features defined in the base node type, including volatile properties, getters, computeds, actions, and defaults, are inherited by the extending node type.
+
 ## Utility Functions
 
 ### `clone`
