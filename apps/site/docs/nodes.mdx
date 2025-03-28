@@ -499,6 +499,13 @@ When a computed prop getter is used over a plain object/array (not a node), it w
 **Use `volatileProp` to associate volatile state to nodes.**
 The `volatileProp` function provides a way to associate volatile state with nodes. Volatile state is stored separately from the node's serializable data; it is only maintained while the node instance is alive and is not included in snapshots.
 
+```ts
+const [getVolatile, setVolatile, resetVolatile] = volatileProp(() => 100)
+getVolatile(myNode) // 100
+setVolatile(myNode, 200) // 200
+resetVolatile(myNode) // 100
+```
+
 #### Relationship with `nodeType.volatile()`
 
 For most cases, the `nodeType.volatile()` method is preferred over direct use of `volatileProp`:
