@@ -1,11 +1,12 @@
 import { when } from "mobx"
-import * as Y from "yjs"
+import type * as Y from "yjs"
 import { failure } from "../../error/failure"
 import { resolveYjsStructurePath } from "./resolveYjsStructurePath"
 import { convertPlainToYjsValue } from "./convertPlainToYjsValue"
 import { buildNodeFullPath } from "../../node/utils/buildNodeFullPath"
 import { onDeepChange, NodeChange } from "../../node/node"
 import { YjsStructure } from "../yjsTypes/types"
+import { requireYjs } from "../requireYjs"
 
 export function setupNodeToYjsReplication({
   node,
@@ -20,6 +21,8 @@ export function setupNodeToYjsReplication({
   yjsOrigin: symbol
   yjsReplicatingRef: { current: number }
 }) {
+  const Y = requireYjs()
+
   let pendingMobxChanges: {
     change: NodeChange
     path: string[]

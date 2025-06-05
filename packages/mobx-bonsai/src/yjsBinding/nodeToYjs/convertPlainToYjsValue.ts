@@ -1,10 +1,11 @@
 import { isObservableObject } from "mobx"
-import * as Y from "yjs"
+import type * as Y from "yjs"
 import { failure } from "../../error/failure"
 import { isArray, isPlainObject, isPrimitive } from "../../plainTypes/checks"
 import { Primitive } from "../../plainTypes/types"
 import { YjsValue } from "../yjsTypes/types"
 import { getNodeTypeAndKey } from "../../node/nodeTypeKey/nodeType"
+import { requireYjs } from "../requireYjs"
 
 /**
  * Converts a plain value to a Y.js value.
@@ -18,6 +19,8 @@ export function convertPlainToYjsValue(v: any): YjsValue {
   if (isPrimitive(v)) {
     return v
   }
+
+  const Y = requireYjs()
 
   if (isArray(v)) {
     const arr = new Y.Array<YjsValue>()

@@ -1,4 +1,4 @@
-import * as Y from "yjs"
+import type * as Y from "yjs"
 import { setupNodeToYjsReplication } from "./nodeToYjs/setupNodeToYjsReplication"
 import { createNodeFromYjsObject } from "./yjsToNode/createNodeFromYjsObject"
 import { setupYjsToNodeReplication } from "./yjsToNode/setupYjsToNodeReplication"

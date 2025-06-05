@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.1
+
+- Make Yjs dependency truly optional.
+
 ## 1.1.0
 
 - Added an `extends` method to node types so that they can extend other node types.

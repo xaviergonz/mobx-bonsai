@@ -1,7 +1,7 @@
-import * as Y from "yjs"
 import { failure } from "../../error/failure"
 import { assertIsYjsStructure } from "../yjsTypes/checks"
 import { YjsStructure } from "../yjsTypes/types"
+import { requireYjs } from "../requireYjs"
 
 export function resolveYjsStructurePath(
   yjsObject: YjsStructure,
@@ -9,6 +9,8 @@ export function resolveYjsStructurePath(
 ): unknown {
   let target = yjsObject
   assertIsYjsStructure(target)
+
+  const Y = requireYjs()
 
   path.forEach((pathSegment, i) => {
     if (target instanceof Y.Array) {

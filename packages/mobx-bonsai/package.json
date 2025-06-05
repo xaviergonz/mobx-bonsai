@@ -1,6 +1,6 @@
 {
   "name": "mobx-bonsai",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A fast lightweight alternative to MobX-State-Tree + Y.js two-way binding",
   "keywords": [
     "mobx",
@@ -43,14 +43,7 @@
   "types": "./dist/types/index.d.ts",
   "typings": "./dist/types/index.d.ts",
   "sideEffects": false,
-  "files": [
-    "src",
-    "dist",
-    "LICENSE",
-    "CHANGELOG.md",
-    "README.md",
-    "logo.png"
-  ],
+  "files": ["src", "dist", "LICENSE", "CHANGELOG.md", "README.md", "logo.png"],
   "scripts": {
     "quick-build": "tsc",
     "quick-build-tests": "tsc -p test",
@@ -63,6 +56,11 @@
   "peerDependencies": {
     "mobx": "^6.0.0 || ^5.0.0 || ^4.0.0",
     "yjs": "^13.0.0"
+  },
+  "peerDependenciesMeta": {
+    "yjs": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/deep-freeze": "^0.1.5",

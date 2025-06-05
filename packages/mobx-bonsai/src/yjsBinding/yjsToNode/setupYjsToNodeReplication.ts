@@ -1,11 +1,12 @@
 import { isObservableArray, isObservableObject, remove, runInAction, set } from "mobx"
-import * as Y from "yjs"
+import type * as Y from "yjs"
 import { failure } from "../../error/failure"
 import { assertIsNode, runDetachingDuplicatedNodes } from "../../node/node"
 import { resolvePath } from "../../node/tree/resolvePath"
 import { Primitive } from "../../plainTypes/types"
 import { isPrimitive } from "../../plainTypes/checks"
 import { YjsStructure, YjsValue } from "../yjsTypes/types"
+import { requireYjs } from "../requireYjs"
 
 function yjsToPlainValue<T extends Primitive>(v: T): T
 function yjsToPlainValue(v: Y.Map<any>): Record<string, any>
@@ -15,6 +16,8 @@ function yjsToPlainValue(v: YjsValue): unknown {
   if (isPrimitive(v)) {
     return v
   }
+
+  const Y = requireYjs()
 
   if (v instanceof Y.Map || v instanceof Y.Array) {
     return v.toJSON()
@@ -34,6 +37,8 @@ export function setupYjsToNodeReplication({
   yjsOrigin: symbol
   yjsReplicatingRef: { current: number }
 }) {
+  const Y = requireYjs()
+
   const yjsObserverCallback = (events: Y.YEvent<any>[], transaction: Y.Transaction) => {
     if (transaction.origin === yjsOrigin || events.length === 0) {
       return
