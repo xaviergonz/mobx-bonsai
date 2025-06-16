@@ -256,7 +256,7 @@ export const node = action(
                   ` trying to assign it to ${JSON.stringify(buildNodeFullPath(observableStruct, path))},` +
                   ` but it already exists at ${JSON.stringify(buildNodeFullPath(parent.object, parent.path))}.` +
                   ` If you are moving the node then remove it from the tree first before moving it.` +
-                  ` If you are copying the node then use 'cloneNode' to make a clone first.`
+                  ` If you are copying the node then use 'clone' to make a clone first.`
               )
             }
           }
