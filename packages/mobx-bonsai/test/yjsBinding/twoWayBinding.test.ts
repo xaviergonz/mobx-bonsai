@@ -37,7 +37,6 @@ test("object two-way binding", () => {
   expect(mobxObservable.optionalStrProp).toBe("world")
 
   runInAction(() => {
-    // biome-ignore lint/performance/noDelete: <explanation>
     delete mobxObservable.optionalStrProp
   })
   expect(yjsMap.get("optionalStrProp")).toBe(undefined)
