@@ -10,9 +10,9 @@
     "serve": "docusaurus serve"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.8.0",
-    "@docusaurus/preset-classic": "^3.8.0",
-    "@easyops-cn/docusaurus-search-local": "^0.50.0",
+    "@docusaurus/core": "^3.8.1",
+    "@docusaurus/preset-classic": "^3.8.1",
+    "@easyops-cn/docusaurus-search-local": "^0.51.0",
     "@iframe-resizer/child": "^5.4.6",
     "@iframe-resizer/react": "^5.4.6",
     "bootstrap-icons": "^1.13.1",
@@ -31,10 +31,10 @@
     "yjs": "^13.0.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.8.0",
-    "@docusaurus/tsconfig": "^3.8.0",
+    "@docusaurus/module-type-aliases": "^3.8.1",
+    "@docusaurus/tsconfig": "^3.8.1",
     "@svgr/webpack": "^8.1.0",
-    "@types/react": "^19.1.6",
+    "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@types/uuid": "^10.0.0",
     "raw-loader": "^4.0.2",
