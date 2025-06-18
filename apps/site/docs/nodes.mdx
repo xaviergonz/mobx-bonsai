@@ -740,3 +740,34 @@ While `clone` is designed specifically for nodes and handles both key substituti
 - It's useful when you need more control over the cloning process
 
 Under the hood, `clone` uses `substituteNodeKeys` to handle the key substitution step of the cloning process.
+
+### `onDeepChange`
+
+Use `onDeepChange` to listen for any change that happens to a node or any of its descendants.
+
+This function registers a listener that is invoked whenever any part of a node's subtree is modified. This includes additions, updates, or removals of properties or array elements:
+
+```ts
+import { onDeepChange, node } from 'mobx-bonsai';
+
+const myNode = node({
+  a: {
+    b: [1, 2, 3]
+  }
+});
+
+const disposer = onDeepChange(myNode, (change) => {
+  console.log("A change occurred:", change);
+});
+
+// Any modification will trigger the listener
+myNode.a.b.push(4);
+
+// To stop listening, call the disposer function
+disposer();
+```
+
+The listener receives a `change` object that conforms to MobX's `IObjectDidChange` or `IArrayDidChange` interfaces, providing details about what was changed.
+
+The function returns a `disposer` function. Call it to remove the listener and stop receiving updates.
+
