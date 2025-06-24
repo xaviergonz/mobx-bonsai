@@ -306,13 +306,18 @@ export const node = action(
         const array = observableStruct
 
         intercept(array, (change) => {
+          let changed = false
+
           switch (change.type) {
             case "update": {
               const oldValue = array[change.index]
-              detachAsChildNode(oldValue)
-              attachAsChildNode(change.newValue, "" + change.index, (n) => {
-                change.newValue = n
-              })
+              changed = oldValue !== change.newValue
+              if (changed) {
+                detachAsChildNode(oldValue)
+                attachAsChildNode(change.newValue, "" + change.index, (n) => {
+                  change.newValue = n
+                })
+              }
               break
             }
 
@@ -327,6 +332,8 @@ export const node = action(
                   change.added[i] = n
                 })
               }
+
+              changed = change.removedCount > 0 || change.added.length > 0
 
               // we might also need to update the parent of the next indexes
               const oldNextIndex = change.index + change.removedCount
@@ -357,9 +364,12 @@ export const node = action(
               throw failure(`unsupported change type`)
           }
 
-          invalidateSnapshotTreeToRoot(observableStruct)
+          if (changed) {
+            invalidateSnapshotTreeToRoot(observableStruct)
+            return change
+          }
 
-          return change
+          return null
         })
 
         observe(array, (change) => {
@@ -379,8 +389,11 @@ export const node = action(
             throw failure(`the property ${change.name} cannot be modified`)
           }
 
+          let changed = false
+
           switch (change.type) {
             case "add": {
+              changed = true
               attachAsChildNode(change.newValue, propKey, (n) => {
                 change.newValue = n
               })
@@ -389,8 +402,8 @@ export const node = action(
 
             case "update": {
               const oldValue = (object as any)[propKey]
-              const newValue = change.newValue
-              if (newValue !== oldValue) {
+              changed = oldValue !== change.newValue
+              if (changed) {
                 detachAsChildNode(oldValue)
                 attachAsChildNode(change.newValue, propKey, (n) => {
                   change.newValue = n
@@ -400,6 +413,7 @@ export const node = action(
             }
 
             case "remove": {
+              changed = true
               const oldValue = (object as any)[propKey]
               detachAsChildNode(oldValue)
               break
@@ -409,9 +423,12 @@ export const node = action(
               throw failure(`unsupported change type`)
           }
 
-          invalidateSnapshotTreeToRoot(observableStruct)
+          if (changed) {
+            invalidateSnapshotTreeToRoot(observableStruct)
+            return change
+          }
 
-          return change
+          return null
         })
 
         observe(observableStruct, (change) => {

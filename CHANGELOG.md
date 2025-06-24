@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.2
+
+- Fix so that reassigning a same value won't invalidate an snapshot.
+
 ## 1.1.1
 
 - Make Yjs dependency truly optional.

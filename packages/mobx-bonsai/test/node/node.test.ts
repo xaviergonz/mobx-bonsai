@@ -1,5 +1,5 @@
 import { configure, isObservable, observable, reaction, runInAction } from "mobx"
-import { TNode, isNode, node, nodeType } from "../../src"
+import { isNode, node, nodeType, TNode } from "../../src"
 
 it("should convert a plain object into a node", () => {
   const obj = { a: 1, b: { c: 2 } }

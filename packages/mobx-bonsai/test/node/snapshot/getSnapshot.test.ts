@@ -219,3 +219,41 @@ it("should trigger mobx reactions when snapshots change", () => {
 `)
   snapshots.length = 0
 })
+
+it("should maintain the same parent snapshot when reassigning the same sub-value to a property", () => {
+  const child = node({ value: 42 })
+  const parent = node({ child, value: 100 })
+
+  const sn1 = getSnapshot(parent)
+
+  runInAction(() => {
+    // biome-ignore lint/correctness/noSelfAssign: intended
+    parent.value = parent.value
+  })
+  expect(getSnapshot(parent)).toBe(sn1)
+
+  runInAction(() => {
+    // biome-ignore lint/correctness/noSelfAssign: intended
+    parent.child = parent.child
+  })
+  expect(getSnapshot(parent)).toBe(sn1)
+})
+
+it("should maintain the same parent snapshot when reassigning the same sub-value to an array field", () => {
+  const child = node({ value: 42 })
+  const parent = node([child, 100])
+
+  const sn1 = getSnapshot(parent)
+
+  runInAction(() => {
+    // biome-ignore lint/correctness/noSelfAssign: intended
+    parent[0] = parent[0]
+  })
+  expect(getSnapshot(parent)).toBe(sn1)
+
+  runInAction(() => {
+    // biome-ignore lint/correctness/noSelfAssign: intended
+    parent[1] = parent[1]
+  })
+  expect(getSnapshot(parent)).toBe(sn1)
+})
