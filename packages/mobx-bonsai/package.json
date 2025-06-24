@@ -72,8 +72,8 @@
   "devDependencies": {
     "@types/deep-freeze": "^0.1.5",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.0.3",
-    "jest": "^30.0.0",
+    "@types/node": "^24.0.4",
+    "jest": "^30.0.2",
     "mobx-v4": "npm:mobx@^4.15.7",
     "mobx-v5": "npm:mobx@^5.15.7",
     "rollup-plugin-typescript2": "^0.36.0",
@@ -84,7 +84,7 @@
     "type-fest": "^4.41.0",
     "typedoc": "^0.28.5",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^7.0.0"
   },
   "dependencies": {
     "deep-freeze": "^0.0.1",
