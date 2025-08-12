@@ -82,9 +82,9 @@
     "ts-jest": "^29.4.1",
     "ts-node": "^10.9.2",
     "type-fest": "^4.41.0",
-    "typedoc": "^0.28.9",
+    "typedoc": "^0.28.10",
     "typescript": "^5.9.2",
-    "vite": "^7.1.1"
+    "vite": "^7.1.2"
   },
   "dependencies": {
     "deep-freeze": "^0.0.1",
