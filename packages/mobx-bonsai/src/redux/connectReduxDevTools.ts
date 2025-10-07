@@ -9,7 +9,6 @@ import { onSnapshot } from "../node/snapshot/onSnapshot"
  * @param remotedevPackage The remotedev package (usually the result of `require("remoteDev")`) (https://www.npmjs.com/package/remotedev).
  * @param remotedevConnection The result of a connect method from the remotedev package (usually the result of `remoteDev.connectViaExtension(...)`).
  * @param target Node to use as root.
- * @param storeName Name to be shown in the redux dev tools.
  */
 export function connectReduxDevTools(
   remotedevPackage: any,
