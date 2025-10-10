@@ -318,18 +318,18 @@ Node types work with arrays too:
 
 ```ts
 const TTodoList = nodeType<Todo[]>()
-  .computeds((list) => ({
+  .computeds({
     completedCount() {
-      return list.filter(todo => todo.done).length;
+      return this.filter(todo => todo.done).length;
     }
-  }))
-  .actions((list) => ({
+  })
+  .actions({
     removeCompleted() {
-      for (let i = list.length - 1; i >= 0; i--) {
-        if (list[i].done) list.splice(i, 1);
+      for (let i = this.length - 1; i >= 0; i--) {
+        if (this[i].done) this.splice(i, 1);
       }
     }
-  }));
+  });
 
 const todoList = TTodoList([]);
 const completed = TTodoList.getCompletedCount(todoList);
@@ -431,14 +431,14 @@ For most cases, the `nodeType.computeds()` method is preferred over direct use o
 ```ts
 // Preferred approach using nodeType.computeds()
 const TTypedTodo = nodeType<TypedTodo>()
-  .computeds((todo) => ({
+  .computeds({
     formattedText() {
-      return `${todo.done ? '✓' : '○'} ${todo.text}`;
+      return `${this.done ? '✓' : '○'} ${this.text}`;
     },
     displayText() {
-      return todo.done ? `Completed: ${todo.text}` : `Todo: ${todo.text}`;
+      return this.done ? `Completed: ${this.text}` : `Todo: ${this.text}`;
     }
-  }));
+  });
 
 // Usage
 const formattedText = TTypedTodo.getFormattedText(todo);
