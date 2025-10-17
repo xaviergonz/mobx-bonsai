@@ -19,6 +19,20 @@
       "outputs": [],
       "env": ["MOBX-VERSION"]
     },
+    "mobx-bonsai-yjs#build": {
+      "dependsOn": ["mobx-bonsai#build"],
+      "outputs": ["dist/**"]
+    },
+    "mobx-bonsai-yjs#test": {
+      "dependsOn": ["mobx-bonsai#build"],
+      "outputs": [],
+      "env": ["MOBX-VERSION"]
+    },
+    "mobx-bonsai-yjs#test:ci": {
+      "dependsOn": ["mobx-bonsai#build"],
+      "outputs": [],
+      "env": ["MOBX-VERSION"]
+    },
     "site#build": {
       "dependsOn": ["mobx-bonsai#build", "mobx-bonsai#build-docs"],
       "outputs": ["build/**"]

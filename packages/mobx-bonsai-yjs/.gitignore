@@ -1,0 +1,11 @@
+/*.log
+/node_modules/
+/dist/
+/coverage/
+/README.md
+/LICENSE
+/CHANGELOG.md
+/*.local
+/.swc
+/api-docs/
+/logo.png

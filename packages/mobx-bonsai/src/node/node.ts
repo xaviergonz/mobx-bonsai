@@ -1,12 +1,12 @@
 import deepFreeze from "deep-freeze"
 import {
+  action,
+  createAtom,
   IArrayDidChange,
   IAtom,
   IObjectDidChange,
-  ObservableSet,
-  action,
-  createAtom,
   intercept,
+  ObservableSet,
   observable,
   observe,
   set,
@@ -17,8 +17,8 @@ import { isArray, isObservablePlainStructure, isPrimitive } from "../plainTypes/
 import { Dispose, disposeOnce } from "../utils/disposable"
 import { inDevMode } from "../utils/inDevMode"
 import {
-  NodeWithAnyType,
   getNodeTypeAndKey,
+  NodeWithAnyType,
   nodeTypeKey,
   tryRegisterNodeByTypeAndKey,
 } from "./nodeTypeKey/nodeType"

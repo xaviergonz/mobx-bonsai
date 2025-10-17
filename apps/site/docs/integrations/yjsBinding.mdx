@@ -5,7 +5,16 @@ slug: /integrations/yjs-binding
 
 ## Overview
 
-`mobx-bonsai` includes a binding with `Y.js` that creates a node that stays in sync with a `Y.js` state in both directions.
+Since `mobx-bonsai` v2.0.0, the Y.js binding has been moved to a separate package: **`mobx-bonsai-yjs`**.
+
+To use the Y.js binding, install both packages:
+```bash
+npm install mobx-bonsai mobx-bonsai-yjs yjs
+# or
+yarn add mobx-bonsai mobx-bonsai-yjs yjs
+```
+
+The `mobx-bonsai-yjs` package provides a binding with `Y.js` that creates a node that stays in sync with a `Y.js` state in both directions.
 
 For example, if you already have a `Y.js` state representing:
 
@@ -102,7 +111,7 @@ If the target node is not part of the bound tree it throws an error.
 
 ```typescript
 import * as Y from "yjs"
-import { bindYjsToNode } from "mobx-bonsai"
+import { bindYjsToNode } from "mobx-bonsai-yjs"
 
 const { node, getYjsValueForNode } = bindYjsToNode<TodoAppState>({
   ...

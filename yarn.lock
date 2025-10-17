@@ -10371,16 +10371,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esm-test@workspace:apps/esm-test":
-  version: 0.0.0-use.local
-  resolution: "esm-test@workspace:apps/esm-test"
-  dependencies:
-    mobx: "npm:^6.13.7"
-    mobx-bonsai: "workspace:*"
-    yjs: "npm:^13.6.27"
-  languageName: unknown
-  linkType: soft
-
 "esprima@npm:^4.0.0, esprima@npm:^4.0.1":
   version: 4.0.1
   resolution: "esprima@npm:4.0.1"
@@ -15479,7 +15469,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mobx-bonsai@workspace:*, mobx-bonsai@workspace:packages/mobx-bonsai":
+"mobx-bonsai-yjs@workspace:packages/mobx-bonsai-yjs":
+  version: 0.0.0-use.local
+  resolution: "mobx-bonsai-yjs@workspace:packages/mobx-bonsai-yjs"
+  dependencies:
+    "@types/jest": "npm:^30.0.0"
+    "@types/node": "npm:^24.7.0"
+    jest: "npm:^30.2.0"
+    mobx-bonsai: "workspace:packages/mobx-bonsai"
+    rollup-plugin-typescript2: "npm:^0.36.0"
+    shx: "npm:^0.4.0"
+    spec.ts: "npm:^1.1.3"
+    ts-jest: "npm:^29.4.4"
+    ts-node: "npm:^10.9.2"
+    tslib: "npm:^2.8.1"
+    typedoc: "npm:^0.28.13"
+    typescript: "npm:^5.9.3"
+    vite: "npm:^7.1.9"
+  peerDependencies:
+    mobx: ^6.0.0 || ^5.0.0 || ^4.0.0
+    mobx-bonsai: ^2.0.0
+    yjs: ^13.0.0
+  languageName: unknown
+  linkType: soft
+
+"mobx-bonsai@workspace:packages/mobx-bonsai":
   version: 0.0.0-use.local
   resolution: "mobx-bonsai@workspace:packages/mobx-bonsai"
   dependencies:
@@ -15505,10 +15519,6 @@ __metadata:
     vite: "npm:^7.1.9"
   peerDependencies:
     mobx: ^6.0.0 || ^5.0.0 || ^4.0.0
-    yjs: ^13.0.0
-  peerDependenciesMeta:
-    yjs:
-      optional: true
   languageName: unknown
   linkType: soft
 
@@ -19642,6 +19652,7 @@ __metadata:
     bootstrap-icons: "npm:^1.13.1"
     bufferutil: "npm:^4.0.9"
     mobx-bonsai: "workspace:packages/mobx-bonsai"
+    mobx-bonsai-yjs: "workspace:packages/mobx-bonsai-yjs"
     mobx-react: "npm:^9.2.1"
     nanoid: "npm:^3.3.11"
     raw-loader: "npm:^4.0.2"
