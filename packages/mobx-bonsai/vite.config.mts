@@ -15,7 +15,7 @@ export default defineConfig({
     minify: false,
 
     rollupOptions: {
-      external: ["mobx", "yjs"],
+      external: ["mobx"],
 
       output: [
         {
@@ -27,7 +27,6 @@ export default defineConfig({
           format: "umd",
           globals: {
             mobx: "mobx",
-            yjs: "yjs",
           },
         },
       ],
