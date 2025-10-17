@@ -91,9 +91,6 @@ export { ImmutableDate } from "./transforms/ImmutableDate"
 // utils
 export { deepEquals } from "./utils/deepEquals"
 
-// polyfills
-;(Symbol as any).dispose ??= Symbol("Symbol.dispose")
-
 // internal utils for mobx-bonsai packages
 export type { Dispose as _Dispose } from "./utils/disposable"
 export { disposeOnce as _disposeOnce } from "./utils/disposable"
