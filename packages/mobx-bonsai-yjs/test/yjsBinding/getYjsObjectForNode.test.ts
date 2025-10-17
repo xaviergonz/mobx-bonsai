@@ -1,5 +1,5 @@
+import { node } from "mobx-bonsai"
 import * as Y from "yjs"
-import { node } from "../../src"
 import { createObjectTestbed } from "./testbed"
 
 it("should resolve a nodes to Y.js structures", () => {

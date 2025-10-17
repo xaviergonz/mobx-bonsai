@@ -1,6 +1,6 @@
 import { runInAction, toJS } from "mobx"
+import { nodeType, TNode } from "mobx-bonsai"
 import { createObjectTestbed } from "./testbed"
-import { nodeType, TNode } from "../../src"
 
 test("reassign an already added object to another part of the tree should fail", () => {
   const { mobxObservable } = createObjectTestbed<{

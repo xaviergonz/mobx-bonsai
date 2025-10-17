@@ -1,6 +1,6 @@
 import * as Y from "yjs"
-import { convertPlainToYjsValue } from "../../../src/yjsBinding/nodeToYjs/convertPlainToYjsValue"
 import { YjsValue } from "../../../src"
+import { convertPlainToYjsValue } from "../../../src/yjsBinding/nodeToYjs/convertPlainToYjsValue"
 
 describe("convertPlainToYjsValue", () => {
   // Y.js structures need to be wrapped in a Y.Doc before they can be read

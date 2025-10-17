@@ -1,9 +1,8 @@
-import { YjsStructure } from "./types"
+import * as Y from "yjs"
 import { failure } from "../../error/failure"
-import { requireYjs } from "../requireYjs"
+import { YjsStructure } from "./types"
 
 export function isYjsStructure(target: unknown): target is YjsStructure {
-  const Y = requireYjs()
   return target instanceof Y.Map || target instanceof Y.Array
 }
 

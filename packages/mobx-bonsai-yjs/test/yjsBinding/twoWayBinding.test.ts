@@ -1,7 +1,8 @@
-import * as Y from "yjs"
-import { createArrayTestbed, createObjectTestbed } from "./testbed"
 import { runInAction } from "mobx"
-import { convertPlainToYjsValue, nodeType, TNode } from "../../src"
+import { nodeType, TNode } from "mobx-bonsai"
+import * as Y from "yjs"
+import { convertPlainToYjsValue } from "../../src"
+import { createArrayTestbed, createObjectTestbed } from "./testbed"
 
 test("object two-way binding", () => {
   const { mobxObservable, yjsObject } = createObjectTestbed<{

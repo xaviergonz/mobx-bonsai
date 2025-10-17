@@ -39,10 +39,18 @@ By using `mobx-bonsai`, you get:
 - **Functional accessors:** Interaction is achieved through pure functions, keeping state manipulation decoupled from the data structure.
 - **Immutable snapshots:** Effortlessly capture a stable state of your tree at any point.
 - **MobX Integration:** Since `mobx-bonsai` uses MobX behind the scenes, it integrates seamlessly with [`mobx`](https://mobx.js.org) and [`mobx-react`](https://github.com/mobxjs/mobx-react).
-- **Seamless Y.js binding:** Two-way binding between `Y.js` state trees and `mobx-bonsai` reactive trees included.
+- **Seamless Y.js binding:** Two-way binding between `Y.js` state trees and `mobx-bonsai` reactive trees available via the `mobx-bonsai-yjs` package.
 
 ### Installation
+
+Core package:
 
 > `npm install mobx-bonsai`
 
 > `yarn add mobx-bonsai`
+
+For Y.js integration (optional):
+
+> `npm install mobx-bonsai-yjs yjs`
+
+> `yarn add mobx-bonsai-yjs yjs`

@@ -19,8 +19,22 @@
       "outputs": [],
       "env": ["MOBX-VERSION"]
     },
+    "mobx-bonsai-yjs#build": {
+      "dependsOn": ["mobx-bonsai#build"],
+      "outputs": ["dist/**"]
+    },
+    "mobx-bonsai-yjs#test": {
+      "dependsOn": ["mobx-bonsai#build"],
+      "outputs": [],
+      "env": ["MOBX-VERSION"]
+    },
+    "mobx-bonsai-yjs#test:ci": {
+      "dependsOn": ["mobx-bonsai#build"],
+      "outputs": [],
+      "env": ["MOBX-VERSION"]
+    },
     "site#build": {
-      "dependsOn": ["mobx-bonsai#build", "mobx-bonsai#build-docs"],
+      "dependsOn": ["mobx-bonsai#build", "mobx-bonsai-yjs#build", "mobx-bonsai#build-docs"],
       "outputs": ["build/**"]
     },
     "site#serve": {
@@ -30,7 +44,7 @@
     },
     "site#start": {
       "cache": false,
-      "dependsOn": ["mobx-bonsai#build", "mobx-bonsai#build-docs"],
+      "dependsOn": ["mobx-bonsai#build", "mobx-bonsai-yjs#build", "mobx-bonsai#build-docs"],
       "outputs": []
     }
   }

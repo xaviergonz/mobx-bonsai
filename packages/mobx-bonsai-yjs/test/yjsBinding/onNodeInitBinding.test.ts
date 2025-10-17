@@ -1,6 +1,6 @@
 import { runInAction } from "mobx"
+import { nodeType, TNode } from "mobx-bonsai"
 import * as Y from "yjs"
-import { nodeType, TNode } from "../../src"
 import { createObjectTestbed } from "./testbed"
 
 test("should update underlying Y.js structure when onNodeInit increases counter", () => {

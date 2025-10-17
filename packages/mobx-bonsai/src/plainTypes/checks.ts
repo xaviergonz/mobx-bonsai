@@ -6,8 +6,8 @@ import {
   ObservableMap,
   ObservableSet,
 } from "mobx"
-import { Primitive } from "./types"
 import { failure } from "../error/failure"
+import { Primitive } from "./types"
 
 export function isPrimitive(v: unknown): v is Primitive {
   const t = typeof v

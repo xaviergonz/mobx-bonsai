@@ -1,7 +1,7 @@
+import { runInAction } from "mobx"
+import { isFrozenNode, node, nodeType, TNode } from "mobx-bonsai"
 import * as Y from "yjs"
 import { createObjectTestbed } from "./testbed"
-import { isFrozenNode, node, nodeType, TNode } from "../../src"
-import { runInAction } from "mobx"
 
 test("frozen nodes are stored as plain values instead of maps", () => {
   type Frozen = TNode<"Frozen", { nested: { a: number } }>

@@ -1,6 +1,6 @@
+import { runInAction } from "mobx"
 import * as Y from "yjs"
 import { createObjectTestbed } from "./testbed"
-import { runInAction } from "mobx"
 
 test("transactions", () => {
   const { mobxObservable, yjsObject, yjsDoc } = createObjectTestbed<{

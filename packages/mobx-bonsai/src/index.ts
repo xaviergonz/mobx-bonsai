@@ -1,3 +1,5 @@
+// biome-ignore-all assist/source/organizeImports: explicit export organization
+
 // mobx-bonsai core
 export { MobxBonsaiError } from "./error/MobxBonsaiError"
 
@@ -31,6 +33,7 @@ export type { FoundParentPath } from "./node/tree/FoundParentPath"
 export { getChildrenNodes } from "./node/tree/getChildrenNodes"
 export { getParent } from "./node/tree/getParent"
 export { getParentPath } from "./node/tree/getParentPath"
+export { getParentToChildPath } from "./node/tree/getParentToChildPath"
 export { getRoot } from "./node/tree/getRoot"
 export { getRootPath } from "./node/tree/getRootPath"
 export { isChildOfParent } from "./node/tree/isChildOfParent"
@@ -88,16 +91,17 @@ export { ImmutableDate } from "./transforms/ImmutableDate"
 // utils
 export { deepEquals } from "./utils/deepEquals"
 
-// yjsBinding
+// internal utils for mobx-bonsai packages
+export type { Dispose as _Dispose } from "./utils/disposable"
+export { disposeOnce as _disposeOnce } from "./utils/disposable"
+export type { Primitive as _Primitive } from "./plainTypes/types"
 export {
-  applyPlainArrayToYArray,
-  applyPlainObjectToYMap,
-  convertPlainToYjsValue,
-} from "./yjsBinding/nodeToYjs/convertPlainToYjsValue"
-
-export type { YjsStructure, YjsValue } from "./yjsBinding/yjsTypes/types"
-
-export { bindYjsToNode } from "./yjsBinding/bindYjsToNode"
+  isArray as _isArray,
+  isPlainObject as _isPlainObject,
+  isPrimitive as _isPrimitive,
+} from "./plainTypes/checks"
+export { buildNodeFullPath as _buildNodeFullPath } from "./node/utils/buildNodeFullPath"
+export { runDetachingDuplicatedNodes as _runDetachingDuplicatedNodes } from "./node/node"
 
 // polyfills
 ;(Symbol as any).dispose ??= Symbol("Symbol.dispose")

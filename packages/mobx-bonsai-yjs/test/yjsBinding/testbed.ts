@@ -1,8 +1,8 @@
+import { _Dispose } from "mobx-bonsai"
 import * as Y from "yjs"
-import { YjsValue, applyPlainArrayToYArray, applyPlainObjectToYMap, bindYjsToNode } from "../../src"
-import { Dispose } from "../../src/utils/disposable"
+import { applyPlainArrayToYArray, applyPlainObjectToYMap, bindYjsToNode, YjsValue } from "../../src"
 
-const disposers: Dispose[] = []
+const disposers: _Dispose[] = []
 
 export function createObjectTestbed<T extends Record<string, any>>(initialData: T) {
   const yjsDoc = new Y.Doc()

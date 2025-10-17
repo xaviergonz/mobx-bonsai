@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.0.0
+
+- Y.js bindings have been moved into a separate `mobx-bonsai-yjs` package. This solves issues when using the Y.js bindings on a ESM module environment.
+- Errors thrown by Y.js bindings will be now of type `MobxBonsaiYjsError` instead of `MobxBonsaiError`.
+
 ## 1.1.2
 
 - Fix so that reassigning a same value won't invalidate an snapshot.

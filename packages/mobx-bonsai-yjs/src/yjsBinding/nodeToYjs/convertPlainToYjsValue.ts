@@ -1,34 +1,29 @@
 import { isObservableObject } from "mobx"
-import type * as Y from "yjs"
+import { _isArray, _isPlainObject, _isPrimitive, _Primitive, getNodeTypeAndKey } from "mobx-bonsai"
+import * as Y from "yjs"
 import { failure } from "../../error/failure"
-import { isArray, isPlainObject, isPrimitive } from "../../plainTypes/checks"
-import { Primitive } from "../../plainTypes/types"
 import { YjsValue } from "../yjsTypes/types"
-import { getNodeTypeAndKey } from "../../node/nodeTypeKey/nodeType"
-import { requireYjs } from "../requireYjs"
 
 /**
  * Converts a plain value to a Y.js value.
  * Objects are converted to Y.Maps, arrays to Y.Arrays, primitives are untouched.
  */
-export function convertPlainToYjsValue<T extends Primitive>(v: T): T
+export function convertPlainToYjsValue<T extends _Primitive>(v: T): T
 export function convertPlainToYjsValue(v: readonly any[]): Y.Array<YjsValue>
 export function convertPlainToYjsValue(v: Readonly<Record<string, any>>): Y.Map<YjsValue>
 
 export function convertPlainToYjsValue(v: any): YjsValue {
-  if (isPrimitive(v)) {
+  if (_isPrimitive(v)) {
     return v
   }
 
-  const Y = requireYjs()
-
-  if (isArray(v)) {
+  if (_isArray(v)) {
     const arr = new Y.Array<YjsValue>()
     applyPlainArrayToYArray(arr, v)
     return arr as YjsValue
   }
 
-  if (isPlainObject(v) || isObservableObject(v)) {
+  if (_isPlainObject(v) || isObservableObject(v)) {
     const frozenData = !!getNodeTypeAndKey(v).type?.isFrozen
     if (frozenData) {
       return v // store as is

@@ -9,24 +9,26 @@ export default defineConfig({
     target: "node10",
     lib: {
       entry: resolvePath("./src/index.ts"),
-      name: "mobx-bonsai",
+      name: "mobx-bonsai-yjs",
     },
     sourcemap: "inline",
     minify: false,
 
     rollupOptions: {
-      external: ["mobx"],
+      external: ["mobx", "mobx-bonsai", "yjs"],
 
       output: [
         {
           format: "esm",
-          entryFileNames: "mobx-bonsai.esm.mjs",
+          entryFileNames: "mobx-bonsai-yjs.esm.mjs",
         },
         {
-          name: "mobx-bonsai",
+          name: "mobx-bonsai-yjs",
           format: "umd",
           globals: {
             mobx: "mobx",
+            "mobx-bonsai": "mobx-bonsai",
+            yjs: "yjs",
           },
         },
       ],

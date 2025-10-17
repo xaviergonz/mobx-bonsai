@@ -1,14 +1,19 @@
+import { action } from "mobx"
+import {
+  _Dispose,
+  _disposeOnce,
+  getNodeTypeAndKey,
+  getParentToChildPath,
+  NodeWithAnyType,
+  WalkTreeMode,
+  walkTree,
+} from "mobx-bonsai"
 import type * as Y from "yjs"
+import { resolveYjsStructurePath } from "./nodeToYjs/resolveYjsStructurePath"
 import { setupNodeToYjsReplication } from "./nodeToYjs/setupNodeToYjsReplication"
 import { createNodeFromYjsObject } from "./yjsToNode/createNodeFromYjsObject"
 import { setupYjsToNodeReplication } from "./yjsToNode/setupYjsToNodeReplication"
 import { YjsStructure } from "./yjsTypes/types"
-import { action } from "mobx"
-import { walkTree, WalkTreeMode } from "../node/tree/walkTree"
-import { Dispose, disposeOnce } from "../utils/disposable"
-import { getParentToChildPath } from "../node/tree/getParentToChildPath"
-import { resolveYjsStructurePath } from "./nodeToYjs/resolveYjsStructurePath"
-import { getNodeTypeAndKey, NodeWithAnyType } from "../node/nodeTypeKey/nodeType"
 
 /**
  * Creates a node that is bound to a Y.js data structure.
@@ -53,7 +58,7 @@ export const bindYjsToNode = action(
     /**
      * Disposes the binding.
      */
-    dispose: Dispose
+    dispose: _Dispose
 
     /**
      * Disposes the binding.
@@ -105,7 +110,7 @@ export const bindYjsToNode = action(
         return resolveYjsStructurePath(yjsObject, path)
       },
 
-      dispose: disposeOnce(() => {
+      dispose: _disposeOnce(() => {
         nodeToYjsReplicationAdmin.dispose()
         yjsToNodeReplicationAdmin.dispose()
       }),

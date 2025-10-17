@@ -1,12 +1,10 @@
 import { when } from "mobx"
-import type * as Y from "yjs"
+import { _buildNodeFullPath, NodeChange, onDeepChange } from "mobx-bonsai"
+import * as Y from "yjs"
 import { failure } from "../../error/failure"
-import { resolveYjsStructurePath } from "./resolveYjsStructurePath"
-import { convertPlainToYjsValue } from "./convertPlainToYjsValue"
-import { buildNodeFullPath } from "../../node/utils/buildNodeFullPath"
-import { onDeepChange, NodeChange } from "../../node/node"
 import { YjsStructure } from "../yjsTypes/types"
-import { requireYjs } from "../requireYjs"
+import { convertPlainToYjsValue } from "./convertPlainToYjsValue"
+import { resolveYjsStructurePath } from "./resolveYjsStructurePath"
 
 export function setupNodeToYjsReplication({
   node,
@@ -21,8 +19,6 @@ export function setupNodeToYjsReplication({
   yjsOrigin: symbol
   yjsReplicatingRef: { current: number }
 }) {
-  const Y = requireYjs()
-
   let pendingMobxChanges: {
     change: NodeChange
     path: string[]
@@ -36,7 +32,7 @@ export function setupNodeToYjsReplication({
     }
 
     mobxDeepChangesNestingLevel++
-    const path = buildNodeFullPath(change.object)
+    const path = _buildNodeFullPath(change.object)
     pendingMobxChanges.push({ change, path })
 
     // hack to apply pending mobx changes once all actions and reactions are finished
