@@ -10371,6 +10371,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"esm-test@workspace:apps/esm-test":
+  version: 0.0.0-use.local
+  resolution: "esm-test@workspace:apps/esm-test"
+  dependencies:
+    mobx: "npm:^6.13.7"
+    mobx-bonsai: "workspace:*"
+    yjs: "npm:^13.6.27"
+  languageName: unknown
+  linkType: soft
+
 "esprima@npm:^4.0.0, esprima@npm:^4.0.1":
   version: 4.0.1
   resolution: "esprima@npm:4.0.1"
@@ -15469,7 +15479,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mobx-bonsai@workspace:packages/mobx-bonsai":
+"mobx-bonsai@workspace:*, mobx-bonsai@workspace:packages/mobx-bonsai":
   version: 0.0.0-use.local
   resolution: "mobx-bonsai@workspace:packages/mobx-bonsai"
   dependencies:

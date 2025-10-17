@@ -1,0 +1,15 @@
+{
+  "name": "esm-test",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Test project to reproduce ESM + yjs-binding issue",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "mobx": "^6.13.7",
+    "mobx-bonsai": "workspace:*",
+    "yjs": "^13.6.27"
+  }
+}
