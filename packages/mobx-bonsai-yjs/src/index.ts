@@ -12,6 +12,3 @@ export {
 } from "./yjsBinding/nodeToYjs/convertPlainToYjsValue"
 
 export type { YjsStructure, YjsValue } from "./yjsBinding/yjsTypes/types"
-
-// polyfills
-;(Symbol as any).dispose ??= Symbol("Symbol.dispose")
