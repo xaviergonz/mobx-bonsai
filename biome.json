@@ -8,6 +8,8 @@
       "!**/dist/**",
       "!packages/mobx-bonsai/coverage/**",
       "!packages/mobx-bonsai/api-docs/**",
+      "!packages/mobx-bonsai-yjs/coverage/**",
+      "!packages/mobx-bonsai-yjs/api-docs/**",
       "!apps/site/.docusaurus/**",
       "!apps/site/build/**",
       "!apps/site/copy-to-build/**",
@@ -88,7 +90,9 @@
       "**/apps/site/docs/**/*.ts",
       "**/apps/site/docs/**/*.tsx",
       "**/packages/mobx-bonsai/src/**/*.ts",
-      "**/packages/mobx-bonsai/test/**/*.ts"
+      "**/packages/mobx-bonsai/test/**/*.ts",
+      "**/packages/mobx-bonsai-yjs/src/**/*.ts",
+      "**/packages/mobx-bonsai-yjs/test/**/*.ts"
     ]
   },
   "javascript": {
