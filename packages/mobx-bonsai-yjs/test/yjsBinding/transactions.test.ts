@@ -1,5 +1,6 @@
 import { runInAction } from "mobx"
 import * as Y from "yjs"
+import { bindYjsToNode } from "../../src"
 import { createObjectTestbed } from "./testbed"
 
 test("transactions", () => {
@@ -71,4 +72,66 @@ test("transaction edge-cases", () => {
     expect(mobxObservable.numberArray).toStrictEqual(undefined) // not yet
   })
   expect(mobxObservable.numberArray).toStrictEqual([4, 5])
+})
+
+test("transactions with symbol getter function", () => {
+  const yjsDoc = new Y.Doc()
+  const yjsObject = yjsDoc.getMap("data") as Y.Map<any>
+
+  // Set up initial data
+  yjsObject.set("value", 0)
+
+  const symbol1 = Symbol("origin1")
+  const symbol2 = Symbol("origin2")
+  let useSymbol1 = true
+  const symbolGetter = () => (useSymbol1 ? symbol1 : symbol2)
+
+  // Set up transaction observer to capture origins
+  const capturedOrigins: unknown[] = []
+  const transactionObserver = (transaction: Y.Transaction) => {
+    capturedOrigins.push(transaction.origin)
+  }
+  yjsDoc.on("afterTransaction", transactionObserver)
+
+  // Create binding with symbol getter function
+  const { node: mobxObservable, dispose } = bindYjsToNode<{ value: number }>({
+    yjsDoc,
+    yjsObject,
+    yjsOrigin: symbolGetter,
+  })
+
+  try {
+    expect(mobxObservable.value).toBe(0)
+
+    // Clear any setup transactions
+    capturedOrigins.length = 0
+
+    // Do a MobX operation while useSymbol1 = true
+    runInAction(() => {
+      mobxObservable.value = 10
+    })
+
+    // The transaction should have been issued with symbol1
+    expect(capturedOrigins).toEqual([symbol1])
+
+    // Clear captured origins
+    capturedOrigins.length = 0
+
+    // Switch to symbol2
+    useSymbol1 = false
+
+    // Do another MobX operation while useSymbol1 = false
+    runInAction(() => {
+      mobxObservable.value = 20
+    })
+
+    // The transaction should have been issued with symbol2
+    expect(capturedOrigins).toEqual([symbol2])
+
+    // Verify the Y.js state was updated
+    expect(yjsObject.get("value")).toBe(20)
+  } finally {
+    yjsDoc.off("afterTransaction", transactionObserver)
+    dispose()
+  }
 })

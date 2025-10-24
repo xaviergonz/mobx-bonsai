@@ -29,16 +29,21 @@ function yjsToPlainValue(v: YjsValue): unknown {
 export function setupYjsToNodeReplication({
   node,
   yjsObject,
-  yjsOrigin,
+  yjsOriginCache,
   yjsReplicatingRef,
 }: {
   node: object
   yjsObject: YjsStructure
-  yjsOrigin: symbol
+  yjsOriginCache: WeakSet<symbol>
   yjsReplicatingRef: { current: number }
 }) {
   const yjsObserverCallback = (events: Y.YEvent<any>[], transaction: Y.Transaction) => {
-    if (transaction.origin === yjsOrigin || events.length === 0) {
+    if (events.length === 0) {
+      return
+    }
+
+    // if it comes from a mobx-bonsai-yjs change, ignore it
+    if (yjsOriginCache.has(transaction.origin)) {
       return
     }
 

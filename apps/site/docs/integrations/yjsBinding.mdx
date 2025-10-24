@@ -94,6 +94,36 @@ When using frozen nodes with the Y.js binding, the frozen node's value is stored
 - There is no extra mapping overhead, which can improve performance.
 - The snapshot of a frozen node is preserved as defined.
 
+### Transaction Origin Symbols
+
+The `bindYjsToNode` function accepts an optional `yjsOrigin` parameter that can be used to control Y.js transaction origins. This is particularly useful when you want to distinguish between local changes and remote changes, or when managing multiple bindings.
+
+The `yjsOrigin` parameter accepts either:
+- A `symbol` - A static origin symbol used for all transactions
+- A `() => symbol` function - A getter function that dynamically returns the current origin symbol
+
+```typescript
+// Static symbol
+const myOrigin = Symbol("my-binding")
+const { node } = bindYjsToNode<TodoAppState>({
+  yjsDoc,
+  yjsObject: yjsDoc.getMap("todoAppState"),
+  yjsOrigin: myOrigin,
+})
+
+// Dynamic symbol getter
+let currentOrigin = Symbol("origin1")
+const { node } = bindYjsToNode<TodoAppState>({
+  yjsDoc,
+  yjsObject: yjsDoc.getMap("todoAppState"),
+  yjsOrigin: () => currentOrigin, // Function is called for each transaction
+})
+```
+
+When Y.js changes occur with the same origin symbol, they won't trigger updates to the bound MobX node (preventing infinite loops). This is useful for filtering out self-originated changes in collaborative scenarios.
+
+If no `yjsOrigin` is provided, one will be automatically generated.
+
 ### Binding Limitations
 
 **`Y.js` binding limits**:

@@ -36,10 +36,10 @@ export const bindYjsToNode = action(
     yjsObject: YjsStructure
 
     /**
-     * The Y.js origin symbol used for binding transactions.
+     * The Y.js origin symbol used for binding transactions, or a function that returns the symbol.
      * One will be automatically generated if not provided.
      */
-    yjsOrigin?: symbol
+    yjsOrigin?: symbol | (() => symbol)
   }): {
     /**
      * The bound node.
@@ -67,14 +67,19 @@ export const bindYjsToNode = action(
   } => {
     yjsOrigin = yjsOrigin ?? Symbol("mobx-bonsai-yjs-origin")
 
+    // Convert yjsOrigin to a getter function if it's a plain symbol
+    const yjsOriginGetter = typeof yjsOrigin === "function" ? yjsOrigin : () => yjsOrigin
+
     const node = createNodeFromYjsObject<T>(yjsObject)
 
     const yjsReplicatingRef = { current: 0 }
 
+    const yjsOriginCache = new WeakSet<symbol>()
+
     const yjsToNodeReplicationAdmin = setupYjsToNodeReplication({
       node: node,
       yjsObject,
-      yjsOrigin,
+      yjsOriginCache,
       yjsReplicatingRef,
     })
 
@@ -82,7 +87,8 @@ export const bindYjsToNode = action(
       node: node,
       yjsDoc,
       yjsObject,
-      yjsOrigin,
+      yjsOriginGetter,
+      yjsOriginCache,
       yjsReplicatingRef,
     })
 

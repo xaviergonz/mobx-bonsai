@@ -1,6 +1,6 @@
 {
   "name": "mobx-bonsai-yjs",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Y.js two-way binding for mobx-bonsai",
   "keywords": [
     "mobx",

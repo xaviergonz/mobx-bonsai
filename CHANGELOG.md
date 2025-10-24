@@ -1,5 +1,9 @@
 # Change Log
 
+## mobx-bonsai-yjs 2.1.0
+
+- `yjsOrigin` parameter in `bindYjsToNode` now accepts either a `symbol` or a `() => symbol` function. When a function is provided, it will be called dynamically to retrieve the current origin symbol for each transaction, allowing for runtime origin symbol selection.
+
 ## 2.0.0
 
 - Y.js bindings have been moved into a separate `mobx-bonsai-yjs` package. This solves issues when using the Y.js bindings on a ESM module environment.

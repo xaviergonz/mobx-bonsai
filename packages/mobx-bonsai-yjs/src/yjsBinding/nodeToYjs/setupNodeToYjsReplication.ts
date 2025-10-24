@@ -10,13 +10,15 @@ export function setupNodeToYjsReplication({
   node,
   yjsDoc,
   yjsObject,
-  yjsOrigin,
+  yjsOriginGetter,
+  yjsOriginCache,
   yjsReplicatingRef,
 }: {
   node: object
   yjsDoc: Y.Doc
   yjsObject: YjsStructure
-  yjsOrigin: symbol
+  yjsOriginGetter: () => symbol
+  yjsOriginCache: WeakSet<symbol>
   yjsReplicatingRef: { current: number }
 }) {
   let pendingMobxChanges: {
@@ -41,6 +43,9 @@ export function setupNodeToYjsReplication({
       () => {
         mobxDeepChangesNestingLevel--
         if (mobxDeepChangesNestingLevel === 0) {
+          const yjsOrigin = yjsOriginGetter()
+          yjsOriginCache.add(yjsOrigin)
+
           yjsDoc.transact(() => {
             const mobxChangesToApply = pendingMobxChanges
             pendingMobxChanges = []
