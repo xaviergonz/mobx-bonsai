@@ -2,6 +2,7 @@
 
 ## 2.1.0
 
+- Reduced a bit memory usage per node.
 - Added `onDeepInterceptedChange` to handle changes -before- they happen.
 - Added `UndoManager`. (Note: If you are using the `Y.js` binding you should still use its own undo manager wherever possible).
 
