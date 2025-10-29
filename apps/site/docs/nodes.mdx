@@ -771,3 +771,33 @@ The listener receives a `change` object that conforms to MobX's `IObjectDidChang
 
 The function returns a `disposer` function. Call it to remove the listener and stop receiving updates.
 
+### `onDeepInterceptedChange`
+
+Use `onDeepInterceptedChange` to listen for any change that is **about to happen** to a node or any of its descendants, before the change is actually committed.
+
+This function is similar to `onDeepChange`, but the listener is called during MobX's intercept phase, **before** the change is applied to the node. This is useful when you need to capture state right before modifications occur:
+
+```ts
+import { onDeepInterceptedChange, node } from 'mobx-bonsai';
+
+const myNode = node({
+  value: 5
+});
+
+const disposer = onDeepInterceptedChange(myNode, (change) => {
+  // This is called BEFORE the change is applied
+  console.log("Before:", myNode.value); // Still 5
+  console.log("About to change to:", change.newValue); // 10
+});
+
+myNode.value = 10;
+// After this, myNode.value is 10
+```
+
+**Key differences from `onDeepChange`:**
+- Called **before** the change is committed (during intercept phase)
+- The node still has its old state when the listener runs
+- Receives `IObjectWillChange`, `IArrayWillChange`, or `IArrayWillSplice` change objects
+
+The function returns a `disposer` function. Call it to remove the listener and stop receiving notifications.
+

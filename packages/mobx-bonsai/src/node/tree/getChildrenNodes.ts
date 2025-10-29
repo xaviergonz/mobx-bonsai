@@ -1,3 +1,4 @@
+import { observable } from "mobx"
 import { computedProp } from "../computedProp"
 import { assertIsNode, getNodeData } from "../node"
 
@@ -6,11 +7,21 @@ export function getChildrenNodesWithTargetSet(node: object, targetSet: Set<objec
     targetSet.add(child)
 
     const deepChildren = getComputedDeepChildren(child)
-    deepChildren.forEach((deepChild) => targetSet.add(deepChild))
+    deepChildren.forEach((deepChild) => {
+      targetSet.add(deepChild)
+    })
   })
 }
 
-const getShallowChildren = (node: object): ReadonlySet<object> => getNodeData(node).childrenObjects
+const getShallowChildren = (node: object): ReadonlySet<object> => {
+  const nodeData = getNodeData(node)
+  // Lazily create the set if needed
+  if (!nodeData.childrenObjects) {
+    nodeData.childrenObjects = observable.set([], { deep: false })
+  }
+  // Return the set - when callers access it (forEach, size, etc), they'll create dependencies
+  return nodeData.childrenObjects
+}
 
 const getComputedDeepChildren = computedProp((node: object): ReadonlySet<object> => {
   const children = new Set<object>()

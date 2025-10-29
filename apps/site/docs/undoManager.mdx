@@ -1,0 +1,401 @@
+---
+title: Undo/Redo Manager
+slug: /undoManager
+---
+
+## Overview
+
+The `UndoManager` provides automatic change tracking and time-travel capabilities for your mobx-bonsai node trees. It monitors changes using MobX's `onDeepChange` and groups changes within MobX actions into logical undoable events.
+
+> **Note:** If you're using the Y.js binding (`mobx-bonsai-yjs`) for collaborative editing, **use Y.js's built-in `UndoManager` instead**. Y.js's undo manager is specifically designed for CRDT operations and properly handles collaborative scenarios, including conflict resolution and remote changes. The mobx-bonsai `UndoManager` is intended for single-user, local undo/redo only!
+
+## Features
+
+- ✅ **Automatic Change Tracking**: Monitors all changes to your node tree
+- ✅ **Action Grouping**: Changes within a single MobX action are grouped into one undoable event
+- ✅ **Selective Recording**: Disable recording for specific operations with `withoutUndo()`
+- ✅ **Attached State**: Save and restore external state alongside undo/redo operations
+- ✅ **Queue Limits**: Configure maximum undo/redo levels to manage memory
+
+## Basic Usage
+
+```typescript
+import { nodeType, UndoManager } from "mobx-bonsai"
+import { runInAction } from "mobx"
+
+// Define your node types
+type TodoItem = {
+  text: string
+  completed: boolean
+}
+
+type TodoList = {
+  items: TodoItem[]
+}
+
+const TTodoItem = nodeType<TodoItem>().defaults({
+  text: () => "",
+  completed: () => false,
+})
+
+const TTodoList = nodeType<TodoList>().defaults({
+  items: () => [],
+})
+
+// Create your data
+const todoList = TTodoList({
+  items: [
+    TTodoItem({ text: "Buy groceries", completed: false }),
+    TTodoItem({ text: "Write code", completed: false }),
+  ],
+})
+
+// Create undo manager
+const undoManager = new UndoManager({ rootNode: todoList })
+
+// Make changes
+runInAction(() => {
+  todoList.items[0].completed = true
+})
+
+// Undo the change
+if (undoManager.canUndo) {
+  undoManager.undo()
+}
+console.log(todoList.items[0].completed) // false
+
+// Redo the change
+if (undoManager.canRedo) {
+  undoManager.redo()
+}
+console.log(todoList.items[0].completed) // true
+
+// Clean up when done
+undoManager.dispose()
+```
+
+## Action Grouping
+
+Changes within a single MobX action are automatically grouped into a single undoable event:
+
+```typescript
+// These three changes become a single undo event
+runInAction(() => {
+  todoList.items[0].text = "Updated task"
+  todoList.items[0].completed = true
+  todoList.items[1].completed = true
+})
+
+// Single undo reverts all three changes
+undoManager.undo()
+```
+
+This ensures that logical operations remain atomic from an undo/redo perspective.
+
+## Time-based Grouping (Debounce)
+
+By default, changes are only grouped within the same MobX action. However, you can enable time-based grouping to merge changes from different actions if they occur within a specified time window:
+
+```typescript
+const undoManager = new UndoManager({
+  rootNode: todoList,
+  groupingDebounceMs: 500, // Group changes within 500ms
+})
+
+// These changes happen in separate actions but within 500ms
+runInAction(() => {
+  todoList.items[0].text = "First change"
+})
+
+// 200ms later...
+setTimeout(() => {
+  runInAction(() => {
+    todoList.items[0].completed = true // Grouped with previous change
+  })
+}, 200)
+
+// Single undo will revert both changes
+```
+
+This is particularly useful for:
+- **Text input**: Group rapid typing as a single undo event instead of character-by-character
+- **Drag operations**: Group position updates during dragging
+- **Slider adjustments**: Group value changes as the user drags
+- **Auto-formatting**: Group user input with automatic formatting changes
+
+**Note:** If `groupingDebounceMs` is `undefined` (default), only MobX action-level grouping is used (the original behavior).
+
+## Selective Recording with `withoutUndo()`
+
+Sometimes you need to make changes that shouldn't be tracked in the undo history (e.g., auto-save timestamps, system-generated changes):
+
+```typescript
+// This change won't be tracked
+undoManager.withoutUndo(() => {
+  runInAction(() => {
+    todoList.lastSyncedAt = Date.now()
+  })
+})
+
+// Can return values
+const result = undoManager.withoutUndo(() => {
+  runInAction(() => {
+    todoList.items.push(TTodoItem({ text: "New item", completed: false }))
+  })
+  return "Success"
+})
+
+// Can be nested with tracked changes in the same action
+runInAction(() => {
+  todoList.items[0].completed = true // This will be tracked
+  undoManager.withoutUndo(() => {
+    todoList.lastModified = Date.now() // This won't be tracked
+  })
+})
+```
+
+You can also check if recording is currently disabled:
+
+```typescript
+if (undoManager.isUndoRecordingDisabled) {
+  // Recording is disabled
+}
+```
+
+## Queue Limits
+
+By default the max number of undo/redo levels is infinite, but you can limit it to manage memory in long-running applications:
+
+```typescript
+const undoManager = new UndoManager({
+  rootNode: todoList,
+  maxUndoLevels: 50, // Keep last 50 undo events
+  maxRedoLevels: 50, // Keep last 50 redo events
+})
+
+// Check current levels
+console.log(undoManager.undoLevels) // Number of available undo steps
+console.log(undoManager.redoLevels) // Number of available redo steps
+
+// Clear queues manually if needed
+undoManager.clearUndo()
+undoManager.clearRedo()
+```
+
+When the maximum is reached, the oldest events are automatically removed.
+
+## Attached State
+
+You can save and restore external state (not part of the node tree) alongside undo/redo operations:
+
+```typescript
+// External state not in the node tree
+const editorState = {
+  cursorPosition: 0,
+  selectionStart: 0,
+  selectionEnd: 0,
+}
+
+const undoManager = new UndoManager({
+  rootNode: document,
+  attachedState: {
+    save: () => ({
+      cursor: editorState.cursorPosition,
+      start: editorState.selectionStart,
+      end: editorState.selectionEnd,
+    }),
+    restore: (state) => {
+      editorState.cursorPosition = state.cursor
+      editorState.selectionStart = state.start
+      editorState.selectionEnd = state.end
+    },
+  },
+})
+
+// When you undo/redo, both the document and editor state are restored
+```
+
+This is useful for:
+- Cursor/selection positions in text editors
+- Scroll positions
+- UI state that's not part of the data model
+- Any external state that should be restored with undo/redo
+
+## Multiple Managers on Different Branches
+
+You can create multiple independent `UndoManager` instances that track different branches of the same root tree. Each manager maintains its own undo/redo history:
+
+```typescript
+type Document = {
+  title: string
+  content: string
+}
+
+type RootStore = {
+  doc1: Document
+  doc2: Document
+}
+
+const TDocument = nodeType<Document>().defaults({
+  title: () => "",
+  content: () => "",
+})
+
+const TRootStore = nodeType<RootStore>().defaults({
+  doc1: () => TDocument({ title: "Doc 1", content: "" }),
+  doc2: () => TDocument({ title: "Doc 2", content: "" }),
+})
+
+const rootStore = TRootStore({
+  doc1: TDocument({ title: "Doc 1", content: "" }),
+  doc2: TDocument({ title: "Doc 2", content: "" }),
+})
+
+// Create separate managers for each document
+const manager1 = new UndoManager({ rootNode: rootStore.doc1 })
+const manager2 = new UndoManager({ rootNode: rootStore.doc2 })
+
+// Changes to doc1 only tracked by manager1
+runInAction(() => {
+  rootStore.doc1.title = "Updated Doc 1"
+})
+
+// Changes to doc2 only tracked by manager2
+runInAction(() => {
+  rootStore.doc2.title = "Updated Doc 2"
+})
+
+// Each manager independently undoes its own changes
+manager1.undo() // Only affects doc1
+manager2.undo() // Only affects doc2
+```
+
+This is useful for:
+- Multi-document editors where each document has its own undo history
+- Split views with independent undo stacks
+- Modular applications with isolated state management
+
+## API Reference
+
+### UndoManager
+
+#### Constructor Options
+
+```typescript
+interface UndoManagerOptions<S = unknown> {
+  // The subtree root to track changes on
+  rootNode: object
+
+  // Optional UndoStore to use (creates new one if not provided)
+  store?: UndoStore
+
+  // Maximum number of undo levels (default: Infinity)
+  maxUndoLevels?: number
+
+  // Maximum number of redo levels (default: Infinity)
+  maxRedoLevels?: number
+
+  // Time window in milliseconds for grouping changes (default: undefined)
+  // If undefined, changes are only grouped within the same MobX action
+  // If set, changes within this time window will be merged into one event
+  groupingDebounceMs?: number
+
+  // Attached state management
+  attachedState?: {
+    save(): S
+    restore(state: S): void
+  }
+}
+```
+
+#### Properties
+
+- `canUndo: boolean` - Whether undo is possible
+- `canRedo: boolean` - Whether redo is possible
+- `undoLevels: number` - Number of undo steps available
+- `redoLevels: number` - Number of redo steps available
+- `undoQueue: ReadonlyArray<UndoEvent>` - The undo event queue (read-only)
+- `redoQueue: ReadonlyArray<UndoEvent>` - The redo event queue (read-only)
+- `isUndoRecordingDisabled: boolean` - Whether recording is currently disabled
+- `rootNode: object` - The tracked root node
+- `store: UndoStore` - The underlying undo store
+
+#### Methods
+
+- `undo(): void` - Undoes the last change
+  - Throws if called inside a MobX action
+  - Throws if there's nothing to undo
+- `redo(): void` - Redoes the last undone change
+  - Throws if called inside a MobX action
+  - Throws if there's nothing to redo
+- `clearUndo(): void` - Clears the undo queue
+- `clearRedo(): void` - Clears the redo queue
+- `withoutUndo<T>(fn: () => T): T` - Executes a function without recording changes
+  - Returns the function's return value
+  - Can be nested
+- `dispose(): void` - Stops change tracking and cleans up
+  - Safe to call multiple times
+
+### UndoStore
+
+The underlying store that holds undo/redo events. You can create a standalone store:
+
+```typescript
+import { createUndoStore } from "mobx-bonsai"
+
+const store = createUndoStore()
+
+// Access the event queues
+console.log(store.undoEvents) // Array of UndoEvent
+console.log(store.redoEvents) // Array of UndoEvent
+```
+
+## Best Practices
+
+1. **Create one UndoManager per document/root**: Each logical document or editing context should have its own undo manager.
+
+2. **Always dispose when done**: Call `dispose()` to prevent memory leaks, especially in React components:
+   ```typescript
+   useEffect(() => {
+     const manager = new UndoManager({ rootNode: document })
+     return () => manager.dispose()
+   }, [document])
+   ```
+
+3. **Use action grouping wisely**: Wrap related changes in `runInAction()` to create logical undo units:
+   ```typescript
+   // Good: All related changes in one action
+   runInAction(() => {
+     todo.text = "New text"
+     todo.completed = true
+     todo.priority = "high"
+   })
+
+   // Avoid: Separate actions create separate undo events
+   runInAction(() => { todo.text = "New text" })
+   runInAction(() => { todo.completed = true })
+   runInAction(() => { todo.priority = "high" })
+   ```
+
+4. **Set appropriate limits**: Use `maxUndoLevels` and `maxRedoLevels` for long-running applications to prevent unbounded memory growth.
+
+5. **Never undo/redo inside actions**: The manager will throw an error if you try this, as it could lead to inconsistent state.
+
+6. **Use `withoutUndo` for system changes**: Auto-generated or system changes shouldn't create undo events:
+   ```typescript
+   // Good: Don't track auto-save timestamps
+   undoManager.withoutUndo(() => {
+     runInAction(() => {
+       document.lastSaved = Date.now()
+     })
+   })
+   ```
+
+7. **Consider attached state carefully**: Only use attached state for truly external state. If it can be part of your node tree, it probably should be.
+
+## Limitations
+
+- **Cannot undo/redo inside MobX actions**: This is enforced to prevent state inconsistencies
+- **Changes outside actions**: While supported, changes outside MobX actions create individual undo events for each change, which may not be ideal
+- **Performance**: Each change creates snapshot copies of the value being changed, which may impact performance for very large trees with frequent changes
+- **Y.js Integration**: When using the Y.js binding (`mobx-bonsai-yjs`), it's recommended to use Y.js's built-in `UndoManager` instead of mobx-bonsai's `UndoManager`. Y.js's undo manager is specifically designed to work with CRDT operations and handles collaborative editing scenarios correctly, including conflict resolution and remote changes

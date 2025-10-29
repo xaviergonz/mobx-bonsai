@@ -61,8 +61,11 @@ export {
   isFrozenNode,
   node,
   onDeepChange,
+  onDeepInterceptedChange,
   type NodeChange,
   type NodeChangeListener,
+  type NodeInterceptedChange,
+  type NodeInterceptedChangeListener,
 } from "./node/node"
 export { substituteNodeKeys } from "./node/substituteNodeKeys"
 export type { NodeKeyGenerator } from "./node/utils/nodeKeyGenerator"
@@ -87,6 +90,29 @@ export { bigIntToStringTransform } from "./transforms/bigIntToStringTransform"
 export { asMap } from "./transforms/asMap"
 export { asSet } from "./transforms/asSet"
 export { ImmutableDate } from "./transforms/ImmutableDate"
+
+// undo
+export {
+  UndoManager,
+  type AttachedStateHandler,
+  type UndoManagerOptions,
+} from "./undo/UndoManager"
+export {
+  createUndoStore,
+  TUndoEvent,
+  TUndoStore,
+  type UndoEvent,
+  type UndoStore,
+} from "./undo/UndoStore"
+export type {
+  UndoableChange,
+  UndoableChangeBase,
+  UndoableObjectAddChange,
+  UndoableObjectUpdateChange,
+  UndoableObjectRemoveChange,
+  UndoableArraySpliceChange,
+  UndoableArrayUpdateChange,
+} from "./undo/types"
 
 // utils
 export { deepEquals } from "./utils/deepEquals"

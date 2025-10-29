@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.1.0
+
+- Reduced a bit memory usage per node.
+- Added `onDeepInterceptedChange` to handle changes -before- they happen.
+- Added `UndoManager`. (Note: If you are using the `Y.js` binding you should still use its own undo manager wherever possible).
+
 ## mobx-bonsai-yjs 2.1.0
 
 - `yjsOrigin` parameter in `bindYjsToNode` now accepts either a `symbol` or a `() => symbol` function. When a function is provided, it will be called dynamically to retrieve the current origin symbol for each transaction, allowing for runtime origin symbol selection.
