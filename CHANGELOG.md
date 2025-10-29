@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.1.1
+
+- Fixed `onDeepInterceptedChange` so it supports returning the change to accept it or returning `null` to cancel it, like mobx `intercept` does.
+
 ## 2.1.0
 
 - Reduced a bit memory usage per node.

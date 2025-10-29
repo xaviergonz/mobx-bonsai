@@ -39,12 +39,22 @@ export type NodeChange = IObjectDidChange | IArrayDidChange
 
 export type NodeChangeListener = (change: NodeChange) => void
 
+/**
+ * Represents a change that is about to happen to a node during the intercept phase.
+ */
 export type NodeInterceptedChange =
   | IObjectWillChange
   | IArrayWillChange<any>
   | IArrayWillSplice<any>
 
-export type NodeInterceptedChangeListener = (change: NodeInterceptedChange) => void
+/**
+ * Listener for intercepted changes. Must return:
+ * - The change object (possibly modified) to accept the change
+ * - null to cancel the change and stop propagation to parent listeners
+ */
+export type NodeInterceptedChangeListener = (
+  change: NodeInterceptedChange
+) => NodeInterceptedChange | null
 
 type NodeData = {
   parent: ParentNode | undefined
@@ -121,29 +131,48 @@ function emitToListeners<TChange>(
   }
 }
 
-function emitChange(eventTarget: object, change: IObjectDidChange | IArrayDidChange) {
-  const changeListeners = getNodeData(eventTarget).onChangeListeners
-  emitToListeners(changeListeners, change)
-}
-
-function emitInterceptedChange(eventTarget: object, change: NodeInterceptedChange) {
-  const interceptedChangeListeners = getNodeData(eventTarget).onInterceptedChangeListeners
-  emitToListeners(interceptedChangeListeners, change)
-}
-
-function emitToRoot<TChange>(
-  eventTarget: object,
-  change: TChange,
-  emitFn: (target: object, change: TChange) => void
-) {
+function emitChangeToRoot(eventTarget: object, change: IObjectDidChange | IArrayDidChange) {
   let currentTarget: object | undefined = eventTarget
   while (currentTarget) {
-    emitFn(currentTarget, change)
+    const changeListeners = getNodeData(currentTarget).onChangeListeners
+    emitToListeners(changeListeners, change)
     currentTarget = getParent(currentTarget)
   }
 }
 
-function registerListener<TListener>(
+function emitInterceptedChangeToRoot(
+  eventTarget: object,
+  change: IObjectWillChange | IArrayWillChange<any> | IArrayWillSplice<any>
+): NodeInterceptedChange | null {
+  let currentChange: NodeInterceptedChange = change
+  let currentTarget: object | undefined = eventTarget
+
+  while (currentTarget) {
+    const interceptedChangeListeners = getNodeData(currentTarget).onInterceptedChangeListeners
+    
+    if (interceptedChangeListeners && interceptedChangeListeners.length > 0) {
+      // Call all listeners on the current node
+      for (const listener of interceptedChangeListeners) {
+        const result = listener(currentChange)
+        if (result === undefined) {
+          throw failure(
+            "onDeepInterceptedChange listener must return either the change object or null, but returned undefined"
+          )
+        }
+        if (result === null) {
+          // Change was cancelled - stop propagation immediately
+          return null
+        }
+        // Update the change object with any modifications
+        currentChange = result
+      }
+    }
+    
+    currentTarget = getParent(currentTarget)
+  }
+
+  return currentChange
+}function registerListener<TListener>(
   node: object,
   listener: TListener,
   listenersProperty: "onChangeListeners" | "onInterceptedChangeListeners"
@@ -179,9 +208,16 @@ function registerListener<TListener>(
  *
  * Note: The listener is called before the change is committed, so the node still has its old state.
  *
+ * The listener must return one of the following:
+ * - The received change object (possibly modified) to accept and apply the change
+ * - null to cancel the change and stop propagation to parent listeners
+ *
+ * The listener can also throw an exception to prevent the change (e.g., if an invariant isn't met).
+ *
  * @param node - The node to attach the intercepted change listener to.
  * @param listener - The callback function that is called when a change is about to occur.
- *   The listener receives a NodeChange parameter representing the change that will be applied.
+ *   The listener receives a NodeInterceptedChange parameter and must return either the change
+ *   object (to accept it) or null (to cancel it).
  *
  * @returns A disposer function that, when invoked, unregisters the listener.
  */
@@ -380,7 +416,11 @@ export const node = action(
 
         intercept(array, (change) => {
           // Emit intercepted change BEFORE processing
-          emitToRoot(array, change, emitInterceptedChange)
+          const wrappedChange = emitInterceptedChangeToRoot(array, change)
+          if (wrappedChange === null) {
+            // Change was cancelled
+            return null
+          }
 
           let changed = false
 
@@ -449,14 +489,18 @@ export const node = action(
         })
 
         observe(array, (change) => {
-          emitToRoot(array, change, emitChange)
+          emitChangeToRoot(array, change)
         })
       } else {
         const object = observableStruct
 
         intercept(object, (change) => {
           // Emit intercepted change BEFORE processing
-          emitToRoot(object, change, emitInterceptedChange)
+          const wrappedChange = emitInterceptedChangeToRoot(object, change)
+          if (wrappedChange === null) {
+            // Change was cancelled
+            return null
+          }
 
           if (typeof change.name === "symbol") {
             throw failure("symbol keys are not supported on a mobx-bonsai node")
@@ -511,7 +555,7 @@ export const node = action(
         })
 
         observe(observableStruct, (change) => {
-          emitToRoot(observableStruct, change, emitChange)
+          emitChangeToRoot(observableStruct, change)
         })
       }
     }

@@ -131,20 +131,22 @@ export class UndoManager<TAttachedState = unknown> {
     this.interceptDisposer = onDeepInterceptedChange(this.rootNode, (change) => {
       // Skip if recording is disabled
       if (this.isRecordingDisabled) {
-        return
+        return change
       }
 
       // Skip if the change is to the UndoStore itself
       const isUndoStoreChange =
         change.object === this.store || isChildOfParent(change.object, this.store)
       if (isUndoStoreChange) {
-        return
+        return change
       }
 
       // Capture attached state before the first change of this event
       if (this.attachedState && this.pendingChanges.length === 0) {
         this.attachedStateBeforeNextEvent = this.attachedState.save()
       }
+      
+      return change
     })
 
     // Track committed changes to record them in the undo queue
