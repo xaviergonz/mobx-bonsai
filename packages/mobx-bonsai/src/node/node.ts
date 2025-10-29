@@ -3,8 +3,11 @@ import {
   action,
   createAtom,
   IArrayDidChange,
+  IArrayWillChange,
+  IArrayWillSplice,
   IAtom,
   IObjectDidChange,
+  IObjectWillChange,
   intercept,
   ObservableSet,
   observable,
@@ -36,11 +39,19 @@ export type NodeChange = IObjectDidChange | IArrayDidChange
 
 export type NodeChangeListener = (change: NodeChange) => void
 
+export type NodeInterceptedChange =
+  | IObjectWillChange
+  | IArrayWillChange<any>
+  | IArrayWillSplice<any>
+
+export type NodeInterceptedChangeListener = (change: NodeInterceptedChange) => void
+
 type NodeData = {
   parent: ParentNode | undefined
   parentAtom: IAtom | undefined
-  onChangeListeners: NodeChangeListener[]
-  childrenObjects: ObservableSet<object>
+  onChangeListeners: NodeChangeListener[] | undefined
+  onInterceptedChangeListeners: NodeInterceptedChangeListener[] | undefined
+  childrenObjects: ObservableSet<object> | undefined
   frozen: boolean
 }
 
@@ -99,21 +110,86 @@ export function assertIsNode(node: object, argName: string): void {
   }
 }
 
-function emitChange(eventTarget: object, change: IObjectDidChange | IArrayDidChange) {
-  const changeListeners = getNodeData(eventTarget).onChangeListeners
-  if (changeListeners.length > 0) {
-    changeListeners.forEach((listener) => {
+function emitToListeners<TChange>(
+  listeners: Array<(change: TChange) => void> | undefined,
+  change: TChange
+) {
+  if (listeners && listeners.length > 0) {
+    listeners.forEach((listener) => {
       listener(change)
     })
   }
 }
 
-function emitChangeToRoot(eventTarget: object, change: IObjectDidChange | IArrayDidChange) {
+function emitChange(eventTarget: object, change: IObjectDidChange | IArrayDidChange) {
+  const changeListeners = getNodeData(eventTarget).onChangeListeners
+  emitToListeners(changeListeners, change)
+}
+
+function emitInterceptedChange(eventTarget: object, change: NodeInterceptedChange) {
+  const interceptedChangeListeners = getNodeData(eventTarget).onInterceptedChangeListeners
+  emitToListeners(interceptedChangeListeners, change)
+}
+
+function emitToRoot<TChange>(
+  eventTarget: object,
+  change: TChange,
+  emitFn: (target: object, change: TChange) => void
+) {
   let currentTarget: object | undefined = eventTarget
   while (currentTarget) {
-    emitChange(currentTarget, change)
+    emitFn(currentTarget, change)
     currentTarget = getParent(currentTarget)
   }
+}
+
+function registerListener<TListener>(
+  node: object,
+  listener: TListener,
+  listenersProperty: "onChangeListeners" | "onInterceptedChangeListeners"
+): Dispose {
+  const nodeData = getNodeData(node)
+  let listeners = nodeData[listenersProperty] as TListener[] | undefined
+  if (!listeners) {
+    listeners = []
+    nodeData[listenersProperty] = listeners as any
+  }
+  listeners.push(listener)
+
+  return disposeOnce(() => {
+    const currentListeners = nodeData[listenersProperty] as TListener[] | undefined
+    if (currentListeners) {
+      const index = currentListeners.indexOf(listener)
+      if (index !== -1) {
+        currentListeners.splice(index, 1)
+        if (currentListeners.length === 0) {
+          nodeData[listenersProperty] = undefined
+        }
+      }
+    }
+  })
+}
+
+/**
+ * Registers a deep change listener on the provided node that is called BEFORE changes are committed.
+ *
+ * The listener is invoked whenever the node is about to undergo a change, such as additions,
+ * updates, or removals within its observable structure. This is called during the intercept phase,
+ * before the change is actually applied. This includes receiving events from both object and array mutations.
+ *
+ * Note: The listener is called before the change is committed, so the node still has its old state.
+ *
+ * @param node - The node to attach the intercepted change listener to.
+ * @param listener - The callback function that is called when a change is about to occur.
+ *   The listener receives a NodeChange parameter representing the change that will be applied.
+ *
+ * @returns A disposer function that, when invoked, unregisters the listener.
+ */
+export function onDeepInterceptedChange(
+  node: object,
+  listener: NodeInterceptedChangeListener
+): Dispose {
+  return registerListener(node, listener, "onInterceptedChangeListeners")
 }
 
 /**
@@ -132,15 +208,7 @@ function emitChangeToRoot(eventTarget: object, change: IObjectDidChange | IArray
  * @returns A disposer function that, when invoked, unregisters the listener.
  */
 export function onDeepChange(node: object, listener: NodeChangeListener): Dispose {
-  const changeListeners = getNodeData(node).onChangeListeners
-  changeListeners.push(listener)
-
-  return disposeOnce(() => {
-    const index = changeListeners.indexOf(listener)
-    if (index !== -1) {
-      changeListeners.splice(index, 1)
-    }
-  })
+  return registerListener(node, listener, "onChangeListeners")
 }
 
 let detachDuplicatedNodes = 0
@@ -197,10 +265,9 @@ export const node = action(
     const nodeData: NodeData = {
       parent: undefined,
       parentAtom: undefined,
-      onChangeListeners: [],
-      childrenObjects: observable.set([], {
-        deep: false,
-      }),
+      onChangeListeners: undefined,
+      onInterceptedChangeListeners: undefined,
+      childrenObjects: undefined,
       frozen,
     }
 
@@ -268,6 +335,10 @@ export const node = action(
           }
         }
 
+        // Lazily create childrenObjects set
+        if (!nodeData.childrenObjects) {
+          nodeData.childrenObjects = observable.set([], { deep: false })
+        }
         nodeData.childrenObjects.add(n)
 
         setParentNode(n, { object: observableStruct, path })
@@ -277,7 +348,9 @@ export const node = action(
         // might not be a node if we convert from observable struct to an existing unique node
         if (!isPrimitive(v) && isNode(v)) {
           setParentNode(v, undefined)
-          nodeData.childrenObjects.delete(v)
+          if (nodeData.childrenObjects) {
+            nodeData.childrenObjects.delete(v)
+          }
         }
       }
 
@@ -306,6 +379,9 @@ export const node = action(
         const array = observableStruct
 
         intercept(array, (change) => {
+          // Emit intercepted change BEFORE processing
+          emitToRoot(array, change, emitInterceptedChange)
+
           let changed = false
 
           switch (change.type) {
@@ -373,12 +449,15 @@ export const node = action(
         })
 
         observe(array, (change) => {
-          emitChangeToRoot(array, change)
+          emitToRoot(array, change, emitChange)
         })
       } else {
         const object = observableStruct
 
         intercept(object, (change) => {
+          // Emit intercepted change BEFORE processing
+          emitToRoot(object, change, emitInterceptedChange)
+
           if (typeof change.name === "symbol") {
             throw failure("symbol keys are not supported on a mobx-bonsai node")
           }
@@ -432,7 +511,7 @@ export const node = action(
         })
 
         observe(observableStruct, (change) => {
-          emitChangeToRoot(observableStruct, change)
+          emitToRoot(observableStruct, change, emitChange)
         })
       }
     }

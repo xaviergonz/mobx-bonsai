@@ -10,6 +10,7 @@ const sidebars: SidebarsConfig = {
     "transforms",
     "frozenNodes",
     "contexts",
+    "undoManager",
     {
       type: "category",
       label: "Integrations",

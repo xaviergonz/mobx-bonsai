@@ -1,5 +1,5 @@
-import { node, onDeepChange, NodeChange } from "../../src"
 import { runInAction } from "mobx"
+import { NodeChange, node, onDeepChange } from "../../src"
 
 it("should notify listener on object property changes", () => {
   const testNode = node<{ a: number; arr: number[] }>({ a: 1, arr: [] })
@@ -21,7 +21,7 @@ it("should notify listener on object property changes", () => {
   expect(events).toMatchInlineSnapshot(`
 [
   {
-    "debugObjectName": "ObservableObject@2",
+    "debugObjectName": "ObservableObject@1",
     "name": "a",
     "newValue": 2,
     "object": {
@@ -39,7 +39,7 @@ it("should notify listener on object property changes", () => {
       1,
     ],
     "addedCount": 1,
-    "debugObjectName": "ObservableArray@4",
+    "debugObjectName": "ObservableArray@2",
     "index": 0,
     "object": [
       1,
