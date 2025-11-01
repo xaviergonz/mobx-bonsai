@@ -16083,6 +16083,8 @@ __metadata:
     tslib: "npm:^2.8.1"
     typedoc: "npm:^0.28.14"
     typescript: "npm:^5.9.3"
+    vite: "npm:^7.1.12"
+    vite-plugin-dts: "npm:^4.5.4"
   peerDependencies:
     mobx: ^6.0.0 || ^5.0.0 || ^4.0.0
     mobx-bonsai: ^2.0.0
@@ -16112,6 +16114,8 @@ __metadata:
     type-fest: "npm:^4.41.0"
     typedoc: "npm:^0.28.14"
     typescript: "npm:^5.9.3"
+    vite: "npm:^7.1.12"
+    vite-plugin-dts: "npm:^4.5.4"
   peerDependencies:
     mobx: ^6.0.0 || ^5.0.0 || ^4.0.0
   languageName: unknown
