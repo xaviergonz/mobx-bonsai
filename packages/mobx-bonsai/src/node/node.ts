@@ -149,7 +149,7 @@ function emitInterceptedChangeToRoot(
 
   while (currentTarget) {
     const interceptedChangeListeners = getNodeData(currentTarget).onInterceptedChangeListeners
-    
+
     if (interceptedChangeListeners && interceptedChangeListeners.length > 0) {
       // Call all listeners on the current node
       for (const listener of interceptedChangeListeners) {
@@ -167,12 +167,13 @@ function emitInterceptedChangeToRoot(
         currentChange = result
       }
     }
-    
+
     currentTarget = getParent(currentTarget)
   }
 
   return currentChange
-}function registerListener<TListener>(
+}
+function registerListener<TListener>(
   node: object,
   listener: TListener,
   listenersProperty: "onChangeListeners" | "onInterceptedChangeListeners"

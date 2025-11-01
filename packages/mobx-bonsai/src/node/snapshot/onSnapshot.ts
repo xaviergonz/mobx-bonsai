@@ -1,7 +1,7 @@
 import { reaction } from "mobx"
-import { getSnapshot } from "./getSnapshot"
-import { assertIsNode } from "../node"
 import { Dispose, disposeOnce } from "../../utils/disposable"
+import { assertIsNode } from "../node"
+import { getSnapshot } from "./getSnapshot"
 
 /**
  * Listener function for onSnapshot.

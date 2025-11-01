@@ -1,18 +1,18 @@
 import {
   action,
-  intercept,
   IObservableArray,
   ISetWillChange,
+  intercept,
   isObservableArray,
-  observable,
   ObservableSet,
+  observable,
   observe,
   transaction,
   untracked,
 } from "mobx"
 import { failure } from "../error/failure"
-import { getMobxVersion } from "../utils/getMobxVersion"
 import { isArray } from "../plainTypes/checks"
+import { getMobxVersion } from "../utils/getMobxVersion"
 
 class PlainArraySet<T> implements Set<T> {
   constructor(private readonly data: T[]) {}

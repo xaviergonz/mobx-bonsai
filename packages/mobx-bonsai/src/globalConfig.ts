@@ -1,4 +1,4 @@
-import { NodeKeyGenerator, defaultNodeKeyGenerator } from "./node/utils/nodeKeyGenerator"
+import { defaultNodeKeyGenerator, NodeKeyGenerator } from "./node/utils/nodeKeyGenerator"
 
 /**
  * Global config object.

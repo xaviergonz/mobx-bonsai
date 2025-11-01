@@ -1,6 +1,6 @@
 import { assertIsNode } from "../node/node"
 import { getSnapshot } from "../node/snapshot/getSnapshot"
-import { onSnapshot, OnSnapshotListener } from "../node/snapshot/onSnapshot"
+import { OnSnapshotListener, onSnapshot } from "../node/snapshot/onSnapshot"
 import { Dispose } from "../utils/disposable"
 
 export const reduxActionType = "applyAction"

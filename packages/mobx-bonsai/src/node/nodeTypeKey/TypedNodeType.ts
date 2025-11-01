@@ -1,5 +1,5 @@
 import { BaseNodeType } from "./BaseNodeType"
-import { NodeWithAnyType, NodeTypeKey } from "./nodeType"
+import { NodeTypeKey, NodeWithAnyType } from "./nodeType"
 
 /**
  * Represents a node type with associated lifecycle and behavior

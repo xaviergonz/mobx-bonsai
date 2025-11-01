@@ -145,7 +145,7 @@ export class UndoManager<TAttachedState = unknown> {
       if (this.attachedState && this.pendingChanges.length === 0) {
         this.attachedStateBeforeNextEvent = this.attachedState.save()
       }
-      
+
       return change
     })
 

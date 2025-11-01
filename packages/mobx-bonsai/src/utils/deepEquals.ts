@@ -1,6 +1,6 @@
 import fastDeepEqual from "fast-deep-equal/es6"
-import { isNode } from "../node/node"
 import { isObservable, toJS } from "mobx"
+import { isNode } from "../node/node"
 import { getSnapshot } from "../node/snapshot/getSnapshot"
 import { getMobxVersion } from "./getMobxVersion"
 

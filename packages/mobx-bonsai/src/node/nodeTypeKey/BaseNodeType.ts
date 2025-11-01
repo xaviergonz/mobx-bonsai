@@ -1,8 +1,8 @@
-import { Merge, SetOptional } from "type-fest"
 import { IComputedValueOptions } from "mobx"
-import { PrependArgument } from "../../utils/PrependArgument"
-import { nodeTypeKey, NodeTypeKey, NodeTypeValue } from "./nodeType"
+import { Merge, SetOptional } from "type-fest"
 import { Dispose } from "../../utils/disposable"
+import { PrependArgument } from "../../utils/PrependArgument"
+import { NodeTypeKey, NodeTypeValue, nodeTypeKey } from "./nodeType"
 
 /**
  * Base interface for node types with type-specific capabilities.

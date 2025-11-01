@@ -1,5 +1,5 @@
 import mitt from "mitt"
-import { IComputedValue, action, computed } from "mobx"
+import { action, computed, IComputedValue } from "mobx"
 import { failure } from "../../error/failure"
 import { getGlobalConfig } from "../../globalConfig"
 import { disposeOnce } from "../../utils/disposable"
@@ -49,13 +49,7 @@ export type TNode<TType extends NodeTypeValue, TData> = {
 const nodeByTypeAndKey = new Map<NodeTypeValue, Map<NodeKeyValue, WeakRef<object>>>()
 
 const finalizationRegistry = new FinalizationRegistry(
-  ({
-    typeId,
-    key,
-  }: {
-    typeId: NodeTypeValue
-    key: NodeKeyValue
-  }) => {
+  ({ typeId, key }: { typeId: NodeTypeValue; key: NodeKeyValue }) => {
     const typeMap = nodeByTypeAndKey.get(typeId)
     if (!typeMap) {
       // already gone

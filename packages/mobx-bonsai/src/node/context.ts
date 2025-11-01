@@ -1,7 +1,7 @@
 import { action, computed, createAtom, IAtom, IComputedValue, observable } from "mobx"
 import { getOrCreate } from "../utils/mapUtils"
-import { getParent } from "./tree/getParent"
 import { assertIsNode, isNode } from "./node"
+import { getParent } from "./tree/getParent"
 
 /**
  * A context.

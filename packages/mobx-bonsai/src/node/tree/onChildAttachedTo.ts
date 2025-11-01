@@ -1,10 +1,10 @@
 import { action, reaction, runInAction } from "mobx"
 import { assertIsFunction } from "../../plainTypes/checks"
-import { assertIsNode } from "../node"
-import { getChildrenNodes } from "./getChildrenNodes"
 import { disposeOnce } from "../../utils/disposable"
-import { AnyTypedNodeType, getNodeTypeAndKey } from "../nodeTypeKey/nodeType"
+import { assertIsNode } from "../node"
 import { NodeForNodeType } from "../nodeTypeKey/NodeForNodeType"
+import { AnyTypedNodeType, getNodeTypeAndKey } from "../nodeTypeKey/nodeType"
+import { getChildrenNodes } from "./getChildrenNodes"
 
 /**
  * Represents a disposer function to clean up resources after a child node is attached to a parent.

@@ -1,10 +1,10 @@
 import { remove, set } from "mobx"
+import { failure } from "../error/failure"
 import { isArray, isMap, isPrimitive, isSet } from "../plainTypes/checks"
 import { isNode } from "./node"
+import { getNodeTypeAndKey } from "./nodeTypeKey/nodeType"
 import { getParentPath } from "./tree/getParentPath"
 import { isChildOfParent } from "./tree/isChildOfParent"
-import { failure } from "../error/failure"
-import { getNodeTypeAndKey } from "./nodeTypeKey/nodeType"
 
 function detachIfNeeded(newValue: any, oldValue: any, reconciliationRoot: object) {
   // edge case for when we are swapping nodes around the tree
