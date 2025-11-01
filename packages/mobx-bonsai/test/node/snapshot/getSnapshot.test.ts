@@ -257,3 +257,141 @@ it("should maintain the same parent snapshot when reassigning the same sub-value
   })
   expect(getSnapshot(parent)).toBe(sn1)
 })
+
+describe("Snapshot Early Termination", () => {
+  test("repeated mutations work correctly", () => {
+    const root = node({
+      a: { b: { c: { value: 1 } } },
+    })
+
+    const snap1 = getSnapshot(root)
+
+    runInAction(() => {
+      // Multiple mutations to same leaf - early termination prevents redundant tree walks
+      root.a.b.c.value = 2
+      root.a.b.c.value = 3
+      root.a.b.c.value = 4
+    })
+
+    const snap2 = getSnapshot(root)
+
+    // Snapshots should be different
+    expect(snap2).not.toBe(snap1)
+    expect(snap2.a.b.c.value).toBe(4)
+  })
+
+  test("multiple rapid mutations produce correct snapshots", () => {
+    const root = node({
+      deep: { nested: { value: 0 } },
+    })
+
+    const snap1 = getSnapshot(root)
+    expect(snap1.deep.nested.value).toBe(0)
+
+    runInAction(() => {
+      // 10 rapid mutations to the same node
+      for (let i = 1; i <= 10; i++) {
+        root.deep.nested.value = i
+      }
+    })
+
+    const snap2 = getSnapshot(root)
+    expect(snap2.deep.nested.value).toBe(10)
+    expect(snap2).not.toBe(snap1)
+  })
+
+  test("deep tree with multiple levels", () => {
+    const root = node({
+      level1: {
+        level2: {
+          level3: {
+            level4: {
+              level5: { value: 0 },
+            },
+          },
+        },
+      },
+    })
+
+    const snap1 = getSnapshot(root)
+
+    runInAction(() => {
+      // 100 rapid mutations at the deepest level - stress test for early termination
+      for (let i = 1; i <= 100; i++) {
+        root.level1.level2.level3.level4.level5.value = i
+      }
+    })
+
+    const snap2 = getSnapshot(root)
+
+    expect(snap2.level1.level2.level3.level4.level5.value).toBe(100)
+    expect(snap2).not.toBe(snap1)
+  })
+
+  test("getSnapshot calls between mutations inside same action work correctly", () => {
+    const root = node({
+      a: { value: 1 },
+      b: { value: 2 },
+    })
+
+    const snap1 = getSnapshot(root)
+    expect(snap1.a.value).toBe(1)
+    expect(snap1.b.value).toBe(2)
+
+    let midSnap1: any
+    let midSnap2: any
+    let midSnap3: any
+
+    runInAction(() => {
+      // First mutation
+      root.a.value = 10
+
+      // Get snapshot mid-action after first mutation
+      midSnap1 = getSnapshot(root)
+
+      // Second mutation on same node
+      root.a.value = 20
+
+      // Get snapshot mid-action after second mutation
+      midSnap2 = getSnapshot(root)
+
+      // Mutation on different node
+      root.b.value = 30
+
+      // Get snapshot mid-action after third mutation
+      midSnap3 = getSnapshot(root)
+
+      // Final mutation
+      root.a.value = 40
+    })
+
+    const snap2 = getSnapshot(root)
+
+    // All mid-action snapshots should be different from initial
+    expect(midSnap1).not.toBe(snap1)
+    expect(midSnap2).not.toBe(snap1)
+    expect(midSnap3).not.toBe(snap1)
+
+    // Mid-action snapshots should reflect state at that point
+    expect(midSnap1.a.value).toBe(10)
+    expect(midSnap1.b.value).toBe(2)
+
+    expect(midSnap2.a.value).toBe(20)
+    expect(midSnap2.b.value).toBe(2)
+
+    expect(midSnap3.a.value).toBe(20)
+    expect(midSnap3.b.value).toBe(30)
+
+    // Final snapshot should reflect all mutations
+    expect(snap2.a.value).toBe(40)
+    expect(snap2.b.value).toBe(30)
+
+    // All snapshots should be different (cache invalidated between each)
+    expect(midSnap2).not.toBe(midSnap1)
+    expect(midSnap3).not.toBe(midSnap2)
+    expect(snap2).not.toBe(midSnap3)
+
+    // Structural sharing: unchanged child in midSnap1 should be cached from snap1
+    expect(midSnap1.b).toBe(snap1.b)
+  })
+})

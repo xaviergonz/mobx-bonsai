@@ -1,5 +1,7 @@
 # Change Log
 
+- Optimized a bit snapshot invalidation.
+
 ## 2.1.1
 
 - Fixed `onDeepInterceptedChange` so it supports returning the change to accept it or returning `null` to cancel it, like mobx `intercept` does.

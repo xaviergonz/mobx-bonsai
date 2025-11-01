@@ -12,7 +12,13 @@ export const invalidateSnapshotTreeToRoot = action((node: object): void => {
 
   let current: object | undefined = node
   while (current) {
-    snapshots.delete(current)
+    const hadSnapshot = snapshots.delete(current)
+
+    if (!hadSnapshot) {
+      // Already deleted (dirty), ancestors must be dirty too
+      break
+    }
+
     snapshotAtoms.get(current)?.reportChanged()
     current = getParentPath(current)?.parent
   }
