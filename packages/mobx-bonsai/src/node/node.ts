@@ -466,7 +466,7 @@ export const node = action(
                     throw failure("node expected")
                   }
                   setParentNode(
-                    array[i], // value
+                    value,
                     {
                       object: array,
                       path: "" + j,
