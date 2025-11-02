@@ -1,6 +1,7 @@
 # Change Log
 
 - Optimized a bit snapshot invalidation.
+- `observer` is no longer used for nodes not under `onDeepChange` detection.
 
 ## 2.1.1
 

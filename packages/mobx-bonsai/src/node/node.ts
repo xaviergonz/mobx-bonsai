@@ -63,6 +63,11 @@ type NodeData = {
   onInterceptedChangeListeners: NodeInterceptedChangeListener[] | undefined
   childrenObjects: ObservableSet<object> | undefined
   frozen: boolean
+  // Observer management (intercept is always attached, only observe is lazy)
+  observeDisposer: Dispose | undefined
+  // Reference count for "has onChangeListeners in path to root"
+  // > 0 means this node or some ancestor has onChangeListeners
+  ancestorChangeListenerRefCount: number
 }
 
 export function getNodeData(node: object): NodeData {
@@ -82,8 +87,33 @@ const nodes = new WeakMap<object, NodeData>()
 
 function setParentNode(node: object, parentNode: ParentNode | undefined): void {
   const nodeData = getNodeData(node)
+  const oldParent = nodeData.parent
+
   nodeData.parent = parentNode
   nodeData.parentAtom?.reportChanged()
+
+  // Handle reference count updates when parent changes
+  if (oldParent && !parentNode) {
+    // Node was detached - check if old parent had onChangeListeners
+    if (shouldHaveChangeListeners(oldParent.object)) {
+      decrementAncestorChangeListenerRefCount(node)
+    }
+  } else if (!oldParent && parentNode) {
+    // Node was attached - check if new parent has onChangeListeners
+    if (shouldHaveChangeListeners(parentNode.object)) {
+      incrementAncestorChangeListenerRefCount(node)
+    }
+  } else if (oldParent && parentNode && oldParent.object !== parentNode.object) {
+    // Node was moved - handle both old and new parent
+    const hadListenersInOldTree = shouldHaveChangeListeners(oldParent.object)
+    const hasListenersInNewTree = shouldHaveChangeListeners(parentNode.object)
+
+    if (hadListenersInOldTree && !hasListenersInNewTree) {
+      decrementAncestorChangeListenerRefCount(node)
+    } else if (!hadListenersInOldTree && hasListenersInNewTree) {
+      incrementAncestorChangeListenerRefCount(node)
+    }
+  }
 }
 
 /**
@@ -180,11 +210,19 @@ function registerListener<TListener>(
 ): Dispose {
   const nodeData = getNodeData(node)
   let listeners = nodeData[listenersProperty] as TListener[] | undefined
+
+  const wasEmpty = !listeners || listeners.length === 0
+
   if (!listeners) {
     listeners = []
     nodeData[listenersProperty] = listeners as any
   }
   listeners.push(listener)
+
+  // If this is the first onChangeListener, propagate down the tree
+  if (wasEmpty && listenersProperty === "onChangeListeners") {
+    incrementAncestorChangeListenerRefCount(node)
+  }
 
   return disposeOnce(() => {
     const currentListeners = nodeData[listenersProperty] as TListener[] | undefined
@@ -192,8 +230,16 @@ function registerListener<TListener>(
       const index = currentListeners.indexOf(listener)
       if (index !== -1) {
         currentListeners.splice(index, 1)
-        if (currentListeners.length === 0) {
+
+        const isEmpty = currentListeners.length === 0
+
+        if (isEmpty) {
           nodeData[listenersProperty] = undefined
+
+          // If this was the last onChangeListener, propagate down the tree
+          if (listenersProperty === "onChangeListeners") {
+            decrementAncestorChangeListenerRefCount(node)
+          }
         }
       }
     }
@@ -246,6 +292,105 @@ export function onDeepInterceptedChange(
  */
 export function onDeepChange(node: object, listener: NodeChangeListener): Dispose {
   return registerListener(node, listener, "onChangeListeners")
+}
+
+/**
+ * Attach MobX observe hook to a node
+ */
+function attachObserveHook(node: object): void {
+  const nodeData = getNodeData(node)
+
+  if (!nodeData.observeDisposer) {
+    nodeData.observeDisposer = observe(node, (change) => {
+      emitChangeToRoot(node, change)
+    })
+  }
+}
+
+/**
+ * Detach MobX observe hook from a node
+ */
+function detachObserveHook(node: object): void {
+  const nodeData = getNodeData(node)
+
+  if (nodeData.observeDisposer) {
+    nodeData.observeDisposer()
+    nodeData.observeDisposer = undefined
+  }
+}
+
+/**
+ * Increment the ancestor change listener ref count for this node and all its descendants
+ */
+function incrementAncestorChangeListenerRefCount(node: object): void {
+  const nodeData = getNodeData(node)
+
+  // Skip frozen nodes entirely - they never get observe hooks
+  if (nodeData.frozen) {
+    return
+  }
+
+  // Increment this node's count
+  nodeData.ancestorChangeListenerRefCount++
+
+  // If count went from 0 to 1, we need to attach observe hook
+  if (nodeData.ancestorChangeListenerRefCount === 1) {
+    attachObserveHook(node)
+  }
+
+  // Propagate to all children
+  if (nodeData.childrenObjects) {
+    nodeData.childrenObjects.forEach((child) => {
+      incrementAncestorChangeListenerRefCount(child)
+    })
+  }
+}
+
+/**
+ * Decrement the ancestor change listener ref count for this node and all its descendants
+ */
+function decrementAncestorChangeListenerRefCount(node: object): void {
+  const nodeData = getNodeData(node)
+
+  // Skip frozen nodes entirely - they never get observe hooks
+  if (nodeData.frozen) {
+    return
+  }
+
+  // Decrement this node's count
+  nodeData.ancestorChangeListenerRefCount--
+
+  // If count went to 0, we can detach observe hook
+  if (nodeData.ancestorChangeListenerRefCount === 0) {
+    detachObserveHook(node)
+  }
+
+  // Propagate to all children
+  if (nodeData.childrenObjects) {
+    nodeData.childrenObjects.forEach((child) => {
+      decrementAncestorChangeListenerRefCount(child)
+    })
+  }
+}
+
+/**
+ * Check if a node or any of its ancestors has onChangeListeners
+ */
+function shouldHaveChangeListeners(node: object): boolean {
+  let current: object | undefined = node
+
+  while (current) {
+    const data = getNodeData(current)
+    const hasListeners = data.onChangeListeners && data.onChangeListeners.length > 0
+
+    if (hasListeners) {
+      return true
+    }
+
+    current = getParent(current)
+  }
+
+  return false
 }
 
 let detachDuplicatedNodes = 0
@@ -306,6 +451,8 @@ export const node = action(
       onInterceptedChangeListeners: undefined,
       childrenObjects: undefined,
       frozen,
+      observeDisposer: undefined,
+      ancestorChangeListenerRefCount: 0,
     }
 
     let nodeStruct: object
@@ -489,9 +636,7 @@ export const node = action(
           return null
         })
 
-        observe(array, (change) => {
-          emitChangeToRoot(array, change)
-        })
+        // observe() hook is attached lazily when first onChangeListener is registered
       } else {
         const object = observableStruct
 
@@ -555,9 +700,7 @@ export const node = action(
           return null
         })
 
-        observe(observableStruct, (change) => {
-          emitChangeToRoot(observableStruct, change)
-        })
+        // observe() hook is attached lazily when first onChangeListener is registered
       }
     }
 
