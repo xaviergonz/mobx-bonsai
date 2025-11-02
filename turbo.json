@@ -46,6 +46,11 @@
       "cache": false,
       "dependsOn": ["mobx-bonsai#build", "mobx-bonsai-yjs#build", "mobx-bonsai#build-docs"],
       "outputs": []
+    },
+    "profiling#profile:node-creation": {
+      "cache": false,
+      "dependsOn": ["mobx-bonsai#build"],
+      "outputs": ["out/**"]
     }
   }
 }

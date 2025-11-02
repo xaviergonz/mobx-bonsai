@@ -16180,7 +16180,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mobx@npm:^6.15.0":
+"mobx@npm:^6.14.0, mobx@npm:^6.15.0":
   version: 6.15.0
   resolution: "mobx@npm:6.15.0"
   checksum: 10c0/afbfdc5659caac4ba620d1caca8eb471bbe56746403a8023ae402e27f9e04856394e1529ccf46feb7fdad0c6d695fa1972e8421e7fbfcb1cf453131739a12ac4
@@ -18526,6 +18526,18 @@ __metadata:
   checksum: 10c0/40c3ce4b7e6d4b8c3355479df77aeed46f81b279818ccdc500124e6a5ab882c0cc81ff7ea16384873a95a74c4570b01b120f287abbdd4c877931460eca6084b3
   languageName: node
   linkType: hard
+
+"profiling@workspace:apps/profiling":
+  version: 0.0.0-use.local
+  resolution: "profiling@workspace:apps/profiling"
+  dependencies:
+    mobx: "npm:^6.14.0"
+    mobx-bonsai: "workspace:packages/mobx-bonsai"
+    typescript: "npm:^5.9.3"
+  peerDependencies:
+    mobx: ^6.0.0
+  languageName: unknown
+  linkType: soft
 
 "promise-retry@npm:^2.0.1":
   version: 2.0.1
