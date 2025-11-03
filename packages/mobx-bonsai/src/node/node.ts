@@ -90,9 +90,6 @@ function setParentNode(node: object, parentNode: ParentNode | undefined): void {
   const nodeData = getNodeData(node)
   const oldParent = nodeData.parent
 
-  nodeData.parent = parentNode
-  nodeData.parentAtom?.reportChanged()
-
   // Handle reference count updates when parent changes
   if (oldParent && !parentNode) {
     // Node was detached - check if old parent had onChangeListeners
@@ -105,16 +102,14 @@ function setParentNode(node: object, parentNode: ParentNode | undefined): void {
       incrementAncestorChangeListenerRefCount(node)
     }
   } else if (oldParent && parentNode && oldParent.object !== parentNode.object) {
-    // Node was moved - handle both old and new parent
-    const hadListenersInOldTree = shouldHaveChangeListeners(oldParent.object)
-    const hasListenersInNewTree = shouldHaveChangeListeners(parentNode.object)
-
-    if (hadListenersInOldTree && !hasListenersInNewTree) {
-      decrementAncestorChangeListenerRefCount(node)
-    } else if (!hadListenersInOldTree && hasListenersInNewTree) {
-      incrementAncestorChangeListenerRefCount(node)
-    }
+    // This should never happen - nodes should be detached before being attached elsewhere
+    throw failure(
+      "assertion failed: node moved from one parent to another without being detached first"
+    )
   }
+
+  nodeData.parent = parentNode
+  nodeData.parentAtom?.reportChanged()
 }
 
 /**
@@ -395,6 +390,36 @@ export const runDetachingDuplicatedNodes = (fn: () => void) => {
   }
 }
 
+function checkForCircularReferences(observableStruct: object, n: object, path: string): void {
+  // Check if we're trying to create a circular reference
+  // (making a node a child of one of its own descendants)
+  if (!getGlobalConfig().checkCircularReferences) {
+    return
+  }
+
+  let currentParent: object | undefined = observableStruct
+  const visited = new Set<object>()
+  while (currentParent) {
+    if (visited.has(currentParent)) {
+      // Cycle detected in the parent chain - this indicates a corrupted tree structure
+      throw failure(
+        `assertion error: cycle detected in parent chain while checking for circular reference,` +
+          ` this should never happen and indicates a bug in mobx-bonsai.`
+      )
+    }
+    visited.add(currentParent)
+
+    if (currentParent === n) {
+      throw failure(
+        `Cannot create a circular reference.` +
+          ` Trying to assign a node to ${JSON.stringify(buildNodeFullPath(observableStruct, path))},` +
+          ` but this would make the node an ancestor of itself.`
+      )
+    }
+    currentParent = getParent(currentParent)
+  }
+}
+
 /**
  * Converts a plain/observable object or array into a mobx-bonsai node.
  * If the data is already a node it is returned as is.
@@ -487,6 +512,8 @@ export const node = action(
 
         let n = v
         if (isNode(n)) {
+          checkForCircularReferences(observableStruct, n, path)
+
           // ensure it is detached first or at same position
           const parent = getNodeData(n).parent
           if (parent && (parent.object !== observableStruct || parent.path !== path)) {
@@ -502,33 +529,28 @@ export const node = action(
               )
             }
           }
-
-          // Check if we're trying to create a circular reference
-          // (making a node a child of one of its own descendants)
-          if (getGlobalConfig().checkCircularReferences) {
-            let currentParent: object | undefined = observableStruct
-            const visited = new Set<object>()
-            while (currentParent) {
-              if (visited.has(currentParent)) {
-                // Cycle detected in the parent chain, break to avoid infinite loop
-                break
-              }
-              visited.add(currentParent)
-
-              if (currentParent === n) {
-                throw failure(
-                  `Cannot create a circular reference.` +
-                    ` Trying to assign a node to ${JSON.stringify(buildNodeFullPath(observableStruct, path))},` +
-                    ` but this would make the node an ancestor of itself.`
-                )
-              }
-              currentParent = getParent(currentParent)
-            }
-          }
         } else {
           n = node(v)
+
+          checkForCircularReferences(observableStruct, n, path)
+
+          // if the converted node has a parent, we need to detach it first
+          // note: this only happens when snapshots resolve to existing unique nodes
+          const parent = getNodeData(n).parent
+          if (parent && (parent.object !== observableStruct || parent.path !== path)) {
+            set(parent.object, parent.path, undefined)
+          }
+
+          // n !== v is TRUE when:
+          //   1. v was a plain (non-observable) object/array that got converted to an observable node
+          //   2. v had a type+key that resolved to an existing node (reconciliation)
+          // n === v is TRUE (no conversion needed) when:
+          //   1. v was already an observable structure but not yet registered as a node
+          //   This happens during reconciliation/applySnapshot when passing observable objects
+          //   Both unique nodes (with type+key) and regular nodes can hit this path
           if (n !== v) {
-            // actually needed conversion from plain object, or was a unique node that resolved to an existing node
+            // actually needed conversion from plain object, or was a unique node snapshot that
+            // got resolved to an existing node
             setIfConverted(n)
           }
         }

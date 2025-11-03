@@ -1,5 +1,5 @@
 import { runInAction } from "mobx"
-import { node, onDeepChange } from "../../src"
+import { node, nodeType, onDeepChange, TNode } from "../../src"
 import { getNodeData } from "../../src/node/node"
 import "../commonSetup"
 
@@ -532,5 +532,59 @@ describe("observe hook optimization", () => {
     expect(childData.observeDisposer).toBe(observeDisposer)
 
     childDisposer()
+  })
+
+  test("node reconciliation: moving keyed node between trees with different listener states", () => {
+    // When nodes have type+key, they are reconciled (reused) across different arrays/trees.
+    // This test verifies that listener ref counts are updated correctly when a keyed node
+    // is moved from one parent to another during reconciliation.
+    const typedNode =
+      nodeType<TNode<"testType1", { id: string; value: number }>>("testType1").withKey("id")
+
+    // Create first array with listener
+    const array1 = node([typedNode.snapshot({ id: "1", value: 1 })])
+    const reconciledNode = array1[0]
+    const nodeData = getNodeData(reconciledNode)
+
+    const disposer1 = onDeepChange(array1, () => {})
+    expectRefCount(nodeData, 1)
+
+    // Create second array WITHOUT listener, but with same keyed node
+    // The node will be reconciled (reused) and moved from array1 to array2
+    const array2 = node([typedNode.snapshot({ id: "1", value: 2 })])
+
+    // The node should be the same instance (reconciled), just with updated value
+    expect(array2[0]).toBe(reconciledNode)
+    expect(reconciledNode.value).toBe(2) // value was updated during reconciliation
+
+    // Should no longer have listeners since it's now in array2 which has no listeners
+    expectRefCount(nodeData, 0)
+
+    disposer1()
+  })
+
+  test("node reconciliation: moving keyed node from tree without listener to tree with listener", () => {
+    const typedNode =
+      nodeType<TNode<"testType2", { id: string; value: number }>>("testType2").withKey("id")
+
+    // Create first array WITHOUT listener
+    const array1 = node([typedNode.snapshot({ id: "1", value: 1 })])
+    const reconciledNode = array1[0]
+    const nodeData = getNodeData(reconciledNode)
+
+    expectRefCount(nodeData, 0)
+
+    // Create second array WITH listener
+    const array2 = node([typedNode.snapshot({ id: "1", value: 2 })])
+    const disposer2 = onDeepChange(array2, () => {})
+
+    // The node should be the same instance (reconciled), just with updated value
+    expect(array2[0]).toBe(reconciledNode)
+    expect(reconciledNode.value).toBe(2) // value was updated during reconciliation
+
+    // Should now have listeners since it's in array2 which has a listener
+    expectRefCount(nodeData, 1)
+
+    disposer2()
   })
 })

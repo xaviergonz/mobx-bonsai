@@ -1,33 +1,7 @@
 import { remove, set } from "mobx"
 import { failure } from "../error/failure"
 import { isArray, isMap, isPrimitive, isSet } from "../plainTypes/checks"
-import { isNode } from "./node"
 import { getNodeTypeAndKey } from "./nodeTypeKey/nodeType"
-import { getParentPath } from "./tree/getParentPath"
-import { isChildOfParent } from "./tree/isChildOfParent"
-
-function detachIfNeeded(newValue: any, oldValue: any, reconciliationRoot: object) {
-  // edge case for when we are swapping nodes around the tree
-
-  const isUniqueNodeTypeAndKey = () => {
-    const { type, key } = getNodeTypeAndKey(newValue)
-    return type !== undefined && key !== undefined
-  }
-
-  if (
-    newValue === oldValue || // already where it should be
-    !isNode(newValue) || // not a node
-    !isUniqueNodeTypeAndKey() || // not a unique node
-    !isChildOfParent(newValue, reconciliationRoot) // not a child of the tree we are reconciling
-  ) {
-    return
-  }
-
-  const parentPath = getParentPath(newValue)
-  if (parentPath) {
-    set(parentPath.parent, parentPath.path, undefined)
-  }
-}
 
 function setIfDifferent(target: any, key: PropertyKey, value: unknown) {
   if (target[key] !== value || !(key in target)) {
@@ -70,8 +44,6 @@ export function reconcileData<T>(oldValue: any, newValue: T, reconciliationRoot:
     for (let i = 0; i < oldArray.length; i++) {
       const oldV = oldArray[i]
       const newV = reconcileData(oldV, newArray[i], reconciliationRoot)
-
-      detachIfNeeded(newV, oldV, reconciliationRoot)
 
       setIfDifferent(oldArray, i, newV)
     }
@@ -125,8 +97,6 @@ export function reconcileData<T>(oldValue: any, newValue: T, reconciliationRoot:
 
       const oldV = oldObject[k]
       const newV = reconcileData(oldV, v, reconciliationRoot)
-
-      detachIfNeeded(newV, oldV, reconciliationRoot)
 
       setIfDifferent(oldObject, k, newV)
     }
