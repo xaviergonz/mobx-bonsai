@@ -16,6 +16,7 @@ import {
   toJS,
 } from "mobx"
 import { failure } from "../error/failure"
+import { getGlobalConfig } from "../globalConfig"
 import { isArray, isObservablePlainStructure, isPrimitive } from "../plainTypes/checks"
 import { Dispose, disposeOnce } from "../utils/disposable"
 import { inDevMode } from "../utils/inDevMode"
@@ -63,6 +64,11 @@ type NodeData = {
   onInterceptedChangeListeners: NodeInterceptedChangeListener[] | undefined
   childrenObjects: ObservableSet<object> | undefined
   frozen: boolean
+  // Observer management (intercept is always attached, only observe is lazy)
+  observeDisposer: Dispose | undefined
+  // Reference count for "has onChangeListeners in path to root"
+  // > 0 means this node or some ancestor has onChangeListeners
+  ancestorChangeListenerRefCount: number
 }
 
 export function getNodeData(node: object): NodeData {
@@ -82,6 +88,26 @@ const nodes = new WeakMap<object, NodeData>()
 
 function setParentNode(node: object, parentNode: ParentNode | undefined): void {
   const nodeData = getNodeData(node)
+  const oldParent = nodeData.parent
+
+  // Handle reference count updates when parent changes
+  if (oldParent && !parentNode) {
+    // Node was detached - check if old parent had onChangeListeners
+    if (shouldHaveChangeListeners(oldParent.object)) {
+      decrementAncestorChangeListenerRefCount(node)
+    }
+  } else if (!oldParent && parentNode) {
+    // Node was attached - check if new parent has onChangeListeners
+    if (shouldHaveChangeListeners(parentNode.object)) {
+      incrementAncestorChangeListenerRefCount(node)
+    }
+  } else if (oldParent && parentNode && oldParent.object !== parentNode.object) {
+    // This should never happen - nodes should be detached before being attached elsewhere
+    throw failure(
+      "assertion failed: node moved from one parent to another without being detached first"
+    )
+  }
+
   nodeData.parent = parentNode
   nodeData.parentAtom?.reportChanged()
 }
@@ -173,6 +199,7 @@ function emitInterceptedChangeToRoot(
 
   return currentChange
 }
+
 function registerListener<TListener>(
   node: object,
   listener: TListener,
@@ -180,11 +207,19 @@ function registerListener<TListener>(
 ): Dispose {
   const nodeData = getNodeData(node)
   let listeners = nodeData[listenersProperty] as TListener[] | undefined
+
+  const wasEmpty = !listeners || listeners.length === 0
+
   if (!listeners) {
     listeners = []
     nodeData[listenersProperty] = listeners as any
   }
   listeners.push(listener)
+
+  // If this is the first onChangeListener, propagate down the tree
+  if (wasEmpty && listenersProperty === "onChangeListeners") {
+    incrementAncestorChangeListenerRefCount(node)
+  }
 
   return disposeOnce(() => {
     const currentListeners = nodeData[listenersProperty] as TListener[] | undefined
@@ -192,8 +227,16 @@ function registerListener<TListener>(
       const index = currentListeners.indexOf(listener)
       if (index !== -1) {
         currentListeners.splice(index, 1)
-        if (currentListeners.length === 0) {
+
+        const isEmpty = currentListeners.length === 0
+
+        if (isEmpty) {
           nodeData[listenersProperty] = undefined
+
+          // If this was the last onChangeListener, propagate down the tree
+          if (listenersProperty === "onChangeListeners") {
+            decrementAncestorChangeListenerRefCount(node)
+          }
         }
       }
     }
@@ -248,6 +291,94 @@ export function onDeepChange(node: object, listener: NodeChangeListener): Dispos
   return registerListener(node, listener, "onChangeListeners")
 }
 
+/**
+ * Attach MobX observe hook to a node
+ */
+function attachObserveHook(node: object): void {
+  const nodeData = getNodeData(node)
+
+  if (!nodeData.observeDisposer) {
+    nodeData.observeDisposer = observe(node, (change) => {
+      emitChangeToRoot(node, change)
+    })
+  }
+}
+
+/**
+ * Detach MobX observe hook from a node
+ */
+function detachObserveHook(node: object): void {
+  const nodeData = getNodeData(node)
+
+  if (nodeData.observeDisposer) {
+    nodeData.observeDisposer()
+    nodeData.observeDisposer = undefined
+  }
+}
+
+/**
+ * Increment the ancestor change listener ref count for this node and all its descendants
+ */
+function incrementAncestorChangeListenerRefCount(node: object): void {
+  const nodeData = getNodeData(node)
+
+  // Skip frozen nodes entirely - they never get observe hooks
+  if (nodeData.frozen) {
+    return
+  }
+
+  // Increment this node's count
+  nodeData.ancestorChangeListenerRefCount++
+
+  // If count went from 0 to 1, we need to attach observe hook
+  if (nodeData.ancestorChangeListenerRefCount === 1) {
+    attachObserveHook(node)
+  }
+
+  // Propagate to all children
+  if (nodeData.childrenObjects) {
+    nodeData.childrenObjects.forEach((child) => {
+      incrementAncestorChangeListenerRefCount(child)
+    })
+  }
+}
+
+/**
+ * Decrement the ancestor change listener ref count for this node and all its descendants
+ */
+function decrementAncestorChangeListenerRefCount(node: object): void {
+  const nodeData = getNodeData(node)
+
+  // Skip frozen nodes entirely - they never get observe hooks
+  if (nodeData.frozen) {
+    return
+  }
+
+  // Decrement this node's count
+  nodeData.ancestorChangeListenerRefCount--
+
+  // If count went to 0, we can detach observe hook
+  if (nodeData.ancestorChangeListenerRefCount === 0) {
+    detachObserveHook(node)
+  }
+
+  // Propagate to all children
+  if (nodeData.childrenObjects) {
+    nodeData.childrenObjects.forEach((child) => {
+      decrementAncestorChangeListenerRefCount(child)
+    })
+  }
+}
+
+/**
+ * Check if a node or any of its ancestors has onChangeListeners
+ */
+function shouldHaveChangeListeners(node: object): boolean {
+  // The ancestorChangeListenerRefCount already tells us if this node
+  // or any ancestor has listeners
+  return getNodeData(node).ancestorChangeListenerRefCount > 0
+}
+
 let detachDuplicatedNodes = 0
 
 export const runDetachingDuplicatedNodes = (fn: () => void) => {
@@ -256,6 +387,36 @@ export const runDetachingDuplicatedNodes = (fn: () => void) => {
     fn()
   } finally {
     detachDuplicatedNodes--
+  }
+}
+
+function checkForCircularReferences(observableStruct: object, n: object, path: string): void {
+  // Check if we're trying to create a circular reference
+  // (making a node a child of one of its own descendants)
+  if (!getGlobalConfig().checkCircularReferences) {
+    return
+  }
+
+  let currentParent: object | undefined = observableStruct
+  const visited = new Set<object>()
+  while (currentParent) {
+    if (visited.has(currentParent)) {
+      // Cycle detected in the parent chain - this indicates a corrupted tree structure
+      throw failure(
+        `assertion error: cycle detected in parent chain while checking for circular reference,` +
+          ` this should never happen and indicates a bug in mobx-bonsai.`
+      )
+    }
+    visited.add(currentParent)
+
+    if (currentParent === n) {
+      throw failure(
+        `Cannot create a circular reference.` +
+          ` Trying to assign a node to ${JSON.stringify(buildNodeFullPath(observableStruct, path))},` +
+          ` but this would make the node an ancestor of itself.`
+      )
+    }
+    currentParent = getParent(currentParent)
   }
 }
 
@@ -306,6 +467,8 @@ export const node = action(
       onInterceptedChangeListeners: undefined,
       childrenObjects: undefined,
       frozen,
+      observeDisposer: undefined,
+      ancestorChangeListenerRefCount: 0,
     }
 
     let nodeStruct: object
@@ -349,6 +512,8 @@ export const node = action(
 
         let n = v
         if (isNode(n)) {
+          checkForCircularReferences(observableStruct, n, path)
+
           // ensure it is detached first or at same position
           const parent = getNodeData(n).parent
           if (parent && (parent.object !== observableStruct || parent.path !== path)) {
@@ -366,8 +531,26 @@ export const node = action(
           }
         } else {
           n = node(v)
+
+          checkForCircularReferences(observableStruct, n, path)
+
+          // if the converted node has a parent, we need to detach it first
+          // note: this only happens when snapshots resolve to existing unique nodes
+          const parent = getNodeData(n).parent
+          if (parent && (parent.object !== observableStruct || parent.path !== path)) {
+            set(parent.object, parent.path, undefined)
+          }
+
+          // n !== v is TRUE when:
+          //   1. v was a plain (non-observable) object/array that got converted to an observable node
+          //   2. v had a type+key that resolved to an existing node (reconciliation)
+          // n === v is TRUE (no conversion needed) when:
+          //   1. v was already an observable structure but not yet registered as a node
+          //   This happens during reconciliation/applySnapshot when passing observable objects
+          //   Both unique nodes (with type+key) and regular nodes can hit this path
           if (n !== v) {
-            // actually needed conversion from plain object, or was a unique node that resolved to an existing node
+            // actually needed conversion from plain object, or was a unique node snapshot that
+            // got resolved to an existing node
             setIfConverted(n)
           }
         }
@@ -489,9 +672,7 @@ export const node = action(
           return null
         })
 
-        observe(array, (change) => {
-          emitChangeToRoot(array, change)
-        })
+        // observe() hook is attached lazily when first onChangeListener is registered
       } else {
         const object = observableStruct
 
@@ -555,9 +736,7 @@ export const node = action(
           return null
         })
 
-        observe(observableStruct, (change) => {
-          emitChangeToRoot(observableStruct, change)
-        })
+        // observe() hook is attached lazily when first onChangeListener is registered
       }
     }
 

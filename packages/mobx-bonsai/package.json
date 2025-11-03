@@ -65,7 +65,7 @@
   "devDependencies": {
     "@types/deep-freeze": "^0.1.5",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.9.2",
+    "@types/node": "^24.10.0",
     "jest": "^30.2.0",
     "mobx-v4": "npm:mobx@^4.15.7",
     "mobx-v5": "npm:mobx@^5.15.7",

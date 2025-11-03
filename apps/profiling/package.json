@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "profiling",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Profiling tools for mobx-bonsai",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "generate:fixture": "yarn build && node dist/fixture-generator.js",
+    "profile:node-creation": "yarn build && node dist/profile-node-creation.js"
+  },
+  "peerDependencies": {
+    "mobx": "^6.0.0"
+  },
+  "dependencies": {
+    "mobx-bonsai": "workspace:packages/mobx-bonsai"
+  },
+  "devDependencies": {
+    "mobx": "^6.15.0",
+    "typescript": "^5.9.3"
+  }
+}

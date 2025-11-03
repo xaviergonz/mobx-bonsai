@@ -8,11 +8,21 @@ export interface GlobalConfig {
    * Node key generator function.
    */
   keyGenerator: NodeKeyGenerator
+
+  /**
+   * Whether to check for circular references when attaching nodes.
+   * When enabled, throws an error if a node would become an ancestor of itself.
+   * When disabled, circular references may cause infinite loops.
+   * For performance reasons this setting is disabled by default.
+   * Default: false
+   */
+  checkCircularReferences: boolean
 }
 
 // defaults
 let globalConfig: GlobalConfig = {
   keyGenerator: defaultNodeKeyGenerator,
+  checkCircularReferences: false,
 }
 
 /**

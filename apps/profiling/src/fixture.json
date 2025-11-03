@@ -1,0 +1,4696 @@
+{
+  "id": "root",
+  "name": "Node-root",
+  "depth": 1,
+  "value": 4387,
+  "score": 957.1361937137241,
+  "active": false,
+  "type": "root",
+  "timestamp": 1761195235769,
+  "metadata": {
+    "created": 1761199814185,
+    "updated": 1762093471851,
+    "version": 2,
+    "author": "user-27",
+    "checksum": "tQy6DmWjr6R2xATTmJu8YgGxyH1WR49Q",
+    "tags": [
+      "tag-Fv9hV",
+      "tag-B8MVr",
+      "tag-As5wB",
+      "tag-WPt9R",
+      "tag-otdBU",
+      "tag-QtusO",
+      "tag-xSeAH"
+    ],
+    "flags": {
+      "enabled": false,
+      "verified": true,
+      "archived": false
+    }
+  },
+  "config": {
+    "setting1": "WoN1ekaT2v",
+    "setting2": 73,
+    "setting3": false,
+    "setting4": 12.080189243311889,
+    "nested": {
+      "deep1": "Ej2cJfnx",
+      "deep2": 32,
+      "deep3": true,
+      "deep4": {
+        "veryDeep1": "xL3oGr8KOfrA",
+        "veryDeep2": [
+          58,
+          89,
+          19,
+          48,
+          33,
+          74
+        ],
+        "veryDeep3": {
+          "ultraDeep1": "TNhveY",
+          "ultraDeep2": false
+        }
+      }
+    },
+    "advanced": {
+      "timeout": 4789,
+      "retries": 3,
+      "batch": true,
+      "compression": "none"
+    }
+  },
+  "tags": [
+    "tag-eFkdc",
+    "tag-gzZwL",
+    "tag-PRAmd",
+    "tag-xwYzW",
+    "tag-7rB5L"
+  ],
+  "numbers": [
+    583,
+    182,
+    652,
+    519,
+    288,
+    894,
+    894,
+    895
+  ],
+  "floats": [
+    48.30388606765899,
+    9.491042603149157,
+    40.23740314399761,
+    22.61462540654374,
+    89.53797499760906,
+    48.795433352983444,
+    21.047647867190456
+  ],
+  "flags": [
+    "flag-4Wks",
+    "flag-kyM6",
+    "flag-hZDf",
+    "flag-SzLI"
+  ],
+  "items": [
+    {
+      "itemId": 0,
+      "itemName": "Item-0",
+      "itemValue": 68.95766293894613,
+      "itemEnabled": true,
+      "itemPriority": 10,
+      "itemMetadata": {
+        "created": 1761994757392,
+        "category": "cat-5"
+      }
+    },
+    {
+      "itemId": 1,
+      "itemName": "Item-1",
+      "itemValue": 65.80115417628954,
+      "itemEnabled": false,
+      "itemPriority": 8,
+      "itemMetadata": {
+        "created": 1762063629646,
+        "category": "cat-4"
+      }
+    },
+    {
+      "itemId": 2,
+      "itemName": "Item-2",
+      "itemValue": 22.358575932613785,
+      "itemEnabled": true,
+      "itemPriority": 10,
+      "itemMetadata": {
+        "created": 1762008126921,
+        "category": "cat-2"
+      }
+    },
+    {
+      "itemId": 3,
+      "itemName": "Item-3",
+      "itemValue": 19.146232087681696,
+      "itemEnabled": true,
+      "itemPriority": 2,
+      "itemMetadata": {
+        "created": 1762011911209,
+        "category": "cat-4"
+      }
+    },
+    {
+      "itemId": 4,
+      "itemName": "Item-4",
+      "itemValue": 21.5222681843151,
+      "itemEnabled": true,
+      "itemPriority": 2,
+      "itemMetadata": {
+        "created": 1762076381926,
+        "category": "cat-4"
+      }
+    },
+    {
+      "itemId": 5,
+      "itemName": "Item-5",
+      "itemValue": 70.60073792899449,
+      "itemEnabled": true,
+      "itemPriority": 4,
+      "itemMetadata": {
+        "created": 1762049928002,
+        "category": "cat-1"
+      }
+    }
+  ],
+  "records": [
+    {
+      "recordId": "record-0",
+      "recordValue": 7234.371261381785,
+      "recordActive": false,
+      "recordType": "tertiary",
+      "recordPriority": 4,
+      "recordMetadata": {
+        "created": 1761519250074,
+        "category": "category-10",
+        "subcategory": "subcategory-6",
+        "tags": [
+          "tag-2lJP",
+          "tag-M1T0",
+          "tag-vubg",
+          "tag-Hdzf"
+        ],
+        "extra": {
+          "field1": "cYKWSv22DT",
+          "field2": 579,
+          "field3": 51.26752131454227,
+          "nested": {
+            "deep1": "HwPgz7m5",
+            "deep2": 63,
+            "deep3": false
+          }
+        }
+      }
+    },
+    {
+      "recordId": "record-1",
+      "recordValue": 9382.845679577964,
+      "recordActive": true,
+      "recordType": "secondary",
+      "recordPriority": 5,
+      "recordMetadata": {
+        "created": 1761494081870,
+        "category": "category-8",
+        "subcategory": "subcategory-5",
+        "tags": [
+          "tag-z3p8",
+          "tag-uVlr"
+        ],
+        "extra": {
+          "field1": "LkDkBsw5oM",
+          "field2": 416,
+          "field3": 79.22162152126113,
+          "nested": {
+            "deep1": "UOkkYyl4",
+            "deep2": 81,
+            "deep3": true
+          }
+        }
+      }
+    },
+    {
+      "recordId": "record-2",
+      "recordValue": 5177.649515313631,
+      "recordActive": true,
+      "recordType": "primary",
+      "recordPriority": 5,
+      "recordMetadata": {
+        "created": 1761187812579,
+        "category": "category-3",
+        "subcategory": "subcategory-6",
+        "tags": [
+          "tag-85Dz",
+          "tag-4UrZ",
+          "tag-yP6o",
+          "tag-OaJu",
+          "tag-mdut"
+        ],
+        "extra": {
+          "field1": "xldVe5UMEH",
+          "field2": 364,
+          "field3": 79.16386376048833,
+          "nested": {
+            "deep1": "rSHVyhGd",
+            "deep2": 17,
+            "deep3": false
+          }
+        }
+      }
+    },
+    {
+      "recordId": "record-3",
+      "recordValue": 7615.753507030244,
+      "recordActive": true,
+      "recordType": "secondary",
+      "recordPriority": 3,
+      "recordMetadata": {
+        "created": 1761865505790,
+        "category": "category-4",
+        "subcategory": "subcategory-8",
+        "tags": [
+          "tag-iYPI",
+          "tag-Yfn6",
+          "tag-Nu14"
+        ],
+        "extra": {
+          "field1": "D4ylsTig1Z",
+          "field2": 778,
+          "field3": 74.36900973946463,
+          "nested": {
+            "deep1": "H2npOYmK",
+            "deep2": 93,
+            "deep3": false
+          }
+        }
+      }
+    },
+    {
+      "recordId": "record-4",
+      "recordValue": 4855.221600623178,
+      "recordActive": true,
+      "recordType": "secondary",
+      "recordPriority": 7,
+      "recordMetadata": {
+        "created": 1761955281355,
+        "category": "category-5",
+        "subcategory": "subcategory-8",
+        "tags": [
+          "tag-wCMF",
+          "tag-6nws",
+          "tag-o5dp",
+          "tag-iFlv"
+        ],
+        "extra": {
+          "field1": "R9qTLjKnCs",
+          "field2": 843,
+          "field3": 18.263693558426446,
+          "nested": {
+            "deep1": "tSRjOKkN",
+            "deep2": 92,
+            "deep3": false
+          }
+        }
+      }
+    },
+    {
+      "recordId": "record-5",
+      "recordValue": 9737.579324648048,
+      "recordActive": false,
+      "recordType": "tertiary",
+      "recordPriority": 4,
+      "recordMetadata": {
+        "created": 1761585426618,
+        "category": "category-0",
+        "subcategory": "subcategory-7",
+        "tags": [
+          "tag-vchP",
+          "tag-eSC0",
+          "tag-oCT5",
+          "tag-0KBR"
+        ],
+        "extra": {
+          "field1": "UBL9T6006V",
+          "field2": 396,
+          "field3": 42.75907484350556,
+          "nested": {
+            "deep1": "Ovb8s62l",
+            "deep2": 83,
+            "deep3": false
+          }
+        }
+      }
+    },
+    {
+      "recordId": "record-6",
+      "recordValue": 9142.558358853483,
+      "recordActive": false,
+      "recordType": "tertiary",
+      "recordPriority": 7,
+      "recordMetadata": {
+        "created": 1761446681492,
+        "category": "category-10",
+        "subcategory": "subcategory-12",
+        "tags": [
+          "tag-AIs1",
+          "tag-yjSl",
+          "tag-2UE6",
+          "tag-kowg",
+          "tag-SRRY"
+        ],
+        "extra": {
+          "field1": "MmUkOXBCsq",
+          "field2": 415,
+          "field3": 38.2377593257254,
+          "nested": {
+            "deep1": "Rs2eLlu3",
+            "deep2": 10,
+            "deep3": false
+          }
+        }
+      }
+    },
+    {
+      "recordId": "record-7",
+      "recordValue": 4310.725416894696,
+      "recordActive": false,
+      "recordType": "secondary",
+      "recordPriority": 7,
+      "recordMetadata": {
+        "created": 1761142621268,
+        "category": "category-0",
+        "subcategory": "subcategory-18",
+        "tags": [
+          "tag-LND2",
+          "tag-sut4",
+          "tag-Aqdu",
+          "tag-sBb7"
+        ],
+        "extra": {
+          "field1": "JBRg6e3Asu",
+          "field2": 829,
+          "field3": 71.70949785725986,
+          "nested": {
+            "deep1": "EoZUEGFC",
+            "deep2": 86,
+            "deep3": false
+          }
+        }
+      }
+    },
+    {
+      "recordId": "record-8",
+      "recordValue": 367.57663007397986,
+      "recordActive": true,
+      "recordType": "secondary",
+      "recordPriority": 3,
+      "recordMetadata": {
+        "created": 1762021329683,
+        "category": "category-10",
+        "subcategory": "subcategory-3",
+        "tags": [
+          "tag-dDaE",
+          "tag-Kjib",
+          "tag-STVw"
+        ],
+        "extra": {
+          "field1": "0DcISFJCLo",
+          "field2": 285,
+          "field3": 36.13925829502309,
+          "nested": {
+            "deep1": "hkj1pw6n",
+            "deep2": 36,
+            "deep3": false
+          }
+        }
+      }
+    },
+    {
+      "recordId": "record-9",
+      "recordValue": 2786.528627728979,
+      "recordActive": true,
+      "recordType": "tertiary",
+      "recordPriority": 9,
+      "recordMetadata": {
+        "created": 1761990049565,
+        "category": "category-0",
+        "subcategory": "subcategory-15",
+        "tags": [
+          "tag-ySsc",
+          "tag-zmib",
+          "tag-iDbK",
+          "tag-EG70"
+        ],
+        "extra": {
+          "field1": "kXOeI1wpnx",
+          "field2": 148,
+          "field3": 47.28525990256754,
+          "nested": {
+            "deep1": "Hciz9c1M",
+            "deep2": 65,
+            "deep3": false
+          }
+        }
+      }
+    },
+    {
+      "recordId": "record-10",
+      "recordValue": 9294.401622914284,
+      "recordActive": true,
+      "recordType": "primary",
+      "recordPriority": 10,
+      "recordMetadata": {
+        "created": 1761338909181,
+        "category": "category-0",
+        "subcategory": "subcategory-14",
+        "tags": [
+          "tag-k642",
+          "tag-rTmn",
+          "tag-1KOC",
+          "tag-CH3V",
+          "tag-OZLU"
+        ],
+        "extra": {
+          "field1": "npjF7itPGi",
+          "field2": 746,
+          "field3": 36.464955727093944,
+          "nested": {
+            "deep1": "whytKJHE",
+            "deep2": 95,
+            "deep3": false
+          }
+        }
+      }
+    }
+  ],
+  "child1": {
+    "id": "root-c1",
+    "name": "Node-root-c1",
+    "depth": 2,
+    "value": 8778,
+    "score": 649.7064982175268,
+    "active": true,
+    "type": "branch",
+    "timestamp": 1761096906728,
+    "metadata": {
+      "created": 1761826044576,
+      "updated": 1762020980132,
+      "version": 6,
+      "author": "user-90",
+      "checksum": "1GkA1KRycIPWWliBxXhiW8OmjOgzBWwA",
+      "tags": [
+        "tag-7T5qk",
+        "tag-doK8S",
+        "tag-uemds"
+      ],
+      "flags": {
+        "enabled": false,
+        "verified": true,
+        "archived": false
+      }
+    },
+    "config": {
+      "setting1": "LXTW8e0IBA",
+      "setting2": 38,
+      "setting3": true,
+      "setting4": 53.093994432047154,
+      "nested": {
+        "deep1": "uQtwiYRZ",
+        "deep2": 6,
+        "deep3": false,
+        "deep4": {
+          "veryDeep1": "66f7OhElcYBT",
+          "veryDeep2": [
+            49,
+            95,
+            26,
+            84,
+            68,
+            53
+          ],
+          "veryDeep3": {
+            "ultraDeep1": "zxGUhA",
+            "ultraDeep2": false
+          }
+        }
+      },
+      "advanced": {
+        "timeout": 6498,
+        "retries": 1,
+        "batch": true,
+        "compression": "none"
+      }
+    },
+    "tags": [
+      "tag-cfTtK",
+      "tag-I9JR8",
+      "tag-t73pu",
+      "tag-KukKq",
+      "tag-31kZ3",
+      "tag-KhlBE",
+      "tag-YZkyl",
+      "tag-PrvR2"
+    ],
+    "numbers": [
+      310,
+      524,
+      857,
+      877,
+      423,
+      95,
+      736,
+      120
+    ],
+    "floats": [
+      77.32585076582198,
+      57.3881870479084,
+      88.4268725878299,
+      11.075144117887547,
+      23.092159866161833,
+      17.357208474075748,
+      92.60239071835431
+    ],
+    "flags": [
+      "flag-tgGI",
+      "flag-ec4y",
+      "flag-Oec7",
+      "flag-2LYJ",
+      "flag-BhaZ"
+    ],
+    "items": [
+      {
+        "itemId": 0,
+        "itemName": "Item-0",
+        "itemValue": 31.53864844863674,
+        "itemEnabled": true,
+        "itemPriority": 10,
+        "itemMetadata": {
+          "created": 1761997861211,
+          "category": "cat-4"
+        }
+      },
+      {
+        "itemId": 1,
+        "itemName": "Item-1",
+        "itemValue": 59.61493211421751,
+        "itemEnabled": true,
+        "itemPriority": 2,
+        "itemMetadata": {
+          "created": 1761996736311,
+          "category": "cat-4"
+        }
+      },
+      {
+        "itemId": 2,
+        "itemName": "Item-2",
+        "itemValue": 67.67706388560141,
+        "itemEnabled": true,
+        "itemPriority": 1,
+        "itemMetadata": {
+          "created": 1762081756512,
+          "category": "cat-3"
+        }
+      },
+      {
+        "itemId": 3,
+        "itemName": "Item-3",
+        "itemValue": 14.2382404933876,
+        "itemEnabled": false,
+        "itemPriority": 3,
+        "itemMetadata": {
+          "created": 1761995279555,
+          "category": "cat-3"
+        }
+      },
+      {
+        "itemId": 4,
+        "itemName": "Item-4",
+        "itemValue": 15.315252083659294,
+        "itemEnabled": false,
+        "itemPriority": 4,
+        "itemMetadata": {
+          "created": 1762067824753,
+          "category": "cat-2"
+        }
+      },
+      {
+        "itemId": 5,
+        "itemName": "Item-5",
+        "itemValue": 85.70973505869398,
+        "itemEnabled": true,
+        "itemPriority": 5,
+        "itemMetadata": {
+          "created": 1762057421353,
+          "category": "cat-1"
+        }
+      }
+    ],
+    "records": [
+      {
+        "recordId": "record-0",
+        "recordValue": 2920.1106986651084,
+        "recordActive": true,
+        "recordType": "primary",
+        "recordPriority": 7,
+        "recordMetadata": {
+          "created": 1761630869119,
+          "category": "category-1",
+          "subcategory": "subcategory-11",
+          "tags": [
+            "tag-nkn7",
+            "tag-XxLl"
+          ],
+          "extra": {
+            "field1": "tbAfX4Yht3",
+            "field2": 957,
+            "field3": 7.296288254888796,
+            "nested": {
+              "deep1": "QXs9U3PG",
+              "deep2": 74,
+              "deep3": false
+            }
+          }
+        }
+      },
+      {
+        "recordId": "record-1",
+        "recordValue": 4310.190946463543,
+        "recordActive": true,
+        "recordType": "secondary",
+        "recordPriority": 1,
+        "recordMetadata": {
+          "created": 1761862083238,
+          "category": "category-5",
+          "subcategory": "subcategory-19",
+          "tags": [
+            "tag-uJnw",
+            "tag-VA0r"
+          ],
+          "extra": {
+            "field1": "ooE7kA5Kyb",
+            "field2": 610,
+            "field3": 27.43314727396985,
+            "nested": {
+              "deep1": "8w7l6ttv",
+              "deep2": 14,
+              "deep3": false
+            }
+          }
+        }
+      },
+      {
+        "recordId": "record-2",
+        "recordValue": 3218.9586250874995,
+        "recordActive": false,
+        "recordType": "primary",
+        "recordPriority": 5,
+        "recordMetadata": {
+          "created": 1761812515454,
+          "category": "category-1",
+          "subcategory": "subcategory-8",
+          "tags": [
+            "tag-mb6n",
+            "tag-ak6x",
+            "tag-OX1M",
+            "tag-WI57",
+            "tag-4rDv"
+          ],
+          "extra": {
+            "field1": "DW8pOPoly4",
+            "field2": 805,
+            "field3": 3.13351683959798,
+            "nested": {
+              "deep1": "HqIYQv20",
+              "deep2": 72,
+              "deep3": false
+            }
+          }
+        }
+      },
+      {
+        "recordId": "record-3",
+        "recordValue": 2011.5007994806695,
+        "recordActive": true,
+        "recordType": "tertiary",
+        "recordPriority": 3,
+        "recordMetadata": {
+          "created": 1761575254623,
+          "category": "category-10",
+          "subcategory": "subcategory-17",
+          "tags": [
+            "tag-9c5u",
+            "tag-qquN",
+            "tag-50bi"
+          ],
+          "extra": {
+            "field1": "t6ELI4Es0b",
+            "field2": 672,
+            "field3": 89.10623709776678,
+            "nested": {
+              "deep1": "f53NTOEG",
+              "deep2": 54,
+              "deep3": true
+            }
+          }
+        }
+      },
+      {
+        "recordId": "record-4",
+        "recordValue": 7052.09547117587,
+        "recordActive": true,
+        "recordType": "primary",
+        "recordPriority": 4,
+        "recordMetadata": {
+          "created": 1762035134829,
+          "category": "category-5",
+          "subcategory": "subcategory-11",
+          "tags": [
+            "tag-fG9l",
+            "tag-CMPg",
+            "tag-QUPx",
+            "tag-IXuQ"
+          ],
+          "extra": {
+            "field1": "lXrAIlIeO7",
+            "field2": 326,
+            "field3": 52.54616106880034,
+            "nested": {
+              "deep1": "ohC7N99Y",
+              "deep2": 44,
+              "deep3": true
+            }
+          }
+        }
+      },
+      {
+        "recordId": "record-5",
+        "recordValue": 6588.094718216646,
+        "recordActive": true,
+        "recordType": "tertiary",
+        "recordPriority": 5,
+        "recordMetadata": {
+          "created": 1762022749326,
+          "category": "category-5",
+          "subcategory": "subcategory-9",
+          "tags": [
+            "tag-CWxw",
+            "tag-pbBM",
+            "tag-QgEo"
+          ],
+          "extra": {
+            "field1": "gjkfqk2lRA",
+            "field2": 992,
+            "field3": 55.96010234497622,
+            "nested": {
+              "deep1": "6JXiMCoP",
+              "deep2": 27,
+              "deep3": true
+            }
+          }
+        }
+      },
+      {
+        "recordId": "record-6",
+        "recordValue": 8500.536367708797,
+        "recordActive": false,
+        "recordType": "secondary",
+        "recordPriority": 1,
+        "recordMetadata": {
+          "created": 1761609604474,
+          "category": "category-0",
+          "subcategory": "subcategory-0",
+          "tags": [
+            "tag-h3zB",
+            "tag-LHRO",
+            "tag-JxfX",
+            "tag-EkKQ",
+            "tag-mb4o"
+          ],
+          "extra": {
+            "field1": "piML2RtFSP",
+            "field2": 995,
+            "field3": 26.232868331950954,
+            "nested": {
+              "deep1": "eFVD5nwO",
+              "deep2": 11,
+              "deep3": false
+            }
+          }
+        }
+      },
+      {
+        "recordId": "record-7",
+        "recordValue": 6683.569199525446,
+        "recordActive": true,
+        "recordType": "secondary",
+        "recordPriority": 6,
+        "recordMetadata": {
+          "created": 1761568323408,
+          "category": "category-2",
+          "subcategory": "subcategory-19",
+          "tags": [
+            "tag-LLdQ",
+            "tag-RhKA"
+          ],
+          "extra": {
+            "field1": "ZPTdN6JM90",
+            "field2": 498,
+            "field3": 81.71381913619861,
+            "nested": {
+              "deep1": "NeAWRYoa",
+              "deep2": 2,
+              "deep3": true
+            }
+          }
+        }
+      },
+      {
+        "recordId": "record-8",
+        "recordValue": 2942.8359580635633,
+        "recordActive": true,
+        "recordType": "primary",
+        "recordPriority": 10,
+        "recordMetadata": {
+          "created": 1762024355266,
+          "category": "category-6",
+          "subcategory": "subcategory-1",
+          "tags": [
+            "tag-DsoK",
+            "tag-nlUI",
+            "tag-ayy4",
+            "tag-2nyT"
+          ],
+          "extra": {
+            "field1": "VyPBvfa87B",
+            "field2": 480,
+            "field3": 15.933615423352789,
+            "nested": {
+              "deep1": "tKdY5Ied",
+              "deep2": 89,
+              "deep3": true
+            }
+          }
+        }
+      }
+    ],
+    "child1": {
+      "id": "root-c1-c1",
+      "name": "Node-root-c1-c1",
+      "depth": 3,
+      "value": 8288,
+      "score": 490.11816692917785,
+      "active": false,
+      "type": "branch",
+      "timestamp": 1762086036285,
+      "metadata": {
+        "created": 1761228245706,
+        "updated": 1762073866216,
+        "version": 5,
+        "author": "user-56",
+        "checksum": "pFZpnNiDK3Zev4o1TV16P8iy9gTKgney",
+        "tags": [
+          "tag-9LTwp",
+          "tag-PZORp",
+          "tag-vp0f7",
+          "tag-0hdVE",
+          "tag-EPXRC",
+          "tag-778vl"
+        ],
+        "flags": {
+          "enabled": true,
+          "verified": true,
+          "archived": true
+        }
+      },
+      "config": {
+        "setting1": "hfDKEbnRyQ",
+        "setting2": 86,
+        "setting3": true,
+        "setting4": 32.46213216879744,
+        "nested": {
+          "deep1": "Qej74Frc",
+          "deep2": 38,
+          "deep3": false,
+          "deep4": {
+            "veryDeep1": "UNqSPETB9J96",
+            "veryDeep2": [
+              68,
+              85,
+              96,
+              17,
+              81
+            ],
+            "veryDeep3": {
+              "ultraDeep1": "qFfmRd",
+              "ultraDeep2": false
+            }
+          }
+        },
+        "advanced": {
+          "timeout": 6866,
+          "retries": 2,
+          "batch": false,
+          "compression": "none"
+        }
+      },
+      "tags": [
+        "tag-qCj4M",
+        "tag-TmBFp",
+        "tag-uTFiW",
+        "tag-B9Di5",
+        "tag-Pe9J3",
+        "tag-EHGC5",
+        "tag-ICPwC"
+      ],
+      "numbers": [
+        66,
+        403,
+        387,
+        846,
+        534,
+        402,
+        827,
+        186,
+        565
+      ],
+      "floats": [
+        96.55596465205531,
+        30.81093721996154,
+        17.661494993140803,
+        25.63381354733845,
+        4.650812191176989,
+        25.98352474090123
+      ],
+      "flags": [
+        "flag-wHON",
+        "flag-gnR5",
+        "flag-GAU6",
+        "flag-D96G",
+        "flag-hmsB"
+      ],
+      "items": [
+        {
+          "itemId": 0,
+          "itemName": "Item-0",
+          "itemValue": 71.86938228714902,
+          "itemEnabled": false,
+          "itemPriority": 5,
+          "itemMetadata": {
+            "created": 1762091476991,
+            "category": "cat-1"
+          }
+        },
+        {
+          "itemId": 1,
+          "itemName": "Item-1",
+          "itemValue": 16.34209429672214,
+          "itemEnabled": true,
+          "itemPriority": 4,
+          "itemMetadata": {
+            "created": 1762030309722,
+            "category": "cat-4"
+          }
+        },
+        {
+          "itemId": 2,
+          "itemName": "Item-2",
+          "itemValue": 82.06296123012376,
+          "itemEnabled": true,
+          "itemPriority": 9,
+          "itemMetadata": {
+            "created": 1762024688404,
+            "category": "cat-2"
+          }
+        },
+        {
+          "itemId": 3,
+          "itemName": "Item-3",
+          "itemValue": 30.787064553296,
+          "itemEnabled": true,
+          "itemPriority": 2,
+          "itemMetadata": {
+            "created": 1762043982758,
+            "category": "cat-3"
+          }
+        },
+        {
+          "itemId": 4,
+          "itemName": "Item-4",
+          "itemValue": 55.15575619740577,
+          "itemEnabled": true,
+          "itemPriority": 7,
+          "itemMetadata": {
+            "created": 1762087546434,
+            "category": "cat-4"
+          }
+        },
+        {
+          "itemId": 5,
+          "itemName": "Item-5",
+          "itemValue": 25.3480253169219,
+          "itemEnabled": true,
+          "itemPriority": 8,
+          "itemMetadata": {
+            "created": 1762068126763,
+            "category": "cat-3"
+          }
+        },
+        {
+          "itemId": 6,
+          "itemName": "Item-6",
+          "itemValue": 34.679932741921164,
+          "itemEnabled": true,
+          "itemPriority": 3,
+          "itemMetadata": {
+            "created": 1762083021696,
+            "category": "cat-4"
+          }
+        }
+      ],
+      "records": [
+        {
+          "recordId": "record-0",
+          "recordValue": 2365.713387136517,
+          "recordActive": true,
+          "recordType": "secondary",
+          "recordPriority": 7,
+          "recordMetadata": {
+            "created": 1762063032948,
+            "category": "category-7",
+            "subcategory": "subcategory-15",
+            "tags": [
+              "tag-0tRT",
+              "tag-oCHN",
+              "tag-lazI",
+              "tag-OX2Q",
+              "tag-rE43"
+            ],
+            "extra": {
+              "field1": "zPnFZKsiCY",
+              "field2": 551,
+              "field3": 32.64338587079315,
+              "nested": {
+                "deep1": "HrnJUfB7",
+                "deep2": 96,
+                "deep3": true
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-1",
+          "recordValue": 8372.693599611002,
+          "recordActive": false,
+          "recordType": "secondary",
+          "recordPriority": 5,
+          "recordMetadata": {
+            "created": 1761784233471,
+            "category": "category-6",
+            "subcategory": "subcategory-17",
+            "tags": [
+              "tag-mVGa",
+              "tag-QAgH"
+            ],
+            "extra": {
+              "field1": "iGFuLg5I7G",
+              "field2": 167,
+              "field3": 87.09266327827501,
+              "nested": {
+                "deep1": "l67gpEsK",
+                "deep2": 3,
+                "deep3": false
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-2",
+          "recordValue": 5592.914467390094,
+          "recordActive": false,
+          "recordType": "secondary",
+          "recordPriority": 5,
+          "recordMetadata": {
+            "created": 1761737909932,
+            "category": "category-2",
+            "subcategory": "subcategory-10",
+            "tags": [
+              "tag-8IZP",
+              "tag-ZB5X",
+              "tag-yi6T"
+            ],
+            "extra": {
+              "field1": "5iHQEfhmHQ",
+              "field2": 575,
+              "field3": 48.53663423725129,
+              "nested": {
+                "deep1": "qhCY65g9",
+                "deep2": 58,
+                "deep3": false
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-3",
+          "recordValue": 7586.567673903443,
+          "recordActive": false,
+          "recordType": "tertiary",
+          "recordPriority": 3,
+          "recordMetadata": {
+            "created": 1761642544394,
+            "category": "category-6",
+            "subcategory": "subcategory-4",
+            "tags": [
+              "tag-q6fv",
+              "tag-Ekk5",
+              "tag-aolY",
+              "tag-tkNU",
+              "tag-kFje"
+            ],
+            "extra": {
+              "field1": "jTAiXfJLT8",
+              "field2": 417,
+              "field3": 27.279430745443452,
+              "nested": {
+                "deep1": "VxbvZ109",
+                "deep2": 58,
+                "deep3": true
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-4",
+          "recordValue": 9302.677475368384,
+          "recordActive": true,
+          "recordType": "tertiary",
+          "recordPriority": 9,
+          "recordMetadata": {
+            "created": 1761269514790,
+            "category": "category-2",
+            "subcategory": "subcategory-16",
+            "tags": [
+              "tag-UY8Z",
+              "tag-UycG",
+              "tag-CNi1",
+              "tag-IenO",
+              "tag-uJt8"
+            ],
+            "extra": {
+              "field1": "OjrUVpGm1h",
+              "field2": 367,
+              "field3": 21.08295569285145,
+              "nested": {
+                "deep1": "jefPmCbw",
+                "deep2": 87,
+                "deep3": false
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-5",
+          "recordValue": 5712.415226199846,
+          "recordActive": true,
+          "recordType": "secondary",
+          "recordPriority": 9,
+          "recordMetadata": {
+            "created": 1761605778061,
+            "category": "category-7",
+            "subcategory": "subcategory-19",
+            "tags": [
+              "tag-EwMh",
+              "tag-t441",
+              "tag-rFxt"
+            ],
+            "extra": {
+              "field1": "WeZ7WGcDGe",
+              "field2": 153,
+              "field3": 47.631336972524316,
+              "nested": {
+                "deep1": "tV1qZVot",
+                "deep2": 3,
+                "deep3": true
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-6",
+          "recordValue": 491.00037867801194,
+          "recordActive": true,
+          "recordType": "tertiary",
+          "recordPriority": 10,
+          "recordMetadata": {
+            "created": 1761677363581,
+            "category": "category-9",
+            "subcategory": "subcategory-9",
+            "tags": [
+              "tag-8xji",
+              "tag-dlZc"
+            ],
+            "extra": {
+              "field1": "fYOFQkLVr8",
+              "field2": 724,
+              "field3": 75.08406728837515,
+              "nested": {
+                "deep1": "KhgrcIJN",
+                "deep2": 66,
+                "deep3": true
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-7",
+          "recordValue": 4841.376858525075,
+          "recordActive": true,
+          "recordType": "secondary",
+          "recordPriority": 2,
+          "recordMetadata": {
+            "created": 1761167606869,
+            "category": "category-6",
+            "subcategory": "subcategory-14",
+            "tags": [
+              "tag-fSUS",
+              "tag-rfvA",
+              "tag-FNFH",
+              "tag-3fFq"
+            ],
+            "extra": {
+              "field1": "MUjHs9k40N",
+              "field2": 964,
+              "field3": 63.04649037491061,
+              "nested": {
+                "deep1": "gBXY0lS0",
+                "deep2": 32,
+                "deep3": false
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-8",
+          "recordValue": 9807.224512909115,
+          "recordActive": false,
+          "recordType": "tertiary",
+          "recordPriority": 8,
+          "recordMetadata": {
+            "created": 1761622281463,
+            "category": "category-5",
+            "subcategory": "subcategory-20",
+            "tags": [
+              "tag-9sTn",
+              "tag-4BsL",
+              "tag-juQ4",
+              "tag-LM82"
+            ],
+            "extra": {
+              "field1": "8NcuQaaSEV",
+              "field2": 397,
+              "field3": 67.12962896600412,
+              "nested": {
+                "deep1": "2zunCxdK",
+                "deep2": 72,
+                "deep3": false
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-9",
+          "recordValue": 3595.9156089778057,
+          "recordActive": false,
+          "recordType": "primary",
+          "recordPriority": 9,
+          "recordMetadata": {
+            "created": 1761284610156,
+            "category": "category-5",
+            "subcategory": "subcategory-10",
+            "tags": [
+              "tag-XKFW",
+              "tag-2KdH"
+            ],
+            "extra": {
+              "field1": "0Y4vUeEba8",
+              "field2": 487,
+              "field3": 2.9946389213178772,
+              "nested": {
+                "deep1": "2xjbci9H",
+                "deep2": 36,
+                "deep3": true
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-10",
+          "recordValue": 9108.840558292733,
+          "recordActive": true,
+          "recordType": "primary",
+          "recordPriority": 6,
+          "recordMetadata": {
+            "created": 1762053389452,
+            "category": "category-6",
+            "subcategory": "subcategory-8",
+            "tags": [
+              "tag-Yh81",
+              "tag-Dyag",
+              "tag-91kW",
+              "tag-ooBJ"
+            ],
+            "extra": {
+              "field1": "cW75PfP2HY",
+              "field2": 746,
+              "field3": 37.349145733171866,
+              "nested": {
+                "deep1": "MtRxUI48",
+                "deep2": 32,
+                "deep3": true
+              }
+            }
+          }
+        },
+        {
+          "recordId": "record-11",
+          "recordValue": 707.6207492271319,
+          "recordActive": false,
+          "recordType": "primary",
+          "recordPriority": 2,
+          "recordMetadata": {
+            "created": 1761384677269,
+            "category": "category-2",
+            "subcategory": "subcategory-15",
+            "tags": [
+              "tag-nBOi",
+              "tag-KwT3",
+              "tag-TPZn",
+              "tag-HYxD"
+            ],
+            "extra": {
+              "field1": "8J8Bkboykv",
+              "field2": 323,
+              "field3": 11.449448956946723,
+              "nested": {
+                "deep1": "5GAc4Mp5",
+                "deep2": 22,
+                "deep3": true
+              }
+            }
+          }
+        }
+      ],
+      "child1": {
+        "id": "root-c1-c1-c1",
+        "name": "Node-root-c1-c1-c1",
+        "depth": 4,
+        "value": 7517,
+        "score": 202.65404682385523,
+        "active": false,
+        "type": "branch",
+        "timestamp": 1761693076793,
+        "metadata": {
+          "created": 1761429453123,
+          "updated": 1762045101124,
+          "version": 7,
+          "author": "user-75",
+          "checksum": "8BjeoVfxOsXjQpF99UQBXQWfxFoUBf0k",
+          "tags": [
+            "tag-AjotQ",
+            "tag-J9UfI",
+            "tag-FyU7S"
+          ],
+          "flags": {
+            "enabled": false,
+            "verified": false,
+            "archived": false
+          }
+        },
+        "config": {
+          "setting1": "Jt9zWjzqkU",
+          "setting2": 22,
+          "setting3": false,
+          "setting4": 30.6733265392212,
+          "nested": {
+            "deep1": "zHydqxTf",
+            "deep2": 36,
+            "deep3": true,
+            "deep4": {
+              "veryDeep1": "8mimbtCqNW52",
+              "veryDeep2": [
+                88,
+                18,
+                78,
+                68,
+                28,
+                98,
+                44
+              ],
+              "veryDeep3": {
+                "ultraDeep1": "f5VOrW",
+                "ultraDeep2": false
+              }
+            }
+          },
+          "advanced": {
+            "timeout": 2911,
+            "retries": 5,
+            "batch": false,
+            "compression": "brotli"
+          }
+        },
+        "tags": [
+          "tag-nnHPf",
+          "tag-aikGW",
+          "tag-DXCgP",
+          "tag-tkxGA",
+          "tag-n0SWt",
+          "tag-E7R1r"
+        ],
+        "numbers": [
+          857,
+          845,
+          552,
+          171,
+          839,
+          645,
+          270,
+          351,
+          614
+        ],
+        "floats": [
+          6.082256351898341,
+          80.90063289984897,
+          54.33781498935294,
+          27.76606097272304,
+          73.7733416642061,
+          88.51316093339186,
+          5.08263498945738
+        ],
+        "flags": [
+          "flag-K8Uj",
+          "flag-ic6X",
+          "flag-RxiE",
+          "flag-fSAV",
+          "flag-m9dG"
+        ],
+        "items": [
+          {
+            "itemId": 0,
+            "itemName": "Item-0",
+            "itemValue": 62.8637081705259,
+            "itemEnabled": false,
+            "itemPriority": 3,
+            "itemMetadata": {
+              "created": 1762048887815,
+              "category": "cat-3"
+            }
+          },
+          {
+            "itemId": 1,
+            "itemName": "Item-1",
+            "itemValue": 55.562229848604325,
+            "itemEnabled": false,
+            "itemPriority": 10,
+            "itemMetadata": {
+              "created": 1762036896827,
+              "category": "cat-3"
+            }
+          },
+          {
+            "itemId": 2,
+            "itemName": "Item-2",
+            "itemValue": 12.387272063444534,
+            "itemEnabled": true,
+            "itemPriority": 2,
+            "itemMetadata": {
+              "created": 1762051096542,
+              "category": "cat-1"
+            }
+          },
+          {
+            "itemId": 3,
+            "itemName": "Item-3",
+            "itemValue": 33.79974541470619,
+            "itemEnabled": false,
+            "itemPriority": 10,
+            "itemMetadata": {
+              "created": 1762085564356,
+              "category": "cat-2"
+            }
+          },
+          {
+            "itemId": 4,
+            "itemName": "Item-4",
+            "itemValue": 95.86362313219378,
+            "itemEnabled": true,
+            "itemPriority": 9,
+            "itemMetadata": {
+              "created": 1762080721344,
+              "category": "cat-4"
+            }
+          },
+          {
+            "itemId": 5,
+            "itemName": "Item-5",
+            "itemValue": 23.062001777156475,
+            "itemEnabled": true,
+            "itemPriority": 6,
+            "itemMetadata": {
+              "created": 1762056337571,
+              "category": "cat-3"
+            }
+          },
+          {
+            "itemId": 6,
+            "itemName": "Item-6",
+            "itemValue": 51.300358202437785,
+            "itemEnabled": false,
+            "itemPriority": 10,
+            "itemMetadata": {
+              "created": 1762078602545,
+              "category": "cat-4"
+            }
+          }
+        ],
+        "records": [
+          {
+            "recordId": "record-0",
+            "recordValue": 977.4684350490261,
+            "recordActive": false,
+            "recordType": "primary",
+            "recordPriority": 7,
+            "recordMetadata": {
+              "created": 1761737831682,
+              "category": "category-6",
+              "subcategory": "subcategory-4",
+              "tags": [
+                "tag-LNBm",
+                "tag-aRz4",
+                "tag-i24t"
+              ],
+              "extra": {
+                "field1": "t75NrAU9O6",
+                "field2": 865,
+                "field3": 22.415213126446595,
+                "nested": {
+                  "deep1": "ZpiO6NUD",
+                  "deep2": 2,
+                  "deep3": true
+                }
+              }
+            }
+          },
+          {
+            "recordId": "record-1",
+            "recordValue": 5393.946113506641,
+            "recordActive": true,
+            "recordType": "primary",
+            "recordPriority": 7,
+            "recordMetadata": {
+              "created": 1761846345677,
+              "category": "category-7",
+              "subcategory": "subcategory-5",
+              "tags": [
+                "tag-Q7xF",
+                "tag-BExI",
+                "tag-qmXR",
+                "tag-Ovwt",
+                "tag-qM9b"
+              ],
+              "extra": {
+                "field1": "QIWIsOIzqG",
+                "field2": 557,
+                "field3": 40.28849584425503,
+                "nested": {
+                  "deep1": "pBYN7Ijr",
+                  "deep2": 9,
+                  "deep3": false
+                }
+              }
+            }
+          },
+          {
+            "recordId": "record-2",
+            "recordValue": 8037.83528044187,
+            "recordActive": true,
+            "recordType": "tertiary",
+            "recordPriority": 1,
+            "recordMetadata": {
+              "created": 1761645681628,
+              "category": "category-2",
+              "subcategory": "subcategory-8",
+              "tags": [
+                "tag-0YWr",
+                "tag-cbkh",
+                "tag-FkgY",
+                "tag-YQUj",
+                "tag-TQZC"
+              ],
+              "extra": {
+                "field1": "cAWiMYzu04",
+                "field2": 504,
+                "field3": 57.059608428365536,
+                "nested": {
+                  "deep1": "Y3NYQmub",
+                  "deep2": 54,
+                  "deep3": true
+                }
+              }
+            }
+          },
+          {
+            "recordId": "record-3",
+            "recordValue": 2550.667484130381,
+            "recordActive": false,
+            "recordType": "primary",
+            "recordPriority": 1,
+            "recordMetadata": {
+              "created": 1761632293642,
+              "category": "category-7",
+              "subcategory": "subcategory-3",
+              "tags": [
+                "tag-yoaV",
+                "tag-VWzo",
+                "tag-mPLb",
+                "tag-lQeW",
+                "tag-glR9"
+              ],
+              "extra": {
+                "field1": "8GxeTJL3l4",
+                "field2": 480,
+                "field3": 37.41635215141728,
+                "nested": {
+                  "deep1": "DD8j3chl",
+                  "deep2": 27,
+                  "deep3": true
+                }
+              }
+            }
+          },
+          {
+            "recordId": "record-4",
+            "recordValue": 357.70075998562834,
+            "recordActive": false,
+            "recordType": "primary",
+            "recordPriority": 3,
+            "recordMetadata": {
+              "created": 1761133214582,
+              "category": "category-1",
+              "subcategory": "subcategory-12",
+              "tags": [
+                "tag-hzYJ",
+                "tag-o2vC",
+                "tag-omrh"
+              ],
+              "extra": {
+                "field1": "vsV9KEpbcw",
+                "field2": 294,
+                "field3": 96.20240279166038,
+                "nested": {
+                  "deep1": "u9kI9Hko",
+                  "deep2": 96,
+                  "deep3": true
+                }
+              }
+            }
+          },
+          {
+            "recordId": "record-5",
+            "recordValue": 9339.025545271543,
+            "recordActive": true,
+            "recordType": "primary",
+            "recordPriority": 6,
+            "recordMetadata": {
+              "created": 1761992669719,
+              "category": "category-5",
+              "subcategory": "subcategory-4",
+              "tags": [
+                "tag-tBLW",
+                "tag-vQ1r",
+                "tag-PVTV"
+              ],
+              "extra": {
+                "field1": "SEcjXx9G7R",
+                "field2": 814,
+                "field3": 48.36968348071938,
+                "nested": {
+                  "deep1": "AFHQvmVN",
+                  "deep2": 34,
+                  "deep3": true
+                }
+              }
+            }
+          },
+          {
+            "recordId": "record-6",
+            "recordValue": 1025.7550473769825,
+            "recordActive": true,
+            "recordType": "tertiary",
+            "recordPriority": 5,
+            "recordMetadata": {
+              "created": 1761269505295,
+              "category": "category-3",
+              "subcategory": "subcategory-17",
+              "tags": [
+                "tag-gEjA",
+                "tag-atSs"
+              ],
+              "extra": {
+                "field1": "ylcTuqRZ5i",
+                "field2": 575,
+                "field3": 78.83537928553339,
+                "nested": {
+                  "deep1": "9CmrAQe4",
+                  "deep2": 37,
+                  "deep3": true
+                }
+              }
+            }
+          },
+          {
+            "recordId": "record-7",
+            "recordValue": 2914.94965789482,
+            "recordActive": true,
+            "recordType": "primary",
+            "recordPriority": 8,
+            "recordMetadata": {
+              "created": 1761461225445,
+              "category": "category-8",
+              "subcategory": "subcategory-13",
+              "tags": [
+                "tag-ZW0Y",
+                "tag-zfue",
+                "tag-RL1F",
+                "tag-kQA1"
+              ],
+              "extra": {
+                "field1": "5vuFVsd3WY",
+                "field2": 625,
+                "field3": 36.62973509316372,
+                "nested": {
+                  "deep1": "pr13s76F",
+                  "deep2": 2,
+                  "deep3": true
+                }
+              }
+            }
+          },
+          {
+            "recordId": "record-8",
+            "recordValue": 4097.610315839149,
+            "recordActive": false,
+            "recordType": "tertiary",
+            "recordPriority": 2,
+            "recordMetadata": {
+              "created": 1761758142082,
+              "category": "category-8",
+              "subcategory": "subcategory-18",
+              "tags": [
+                "tag-BHkh",
+                "tag-nHnS",
+                "tag-CNiP",
+                "tag-yw9h",
+                "tag-PavK"
+              ],
+              "extra": {
+                "field1": "GQ1xJ149QR",
+                "field2": 236,
+                "field3": 49.32656601539311,
+                "nested": {
+                  "deep1": "FWtwQjy6",
+                  "deep2": 19,
+                  "deep3": false
+                }
+              }
+            }
+          },
+          {
+            "recordId": "record-9",
+            "recordValue": 7389.123937407976,
+            "recordActive": false,
+            "recordType": "primary",
+            "recordPriority": 7,
+            "recordMetadata": {
+              "created": 1761175186923,
+              "category": "category-6",
+              "subcategory": "subcategory-15",
+              "tags": [
+                "tag-SUsf",
+                "tag-nK4S"
+              ],
+              "extra": {
+                "field1": "R1wQaLc2G9",
+                "field2": 870,
+                "field3": 9.877916704046397,
+                "nested": {
+                  "deep1": "AOLKW62t",
+                  "deep2": 89,
+                  "deep3": true
+                }
+              }
+            }
+          }
+        ],
+        "child1": {
+          "id": "root-c1-c1-c1-c1",
+          "name": "Node-root-c1-c1-c1-c1",
+          "depth": 5,
+          "value": 426,
+          "score": 51.15027236122427,
+          "active": false,
+          "type": "root",
+          "timestamp": 1761952769655,
+          "metadata": {
+            "created": 1761130859654,
+            "updated": 1762001031839,
+            "version": 3,
+            "author": "user-23",
+            "checksum": "RCo1QV9D8FfZkeTqyjaLvQjjxThZR0qU",
+            "tags": [
+              "tag-KJVgz",
+              "tag-HpB4S",
+              "tag-76pM8",
+              "tag-BJa5N",
+              "tag-QTKQR",
+              "tag-xauhu",
+              "tag-QqYn0",
+              "tag-ev17U"
+            ],
+            "flags": {
+              "enabled": false,
+              "verified": false,
+              "archived": false
+            }
+          },
+          "config": {
+            "setting1": "YfAhKHAw3E",
+            "setting2": 75,
+            "setting3": false,
+            "setting4": 47.58356418165112,
+            "nested": {
+              "deep1": "ZQHwf40G",
+              "deep2": 10,
+              "deep3": false,
+              "deep4": {
+                "veryDeep1": "eVbMchoFTc1a",
+                "veryDeep2": [
+                  97,
+                  14,
+                  34
+                ],
+                "veryDeep3": {
+                  "ultraDeep1": "9befHY",
+                  "ultraDeep2": false
+                }
+              }
+            },
+            "advanced": {
+              "timeout": 5307,
+              "retries": 2,
+              "batch": true,
+              "compression": "none"
+            }
+          },
+          "tags": [
+            "tag-TGpWP",
+            "tag-LH9Yp",
+            "tag-S6sCz",
+            "tag-MG9fu",
+            "tag-Xskk8",
+            "tag-f3qbJ",
+            "tag-jWQ3G",
+            "tag-F8IVJ"
+          ],
+          "numbers": [
+            270,
+            216,
+            749,
+            768,
+            388,
+            251,
+            932,
+            545,
+            391,
+            465,
+            390
+          ],
+          "floats": [
+            68.09262489774481,
+            9.978534051592813,
+            25.789522653138132,
+            64.12827966957335,
+            7.683431614244363,
+            30.03549554344299,
+            17.438786659459492,
+            90.91116827823538,
+            32.72892943759652
+          ],
+          "flags": [
+            "flag-h3lh",
+            "flag-o6zX",
+            "flag-TMcn",
+            "flag-Nws0",
+            "flag-tl18",
+            "flag-MmLR"
+          ],
+          "items": [
+            {
+              "itemId": 0,
+              "itemName": "Item-0",
+              "itemValue": 91.33999100229173,
+              "itemEnabled": false,
+              "itemPriority": 2,
+              "itemMetadata": {
+                "created": 1762080246076,
+                "category": "cat-5"
+              }
+            },
+            {
+              "itemId": 1,
+              "itemName": "Item-1",
+              "itemValue": 71.69281318333344,
+              "itemEnabled": true,
+              "itemPriority": 9,
+              "itemMetadata": {
+                "created": 1762051228308,
+                "category": "cat-2"
+              }
+            },
+            {
+              "itemId": 2,
+              "itemName": "Item-2",
+              "itemValue": 53.26009880153544,
+              "itemEnabled": false,
+              "itemPriority": 1,
+              "itemMetadata": {
+                "created": 1762001054974,
+                "category": "cat-5"
+              }
+            },
+            {
+              "itemId": 3,
+              "itemName": "Item-3",
+              "itemValue": 57.54347996698389,
+              "itemEnabled": false,
+              "itemPriority": 3,
+              "itemMetadata": {
+                "created": 1762046741840,
+                "category": "cat-1"
+              }
+            },
+            {
+              "itemId": 4,
+              "itemName": "Item-4",
+              "itemValue": 97.56578382058716,
+              "itemEnabled": true,
+              "itemPriority": 7,
+              "itemMetadata": {
+                "created": 1762037828067,
+                "category": "cat-3"
+              }
+            },
+            {
+              "itemId": 5,
+              "itemName": "Item-5",
+              "itemValue": 13.522706792677097,
+              "itemEnabled": true,
+              "itemPriority": 5,
+              "itemMetadata": {
+                "created": 1762071284564,
+                "category": "cat-1"
+              }
+            },
+            {
+              "itemId": 6,
+              "itemName": "Item-6",
+              "itemValue": 55.964637426146886,
+              "itemEnabled": false,
+              "itemPriority": 2,
+              "itemMetadata": {
+                "created": 1762094198285,
+                "category": "cat-3"
+              }
+            },
+            {
+              "itemId": 7,
+              "itemName": "Item-7",
+              "itemValue": 35.35657186897134,
+              "itemEnabled": false,
+              "itemPriority": 1,
+              "itemMetadata": {
+                "created": 1762027488533,
+                "category": "cat-5"
+              }
+            }
+          ],
+          "records": [
+            {
+              "recordId": "record-0",
+              "recordValue": 2370.7053065990467,
+              "recordActive": true,
+              "recordType": "primary",
+              "recordPriority": 9,
+              "recordMetadata": {
+                "created": 1761702647462,
+                "category": "category-10",
+                "subcategory": "subcategory-4",
+                "tags": [
+                  "tag-f1LU",
+                  "tag-QudE",
+                  "tag-LhFT",
+                  "tag-v1zF"
+                ],
+                "extra": {
+                  "field1": "PVAFH8AghE",
+                  "field2": 130,
+                  "field3": 23.42073355046995,
+                  "nested": {
+                    "deep1": "gmUJONqn",
+                    "deep2": 74,
+                    "deep3": false
+                  }
+                }
+              }
+            },
+            {
+              "recordId": "record-1",
+              "recordValue": 2197.2111844891015,
+              "recordActive": false,
+              "recordType": "secondary",
+              "recordPriority": 10,
+              "recordMetadata": {
+                "created": 1761372202944,
+                "category": "category-8",
+                "subcategory": "subcategory-14",
+                "tags": [
+                  "tag-v9Nb",
+                  "tag-lx86",
+                  "tag-tVSY"
+                ],
+                "extra": {
+                  "field1": "nqm5vybZHN",
+                  "field2": 483,
+                  "field3": 44.44811057080328,
+                  "nested": {
+                    "deep1": "AJa09Wih",
+                    "deep2": 26,
+                    "deep3": false
+                  }
+                }
+              }
+            },
+            {
+              "recordId": "record-2",
+              "recordValue": 3859.011934255072,
+              "recordActive": false,
+              "recordType": "tertiary",
+              "recordPriority": 2,
+              "recordMetadata": {
+                "created": 1761099980406,
+                "category": "category-9",
+                "subcategory": "subcategory-3",
+                "tags": [
+                  "tag-jRFG",
+                  "tag-XT3m"
+                ],
+                "extra": {
+                  "field1": "t89WZPJLGY",
+                  "field2": 933,
+                  "field3": 7.799598272893513,
+                  "nested": {
+                    "deep1": "NkR7Q4ic",
+                    "deep2": 88,
+                    "deep3": false
+                  }
+                }
+              }
+            },
+            {
+              "recordId": "record-3",
+              "recordValue": 674.5135672317114,
+              "recordActive": false,
+              "recordType": "tertiary",
+              "recordPriority": 2,
+              "recordMetadata": {
+                "created": 1761156735359,
+                "category": "category-3",
+                "subcategory": "subcategory-10",
+                "tags": [
+                  "tag-9LLl",
+                  "tag-qClB",
+                  "tag-apMa"
+                ],
+                "extra": {
+                  "field1": "YEHEJL3BAD",
+                  "field2": 513,
+                  "field3": 56.94369908659238,
+                  "nested": {
+                    "deep1": "po5r2Rbg",
+                    "deep2": 65,
+                    "deep3": false
+                  }
+                }
+              }
+            },
+            {
+              "recordId": "record-4",
+              "recordValue": 6525.137358798041,
+              "recordActive": true,
+              "recordType": "primary",
+              "recordPriority": 6,
+              "recordMetadata": {
+                "created": 1761904052943,
+                "category": "category-2",
+                "subcategory": "subcategory-3",
+                "tags": [
+                  "tag-JiIc",
+                  "tag-UhjH"
+                ],
+                "extra": {
+                  "field1": "lIPXE0CsHi",
+                  "field2": 736,
+                  "field3": 98.73726826512525,
+                  "nested": {
+                    "deep1": "jmpfvrTh",
+                    "deep2": 54,
+                    "deep3": false
+                  }
+                }
+              }
+            },
+            {
+              "recordId": "record-5",
+              "recordValue": 409.0595808960392,
+              "recordActive": false,
+              "recordType": "secondary",
+              "recordPriority": 7,
+              "recordMetadata": {
+                "created": 1762051651234,
+                "category": "category-2",
+                "subcategory": "subcategory-8",
+                "tags": [
+                  "tag-3R4z",
+                  "tag-LsJl",
+                  "tag-wvUj",
+                  "tag-RGGE",
+                  "tag-zTZ7"
+                ],
+                "extra": {
+                  "field1": "GnRJ9UzKsd",
+                  "field2": 339,
+                  "field3": 86.04309245910521,
+                  "nested": {
+                    "deep1": "rwRgrhFH",
+                    "deep2": 63,
+                    "deep3": false
+                  }
+                }
+              }
+            },
+            {
+              "recordId": "record-6",
+              "recordValue": 2865.764781218486,
+              "recordActive": true,
+              "recordType": "secondary",
+              "recordPriority": 10,
+              "recordMetadata": {
+                "created": 1761114939600,
+                "category": "category-10",
+                "subcategory": "subcategory-12",
+                "tags": [
+                  "tag-1M2i",
+                  "tag-xhEe",
+                  "tag-WDED",
+                  "tag-00IB",
+                  "tag-gmAS"
+                ],
+                "extra": {
+                  "field1": "AXCRWklZPe",
+                  "field2": 101,
+                  "field3": 86.145522318597,
+                  "nested": {
+                    "deep1": "Wr2cd3WU",
+                    "deep2": 19,
+                    "deep3": true
+                  }
+                }
+              }
+            },
+            {
+              "recordId": "record-7",
+              "recordValue": 8713.768818504815,
+              "recordActive": true,
+              "recordType": "secondary",
+              "recordPriority": 9,
+              "recordMetadata": {
+                "created": 1761552417578,
+                "category": "category-9",
+                "subcategory": "subcategory-8",
+                "tags": [
+                  "tag-t9Dk",
+                  "tag-WhKB"
+                ],
+                "extra": {
+                  "field1": "jRa6qujVCs",
+                  "field2": 747,
+                  "field3": 44.10321552370237,
+                  "nested": {
+                    "deep1": "M3VrmmvG",
+                    "deep2": 1,
+                    "deep3": true
+                  }
+                }
+              }
+            },
+            {
+              "recordId": "record-8",
+              "recordValue": 7429.492434379502,
+              "recordActive": true,
+              "recordType": "tertiary",
+              "recordPriority": 10,
+              "recordMetadata": {
+                "created": 1761503087811,
+                "category": "category-7",
+                "subcategory": "subcategory-1",
+                "tags": [
+                  "tag-q27K",
+                  "tag-NF3h",
+                  "tag-9z19",
+                  "tag-Oj89"
+                ],
+                "extra": {
+                  "field1": "HYzNkPA69J",
+                  "field2": 241,
+                  "field3": 80.11926524622673,
+                  "nested": {
+                    "deep1": "dSfmegES",
+                    "deep2": 81,
+                    "deep3": true
+                  }
+                }
+              }
+            },
+            {
+              "recordId": "record-9",
+              "recordValue": 2995.4717351985387,
+              "recordActive": true,
+              "recordType": "secondary",
+              "recordPriority": 3,
+              "recordMetadata": {
+                "created": 1762062115059,
+                "category": "category-7",
+                "subcategory": "subcategory-13",
+                "tags": [
+                  "tag-azhd",
+                  "tag-Bs8l",
+                  "tag-MYyY",
+                  "tag-ui4U"
+                ],
+                "extra": {
+                  "field1": "yHoyeKKHuf",
+                  "field2": 856,
+                  "field3": 38.7741964255118,
+                  "nested": {
+                    "deep1": "M2wLWM5V",
+                    "deep2": 10,
+                    "deep3": true
+                  }
+                }
+              }
+            },
+            {
+              "recordId": "record-10",
+              "recordValue": 1233.8758065510049,
+              "recordActive": true,
+              "recordType": "tertiary",
+              "recordPriority": 7,
+              "recordMetadata": {
+                "created": 1761660081668,
+                "category": "category-7",
+                "subcategory": "subcategory-9",
+                "tags": [
+                  "tag-58h7",
+                  "tag-ShiN",
+                  "tag-xz8E",
+                  "tag-gA4X"
+                ],
+                "extra": {
+                  "field1": "Vrmz0CEbXn",
+                  "field2": 709,
+                  "field3": 49.04345434238394,
+                  "nested": {
+                    "deep1": "EJp3ItXp",
+                    "deep2": 51,
+                    "deep3": true
+                  }
+                }
+              }
+            }
+          ],
+          "child1": {
+            "id": "root-c1-c1-c1-c1-c1",
+            "name": "Node-root-c1-c1-c1-c1-c1",
+            "depth": 6,
+            "value": 812,
+            "score": 245.73598769199944,
+            "active": false,
+            "type": "branch",
+            "timestamp": 1761996326386,
+            "metadata": {
+              "created": 1761603957722,
+              "updated": 1761995981402,
+              "version": 1,
+              "author": "user-43",
+              "checksum": "xECMdfTElg1MqLy6xnKy8L7wkbYVmgGB",
+              "tags": [
+                "tag-cH1lE",
+                "tag-QX9xy",
+                "tag-XQjCP",
+                "tag-KYRtT",
+                "tag-2YFSf",
+                "tag-Qzu8i",
+                "tag-dBbeY"
+              ],
+              "flags": {
+                "enabled": true,
+                "verified": true,
+                "archived": true
+              }
+            },
+            "config": {
+              "setting1": "DKrVZmbjoE",
+              "setting2": 48,
+              "setting3": true,
+              "setting4": 0.30315734480828027,
+              "nested": {
+                "deep1": "8XTWwKon",
+                "deep2": 7,
+                "deep3": false,
+                "deep4": {
+                  "veryDeep1": "L4H9IFS8v0N4",
+                  "veryDeep2": [
+                    47,
+                    55,
+                    60,
+                    71,
+                    71,
+                    79
+                  ],
+                  "veryDeep3": {
+                    "ultraDeep1": "dPfnMX",
+                    "ultraDeep2": false
+                  }
+                }
+              },
+              "advanced": {
+                "timeout": 1571,
+                "retries": 3,
+                "batch": false,
+                "compression": "brotli"
+              }
+            },
+            "tags": [
+              "tag-o7JDy",
+              "tag-KPArX",
+              "tag-cbG1O",
+              "tag-J7HBe",
+              "tag-rVm6u"
+            ],
+            "numbers": [
+              205,
+              87,
+              947,
+              911,
+              260,
+              352,
+              877,
+              547,
+              939,
+              454,
+              115
+            ],
+            "floats": [
+              74.30922498613941,
+              52.32402156759463,
+              74.45057059515675,
+              7.593967396709078,
+              82.65611522346128,
+              78.76621528067814,
+              84.13450482182039
+            ],
+            "flags": [
+              "flag-cnJ5",
+              "flag-6dlx",
+              "flag-imr2",
+              "flag-47DS",
+              "flag-x6qb",
+              "flag-npvR"
+            ],
+            "items": [
+              {
+                "itemId": 0,
+                "itemName": "Item-0",
+                "itemValue": 84.65923423459705,
+                "itemEnabled": false,
+                "itemPriority": 5,
+                "itemMetadata": {
+                  "created": 1762048695851,
+                  "category": "cat-2"
+                }
+              },
+              {
+                "itemId": 1,
+                "itemName": "Item-1",
+                "itemValue": 92.72453846408231,
+                "itemEnabled": false,
+                "itemPriority": 6,
+                "itemMetadata": {
+                  "created": 1762091876142,
+                  "category": "cat-4"
+                }
+              },
+              {
+                "itemId": 2,
+                "itemName": "Item-2",
+                "itemValue": 26.15081352457868,
+                "itemEnabled": true,
+                "itemPriority": 7,
+                "itemMetadata": {
+                  "created": 1762093397643,
+                  "category": "cat-4"
+                }
+              },
+              {
+                "itemId": 3,
+                "itemName": "Item-3",
+                "itemValue": 77.6095669904805,
+                "itemEnabled": true,
+                "itemPriority": 4,
+                "itemMetadata": {
+                  "created": 1762078627594,
+                  "category": "cat-2"
+                }
+              },
+              {
+                "itemId": 4,
+                "itemName": "Item-4",
+                "itemValue": 91.89790482396667,
+                "itemEnabled": true,
+                "itemPriority": 5,
+                "itemMetadata": {
+                  "created": 1762058160596,
+                  "category": "cat-4"
+                }
+              },
+              {
+                "itemId": 5,
+                "itemName": "Item-5",
+                "itemValue": 78.65432643954372,
+                "itemEnabled": false,
+                "itemPriority": 10,
+                "itemMetadata": {
+                  "created": 1762036161028,
+                  "category": "cat-3"
+                }
+              },
+              {
+                "itemId": 6,
+                "itemName": "Item-6",
+                "itemValue": 22.225731483460656,
+                "itemEnabled": true,
+                "itemPriority": 9,
+                "itemMetadata": {
+                  "created": 1762047100916,
+                  "category": "cat-2"
+                }
+              }
+            ],
+            "records": [
+              {
+                "recordId": "record-0",
+                "recordValue": 4055.0809471237585,
+                "recordActive": false,
+                "recordType": "primary",
+                "recordPriority": 9,
+                "recordMetadata": {
+                  "created": 1761841642155,
+                  "category": "category-8",
+                  "subcategory": "subcategory-8",
+                  "tags": [
+                    "tag-ZZL2",
+                    "tag-zl1F",
+                    "tag-a9QY",
+                    "tag-KKE9",
+                    "tag-CYj3"
+                  ],
+                  "extra": {
+                    "field1": "Nzdc5JraGm",
+                    "field2": 689,
+                    "field3": 95.34579570728728,
+                    "nested": {
+                      "deep1": "8jW2xi29",
+                      "deep2": 43,
+                      "deep3": false
+                    }
+                  }
+                }
+              },
+              {
+                "recordId": "record-1",
+                "recordValue": 9854.743095846487,
+                "recordActive": false,
+                "recordType": "secondary",
+                "recordPriority": 3,
+                "recordMetadata": {
+                  "created": 1761466853121,
+                  "category": "category-5",
+                  "subcategory": "subcategory-3",
+                  "tags": [
+                    "tag-hpK1",
+                    "tag-VrPp",
+                    "tag-tdfJ"
+                  ],
+                  "extra": {
+                    "field1": "L2BiuQqfPY",
+                    "field2": 819,
+                    "field3": 36.08357803529862,
+                    "nested": {
+                      "deep1": "jAg7s8Lk",
+                      "deep2": 61,
+                      "deep3": true
+                    }
+                  }
+                }
+              },
+              {
+                "recordId": "record-2",
+                "recordValue": 5108.5902837828535,
+                "recordActive": true,
+                "recordType": "secondary",
+                "recordPriority": 4,
+                "recordMetadata": {
+                  "created": 1761516432760,
+                  "category": "category-0",
+                  "subcategory": "subcategory-20",
+                  "tags": [
+                    "tag-PRzS",
+                    "tag-AF6x",
+                    "tag-vEpI",
+                    "tag-AhQh",
+                    "tag-aby0"
+                  ],
+                  "extra": {
+                    "field1": "oBurV7Q5m7",
+                    "field2": 180,
+                    "field3": 75.45136241762538,
+                    "nested": {
+                      "deep1": "yFqlijq2",
+                      "deep2": 85,
+                      "deep3": true
+                    }
+                  }
+                }
+              },
+              {
+                "recordId": "record-3",
+                "recordValue": 706.102132139989,
+                "recordActive": true,
+                "recordType": "primary",
+                "recordPriority": 8,
+                "recordMetadata": {
+                  "created": 1761843126650,
+                  "category": "category-9",
+                  "subcategory": "subcategory-14",
+                  "tags": [
+                    "tag-52QR",
+                    "tag-DVUe",
+                    "tag-GGGE",
+                    "tag-BWw8"
+                  ],
+                  "extra": {
+                    "field1": "NhUKX0hFdR",
+                    "field2": 558,
+                    "field3": 87.18491312732651,
+                    "nested": {
+                      "deep1": "sDJOCvhi",
+                      "deep2": 7,
+                      "deep3": false
+                    }
+                  }
+                }
+              },
+              {
+                "recordId": "record-4",
+                "recordValue": 2018.6178489860915,
+                "recordActive": true,
+                "recordType": "tertiary",
+                "recordPriority": 4,
+                "recordMetadata": {
+                  "created": 1761223934461,
+                  "category": "category-10",
+                  "subcategory": "subcategory-7",
+                  "tags": [
+                    "tag-b7UL",
+                    "tag-b6TP",
+                    "tag-fB0K",
+                    "tag-c39T",
+                    "tag-9bTX"
+                  ],
+                  "extra": {
+                    "field1": "ZehuJjuRZN",
+                    "field2": 817,
+                    "field3": 43.90535248702775,
+                    "nested": {
+                      "deep1": "PPKEaOoy",
+                      "deep2": 21,
+                      "deep3": false
+                    }
+                  }
+                }
+              },
+              {
+                "recordId": "record-5",
+                "recordValue": 542.3900740809374,
+                "recordActive": true,
+                "recordType": "secondary",
+                "recordPriority": 4,
+                "recordMetadata": {
+                  "created": 1761312877992,
+                  "category": "category-7",
+                  "subcategory": "subcategory-18",
+                  "tags": [
+                    "tag-79zL",
+                    "tag-bQyh",
+                    "tag-imG0"
+                  ],
+                  "extra": {
+                    "field1": "QxxbRG0wSA",
+                    "field2": 152,
+                    "field3": 46.110138691208824,
+                    "nested": {
+                      "deep1": "WySVzjqz",
+                      "deep2": 28,
+                      "deep3": false
+                    }
+                  }
+                }
+              },
+              {
+                "recordId": "record-6",
+                "recordValue": 1556.7101717301562,
+                "recordActive": true,
+                "recordType": "tertiary",
+                "recordPriority": 7,
+                "recordMetadata": {
+                  "created": 1761688387596,
+                  "category": "category-10",
+                  "subcategory": "subcategory-3",
+                  "tags": [
+                    "tag-Y4a6",
+                    "tag-vFPh",
+                    "tag-bddM",
+                    "tag-bnZC"
+                  ],
+                  "extra": {
+                    "field1": "8vWCLqjaCZ",
+                    "field2": 633,
+                    "field3": 69.27789263753844,
+                    "nested": {
+                      "deep1": "89oqLuMx",
+                      "deep2": 5,
+                      "deep3": false
+                    }
+                  }
+                }
+              },
+              {
+                "recordId": "record-7",
+                "recordValue": 1626.8655634873526,
+                "recordActive": false,
+                "recordType": "primary",
+                "recordPriority": 3,
+                "recordMetadata": {
+                  "created": 1761548720091,
+                  "category": "category-1",
+                  "subcategory": "subcategory-6",
+                  "tags": [
+                    "tag-t2Sw",
+                    "tag-x4TG",
+                    "tag-DAY0",
+                    "tag-BIeJ"
+                  ],
+                  "extra": {
+                    "field1": "f6ewe7pqUS",
+                    "field2": 514,
+                    "field3": 45.96064210802268,
+                    "nested": {
+                      "deep1": "7CPm9q8N",
+                      "deep2": 91,
+                      "deep3": true
+                    }
+                  }
+                }
+              },
+              {
+                "recordId": "record-8",
+                "recordValue": 7202.269944239948,
+                "recordActive": true,
+                "recordType": "tertiary",
+                "recordPriority": 3,
+                "recordMetadata": {
+                  "created": 1761698086603,
+                  "category": "category-10",
+                  "subcategory": "subcategory-5",
+                  "tags": [
+                    "tag-2N1P",
+                    "tag-jr6Y",
+                    "tag-xi2z",
+                    "tag-JI4Y",
+                    "tag-arIU"
+                  ],
+                  "extra": {
+                    "field1": "tD7GmTOXc9",
+                    "field2": 356,
+                    "field3": 5.801007106034429,
+                    "nested": {
+                      "deep1": "TOPeC3mI",
+                      "deep2": 95,
+                      "deep3": true
+                    }
+                  }
+                }
+              }
+            ],
+            "child1": {
+              "id": "root-c1-c1-c1-c1-c1-c1",
+              "name": "Node-root-c1-c1-c1-c1-c1-c1",
+              "depth": 7,
+              "value": 5541,
+              "score": 648.6552891999622,
+              "active": true,
+              "type": "branch",
+              "timestamp": 1761148172653,
+              "metadata": {
+                "created": 1761890713074,
+                "updated": 1762050871236,
+                "version": 8,
+                "author": "user-69",
+                "checksum": "xEoNJRMoJ9MIpYoFtwue0MPRtZDMLzNu",
+                "tags": [
+                  "tag-8z7q2",
+                  "tag-8Bvsh",
+                  "tag-RU7qp",
+                  "tag-QyrHx"
+                ],
+                "flags": {
+                  "enabled": false,
+                  "verified": false,
+                  "archived": true
+                }
+              },
+              "config": {
+                "setting1": "jHWQjGKIFh",
+                "setting2": 14,
+                "setting3": true,
+                "setting4": 57.88523406997144,
+                "nested": {
+                  "deep1": "QMJql3Ki",
+                  "deep2": 11,
+                  "deep3": false,
+                  "deep4": {
+                    "veryDeep1": "cKkcKXr5vmUX",
+                    "veryDeep2": [
+                      67,
+                      14,
+                      89,
+                      23,
+                      46
+                    ],
+                    "veryDeep3": {
+                      "ultraDeep1": "gCh6X9",
+                      "ultraDeep2": true
+                    }
+                  }
+                },
+                "advanced": {
+                  "timeout": 7942,
+                  "retries": 1,
+                  "batch": true,
+                  "compression": "none"
+                }
+              },
+              "tags": [
+                "tag-y27la",
+                "tag-4LT1Q",
+                "tag-InxMS",
+                "tag-6gMvF",
+                "tag-5ndtp"
+              ],
+              "numbers": [
+                416,
+                503,
+                584,
+                447,
+                162,
+                359,
+                791,
+                645,
+                156,
+                606
+              ],
+              "floats": [
+                35.4322349980577,
+                4.754613133728835,
+                19.711499144829258,
+                60.867639144989795,
+                48.16096811237487,
+                55.03540544241502,
+                80.27243888098424,
+                74.96256756564115
+              ],
+              "flags": [
+                "flag-2CGA",
+                "flag-5Baq",
+                "flag-STMd",
+                "flag-1AAz",
+                "flag-Juoi"
+              ],
+              "items": [
+                {
+                  "itemId": 0,
+                  "itemName": "Item-0",
+                  "itemValue": 79.30590833494625,
+                  "itemEnabled": true,
+                  "itemPriority": 4,
+                  "itemMetadata": {
+                    "created": 1761999766935,
+                    "category": "cat-3"
+                  }
+                },
+                {
+                  "itemId": 1,
+                  "itemName": "Item-1",
+                  "itemValue": 98.49760404128833,
+                  "itemEnabled": true,
+                  "itemPriority": 10,
+                  "itemMetadata": {
+                    "created": 1762064379992,
+                    "category": "cat-3"
+                  }
+                },
+                {
+                  "itemId": 2,
+                  "itemName": "Item-2",
+                  "itemValue": 61.49117469229714,
+                  "itemEnabled": true,
+                  "itemPriority": 1,
+                  "itemMetadata": {
+                    "created": 1762069934848,
+                    "category": "cat-2"
+                  }
+                },
+                {
+                  "itemId": 3,
+                  "itemName": "Item-3",
+                  "itemValue": 46.606651275412716,
+                  "itemEnabled": true,
+                  "itemPriority": 3,
+                  "itemMetadata": {
+                    "created": 1762039733575,
+                    "category": "cat-3"
+                  }
+                },
+                {
+                  "itemId": 4,
+                  "itemName": "Item-4",
+                  "itemValue": 45.478818830048304,
+                  "itemEnabled": true,
+                  "itemPriority": 9,
+                  "itemMetadata": {
+                    "created": 1762060585567,
+                    "category": "cat-1"
+                  }
+                }
+              ],
+              "records": [
+                {
+                  "recordId": "record-0",
+                  "recordValue": 1033.2077744438566,
+                  "recordActive": false,
+                  "recordType": "primary",
+                  "recordPriority": 1,
+                  "recordMetadata": {
+                    "created": 1762057848393,
+                    "category": "category-2",
+                    "subcategory": "subcategory-17",
+                    "tags": [
+                      "tag-gRWi",
+                      "tag-ycMN"
+                    ],
+                    "extra": {
+                      "field1": "VqZr0Y26X3",
+                      "field2": 244,
+                      "field3": 53.92264352021979,
+                      "nested": {
+                        "deep1": "V3fDi8ym",
+                        "deep2": 57,
+                        "deep3": false
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-1",
+                  "recordValue": 2375.4350838593855,
+                  "recordActive": true,
+                  "recordType": "secondary",
+                  "recordPriority": 2,
+                  "recordMetadata": {
+                    "created": 1761894522840,
+                    "category": "category-3",
+                    "subcategory": "subcategory-10",
+                    "tags": [
+                      "tag-BG34",
+                      "tag-QALP",
+                      "tag-tQ34"
+                    ],
+                    "extra": {
+                      "field1": "XFnVubvsxu",
+                      "field2": 167,
+                      "field3": 62.90610821150367,
+                      "nested": {
+                        "deep1": "zkPYTce6",
+                        "deep2": 75,
+                        "deep3": true
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-2",
+                  "recordValue": 1051.8296612867698,
+                  "recordActive": true,
+                  "recordType": "secondary",
+                  "recordPriority": 6,
+                  "recordMetadata": {
+                    "created": 1761969084945,
+                    "category": "category-8",
+                    "subcategory": "subcategory-4",
+                    "tags": [
+                      "tag-VtBH",
+                      "tag-fIUX"
+                    ],
+                    "extra": {
+                      "field1": "xE97tjxC5e",
+                      "field2": 801,
+                      "field3": 60.09706755917829,
+                      "nested": {
+                        "deep1": "J0P5vifG",
+                        "deep2": 41,
+                        "deep3": false
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-3",
+                  "recordValue": 4244.697072314659,
+                  "recordActive": true,
+                  "recordType": "secondary",
+                  "recordPriority": 5,
+                  "recordMetadata": {
+                    "created": 1761213984586,
+                    "category": "category-9",
+                    "subcategory": "subcategory-4",
+                    "tags": [
+                      "tag-GmZW",
+                      "tag-ezGw"
+                    ],
+                    "extra": {
+                      "field1": "lDaBfQ5T87",
+                      "field2": 461,
+                      "field3": 1.7658556880964351,
+                      "nested": {
+                        "deep1": "DQhLmVoZ",
+                        "deep2": 92,
+                        "deep3": false
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-4",
+                  "recordValue": 7729.520380815508,
+                  "recordActive": true,
+                  "recordType": "tertiary",
+                  "recordPriority": 7,
+                  "recordMetadata": {
+                    "created": 1761975308089,
+                    "category": "category-0",
+                    "subcategory": "subcategory-0",
+                    "tags": [
+                      "tag-v8J2",
+                      "tag-J8YZ"
+                    ],
+                    "extra": {
+                      "field1": "qLqVwq8QoM",
+                      "field2": 572,
+                      "field3": 10.618342527015713,
+                      "nested": {
+                        "deep1": "S0CLVW5k",
+                        "deep2": 11,
+                        "deep3": false
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-5",
+                  "recordValue": 3184.4455784162055,
+                  "recordActive": false,
+                  "recordType": "primary",
+                  "recordPriority": 2,
+                  "recordMetadata": {
+                    "created": 1761648193747,
+                    "category": "category-10",
+                    "subcategory": "subcategory-2",
+                    "tags": [
+                      "tag-A6Tz",
+                      "tag-gypM",
+                      "tag-QB7o",
+                      "tag-pPzv",
+                      "tag-M162"
+                    ],
+                    "extra": {
+                      "field1": "de0oafcQn7",
+                      "field2": 211,
+                      "field3": 75.1810936737256,
+                      "nested": {
+                        "deep1": "NuHhviKF",
+                        "deep2": 91,
+                        "deep3": true
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-6",
+                  "recordValue": 5846.732732235685,
+                  "recordActive": false,
+                  "recordType": "tertiary",
+                  "recordPriority": 2,
+                  "recordMetadata": {
+                    "created": 1761359373008,
+                    "category": "category-7",
+                    "subcategory": "subcategory-14",
+                    "tags": [
+                      "tag-7rhg",
+                      "tag-1HEb"
+                    ],
+                    "extra": {
+                      "field1": "AIs3ylOBMz",
+                      "field2": 347,
+                      "field3": 92.98262232353308,
+                      "nested": {
+                        "deep1": "hXkhR2W6",
+                        "deep2": 9,
+                        "deep3": false
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-7",
+                  "recordValue": 4066.5749749222623,
+                  "recordActive": false,
+                  "recordType": "tertiary",
+                  "recordPriority": 10,
+                  "recordMetadata": {
+                    "created": 1761373394458,
+                    "category": "category-0",
+                    "subcategory": "subcategory-11",
+                    "tags": [
+                      "tag-uRQW",
+                      "tag-z7we",
+                      "tag-u7O5"
+                    ],
+                    "extra": {
+                      "field1": "V0Vmasru5A",
+                      "field2": 796,
+                      "field3": 30.612625986008144,
+                      "nested": {
+                        "deep1": "dqJVFZIY",
+                        "deep2": 87,
+                        "deep3": false
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-8",
+                  "recordValue": 8816.455539576666,
+                  "recordActive": false,
+                  "recordType": "primary",
+                  "recordPriority": 5,
+                  "recordMetadata": {
+                    "created": 1761616348093,
+                    "category": "category-7",
+                    "subcategory": "subcategory-2",
+                    "tags": [
+                      "tag-P9nZ",
+                      "tag-0pEM",
+                      "tag-i4lx",
+                      "tag-v6RK",
+                      "tag-IqJm"
+                    ],
+                    "extra": {
+                      "field1": "1XIAFA2fbC",
+                      "field2": 252,
+                      "field3": 88.24374936133655,
+                      "nested": {
+                        "deep1": "aYpkAVNN",
+                        "deep2": 48,
+                        "deep3": false
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-9",
+                  "recordValue": 2907.735615155506,
+                  "recordActive": true,
+                  "recordType": "tertiary",
+                  "recordPriority": 7,
+                  "recordMetadata": {
+                    "created": 1761097894572,
+                    "category": "category-8",
+                    "subcategory": "subcategory-18",
+                    "tags": [
+                      "tag-fEY0",
+                      "tag-1NRx"
+                    ],
+                    "extra": {
+                      "field1": "CRvx7P4Q24",
+                      "field2": 336,
+                      "field3": 54.19618212976441,
+                      "nested": {
+                        "deep1": "CYxUtsPZ",
+                        "deep2": 80,
+                        "deep3": true
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-10",
+                  "recordValue": 8333.89434110248,
+                  "recordActive": true,
+                  "recordType": "secondary",
+                  "recordPriority": 3,
+                  "recordMetadata": {
+                    "created": 1761100228958,
+                    "category": "category-8",
+                    "subcategory": "subcategory-14",
+                    "tags": [
+                      "tag-DUUN",
+                      "tag-XcpK",
+                      "tag-Se4o",
+                      "tag-6RBP"
+                    ],
+                    "extra": {
+                      "field1": "6uYu5shrcH",
+                      "field2": 208,
+                      "field3": 33.08866068671176,
+                      "nested": {
+                        "deep1": "pJadjAEM",
+                        "deep2": 80,
+                        "deep3": false
+                      }
+                    }
+                  }
+                },
+                {
+                  "recordId": "record-11",
+                  "recordValue": 947.0231037499709,
+                  "recordActive": false,
+                  "recordType": "primary",
+                  "recordPriority": 9,
+                  "recordMetadata": {
+                    "created": 1761945919751,
+                    "category": "category-6",
+                    "subcategory": "subcategory-1",
+                    "tags": [
+                      "tag-OdZH",
+                      "tag-R6lr"
+                    ],
+                    "extra": {
+                      "field1": "UqfRa8TQKW",
+                      "field2": 647,
+                      "field3": 91.10707033184671,
+                      "nested": {
+                        "deep1": "aQWOuKH4",
+                        "deep2": 37,
+                        "deep3": false
+                      }
+                    }
+                  }
+                }
+              ],
+              "child1": {
+                "id": "root-c1-c1-c1-c1-c1-c1-c1",
+                "name": "Node-root-c1-c1-c1-c1-c1-c1-c1",
+                "depth": 8,
+                "value": 6376,
+                "score": 262.61959251515634,
+                "active": false,
+                "type": "leaf",
+                "timestamp": 1762041854933,
+                "metadata": {
+                  "created": 1762033870132,
+                  "updated": 1762046794459,
+                  "version": 4,
+                  "author": "user-43",
+                  "checksum": "L7R4sF6gjbyGn7RRv98BQMypjlDgMT2K",
+                  "tags": [
+                    "tag-QJ45t",
+                    "tag-sqpDV",
+                    "tag-6pnFU",
+                    "tag-IfTVx",
+                    "tag-l9Q7k",
+                    "tag-topAf",
+                    "tag-exuIt",
+                    "tag-MWlKH"
+                  ],
+                  "flags": {
+                    "enabled": true,
+                    "verified": false,
+                    "archived": false
+                  }
+                },
+                "config": {
+                  "setting1": "VPNgi95uLZ",
+                  "setting2": 53,
+                  "setting3": true,
+                  "setting4": 32.247379454198764,
+                  "nested": {
+                    "deep1": "tOLnHkaZ",
+                    "deep2": 24,
+                    "deep3": true,
+                    "deep4": {
+                      "veryDeep1": "youZlUDXipRN",
+                      "veryDeep2": [
+                        76,
+                        90,
+                        32,
+                        45,
+                        71,
+                        38
+                      ],
+                      "veryDeep3": {
+                        "ultraDeep1": "5aSUYd",
+                        "ultraDeep2": false
+                      }
+                    }
+                  },
+                  "advanced": {
+                    "timeout": 3955,
+                    "retries": 5,
+                    "batch": true,
+                    "compression": "none"
+                  }
+                },
+                "tags": [
+                  "tag-nGd0d",
+                  "tag-59qNr",
+                  "tag-xPB1J",
+                  "tag-N6hBW",
+                  "tag-n91Hs",
+                  "tag-ouqRf",
+                  "tag-djaj2"
+                ],
+                "numbers": [
+                  414,
+                  143,
+                  563,
+                  714,
+                  670,
+                  124,
+                  40,
+                  906,
+                  403,
+                  801,
+                  78,
+                  138
+                ],
+                "floats": [
+                  82.47837035177945,
+                  53.09359471888872,
+                  99.87589918908692,
+                  12.024180896303404,
+                  37.1967642742137,
+                  1.1510045738971852,
+                  80.0729580790433,
+                  65.21667730900037,
+                  61.772727415439874,
+                  43.90304427132171
+                ],
+                "flags": [
+                  "flag-fh1o",
+                  "flag-4G5E",
+                  "flag-cfNe",
+                  "flag-NgD4",
+                  "flag-xTzK",
+                  "flag-Jj8D"
+                ],
+                "items": [
+                  {
+                    "itemId": 0,
+                    "itemName": "Item-0",
+                    "itemValue": 26.961047931084874,
+                    "itemEnabled": true,
+                    "itemPriority": 5,
+                    "itemMetadata": {
+                      "created": 1761998401631,
+                      "category": "cat-5"
+                    }
+                  },
+                  {
+                    "itemId": 1,
+                    "itemName": "Item-1",
+                    "itemValue": 93.0482818941862,
+                    "itemEnabled": false,
+                    "itemPriority": 5,
+                    "itemMetadata": {
+                      "created": 1762049165688,
+                      "category": "cat-4"
+                    }
+                  },
+                  {
+                    "itemId": 2,
+                    "itemName": "Item-2",
+                    "itemValue": 49.348891594006446,
+                    "itemEnabled": true,
+                    "itemPriority": 6,
+                    "itemMetadata": {
+                      "created": 1762066430807,
+                      "category": "cat-1"
+                    }
+                  },
+                  {
+                    "itemId": 3,
+                    "itemName": "Item-3",
+                    "itemValue": 17.150838452091154,
+                    "itemEnabled": true,
+                    "itemPriority": 3,
+                    "itemMetadata": {
+                      "created": 1762073246650,
+                      "category": "cat-4"
+                    }
+                  },
+                  {
+                    "itemId": 4,
+                    "itemName": "Item-4",
+                    "itemValue": 73.21915330783035,
+                    "itemEnabled": false,
+                    "itemPriority": 4,
+                    "itemMetadata": {
+                      "created": 1762079702367,
+                      "category": "cat-1"
+                    }
+                  },
+                  {
+                    "itemId": 5,
+                    "itemName": "Item-5",
+                    "itemValue": 78.36881857874957,
+                    "itemEnabled": false,
+                    "itemPriority": 5,
+                    "itemMetadata": {
+                      "created": 1762023042005,
+                      "category": "cat-4"
+                    }
+                  },
+                  {
+                    "itemId": 6,
+                    "itemName": "Item-6",
+                    "itemValue": 21.66242935632858,
+                    "itemEnabled": false,
+                    "itemPriority": 5,
+                    "itemMetadata": {
+                      "created": 1762051603709,
+                      "category": "cat-2"
+                    }
+                  }
+                ],
+                "records": [
+                  {
+                    "recordId": "record-0",
+                    "recordValue": 4408.6231147284,
+                    "recordActive": true,
+                    "recordType": "primary",
+                    "recordPriority": 9,
+                    "recordMetadata": {
+                      "created": 1761807646616,
+                      "category": "category-5",
+                      "subcategory": "subcategory-5",
+                      "tags": [
+                        "tag-q8rX",
+                        "tag-towE",
+                        "tag-IiMa",
+                        "tag-ej7c"
+                      ],
+                      "extra": {
+                        "field1": "D6V3I2rEJ6",
+                        "field2": 944,
+                        "field3": 18.473911551783107,
+                        "nested": {
+                          "deep1": "mrTRhxLM",
+                          "deep2": 96,
+                          "deep3": true
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "recordId": "record-1",
+                    "recordValue": 1486.1299759731392,
+                    "recordActive": false,
+                    "recordType": "primary",
+                    "recordPriority": 5,
+                    "recordMetadata": {
+                      "created": 1761179370509,
+                      "category": "category-8",
+                      "subcategory": "subcategory-5",
+                      "tags": [
+                        "tag-Srxe",
+                        "tag-CMkt",
+                        "tag-qqna",
+                        "tag-x5oo",
+                        "tag-OWfC"
+                      ],
+                      "extra": {
+                        "field1": "xDuW8JmTDM",
+                        "field2": 791,
+                        "field3": 87.53568145014555,
+                        "nested": {
+                          "deep1": "dOg2FIK9",
+                          "deep2": 84,
+                          "deep3": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "recordId": "record-2",
+                    "recordValue": 1744.1383115815888,
+                    "recordActive": true,
+                    "recordType": "primary",
+                    "recordPriority": 7,
+                    "recordMetadata": {
+                      "created": 1762074424268,
+                      "category": "category-1",
+                      "subcategory": "subcategory-14",
+                      "tags": [
+                        "tag-mytm",
+                        "tag-lJ7j",
+                        "tag-TTuS"
+                      ],
+                      "extra": {
+                        "field1": "vCHWtahXll",
+                        "field2": 949,
+                        "field3": 86.16458453149022,
+                        "nested": {
+                          "deep1": "RUwIyym7",
+                          "deep2": 48,
+                          "deep3": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "recordId": "record-3",
+                    "recordValue": 2407.620106855692,
+                    "recordActive": false,
+                    "recordType": "secondary",
+                    "recordPriority": 10,
+                    "recordMetadata": {
+                      "created": 1761102014575,
+                      "category": "category-6",
+                      "subcategory": "subcategory-9",
+                      "tags": [
+                        "tag-xLzr",
+                        "tag-v7Rg",
+                        "tag-PTJ6",
+                        "tag-61x7",
+                        "tag-oVEo"
+                      ],
+                      "extra": {
+                        "field1": "GkRtiY3kga",
+                        "field2": 527,
+                        "field3": 86.49761291234461,
+                        "nested": {
+                          "deep1": "H2o6M3MV",
+                          "deep2": 57,
+                          "deep3": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "recordId": "record-4",
+                    "recordValue": 9005.313367892979,
+                    "recordActive": true,
+                    "recordType": "primary",
+                    "recordPriority": 4,
+                    "recordMetadata": {
+                      "created": 1761781334566,
+                      "category": "category-4",
+                      "subcategory": "subcategory-3",
+                      "tags": [
+                        "tag-8Vwc",
+                        "tag-3n7v"
+                      ],
+                      "extra": {
+                        "field1": "mRNDDCVGEN",
+                        "field2": 462,
+                        "field3": 28.596037869073335,
+                        "nested": {
+                          "deep1": "GFNUxyGQ",
+                          "deep2": 46,
+                          "deep3": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "recordId": "record-5",
+                    "recordValue": 5001.349885178724,
+                    "recordActive": false,
+                    "recordType": "tertiary",
+                    "recordPriority": 6,
+                    "recordMetadata": {
+                      "created": 1761364027873,
+                      "category": "category-4",
+                      "subcategory": "subcategory-7",
+                      "tags": [
+                        "tag-uhWz",
+                        "tag-hzG3",
+                        "tag-Z9G5",
+                        "tag-kxtm",
+                        "tag-3oE1"
+                      ],
+                      "extra": {
+                        "field1": "DNRE2yNyyp",
+                        "field2": 748,
+                        "field3": 93.17069996638799,
+                        "nested": {
+                          "deep1": "uTs2TF8T",
+                          "deep2": 47,
+                          "deep3": true
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "recordId": "record-6",
+                    "recordValue": 6265.08150535578,
+                    "recordActive": false,
+                    "recordType": "primary",
+                    "recordPriority": 7,
+                    "recordMetadata": {
+                      "created": 1761246759738,
+                      "category": "category-5",
+                      "subcategory": "subcategory-18",
+                      "tags": [
+                        "tag-NeHE",
+                        "tag-ky8R",
+                        "tag-9NM7",
+                        "tag-DGqS",
+                        "tag-K982"
+                      ],
+                      "extra": {
+                        "field1": "EhwgsaZMmf",
+                        "field2": 694,
+                        "field3": 48.710384503259995,
+                        "nested": {
+                          "deep1": "jOnWbQCY",
+                          "deep2": 99,
+                          "deep3": true
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "recordId": "record-7",
+                    "recordValue": 4503.977292630806,
+                    "recordActive": false,
+                    "recordType": "secondary",
+                    "recordPriority": 7,
+                    "recordMetadata": {
+                      "created": 1761685190016,
+                      "category": "category-7",
+                      "subcategory": "subcategory-13",
+                      "tags": [
+                        "tag-C4fW",
+                        "tag-5aKx"
+                      ],
+                      "extra": {
+                        "field1": "HmHhyRxVEx",
+                        "field2": 992,
+                        "field3": 53.58127682622492,
+                        "nested": {
+                          "deep1": "0HpaCQ1H",
+                          "deep2": 1,
+                          "deep3": false
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "recordId": "record-8",
+                    "recordValue": 1360.4404376204036,
+                    "recordActive": true,
+                    "recordType": "tertiary",
+                    "recordPriority": 6,
+                    "recordMetadata": {
+                      "created": 1761288441161,
+                      "category": "category-6",
+                      "subcategory": "subcategory-9",
+                      "tags": [
+                        "tag-go3N",
+                        "tag-JusC",
+                        "tag-32q1",
+                        "tag-eUef",
+                        "tag-YgTp"
+                      ],
+                      "extra": {
+                        "field1": "mrVUpQGb7Q",
+                        "field2": 185,
+                        "field3": 17.526662183973883,
+                        "nested": {
+                          "deep1": "SBTF9jyH",
+                          "deep2": 44,
+                          "deep3": true
+                        }
+                      }
+                    }
+                  }
+                ],
+                "child1": {
+                  "id": "root-c1-c1-c1-c1-c1-c1-c1-c1",
+                  "name": "Node-root-c1-c1-c1-c1-c1-c1-c1-c1",
+                  "depth": 9,
+                  "value": 9299,
+                  "score": 430.0180852194061,
+                  "active": true,
+                  "type": "root",
+                  "timestamp": 1761642061154,
+                  "metadata": {
+                    "created": 1761926331413,
+                    "updated": 1762086052381,
+                    "version": 3,
+                    "author": "user-1",
+                    "checksum": "gedhuGCJCbKK8Xz7zuqGipJoUsxDyQfv",
+                    "tags": [
+                      "tag-UOMRA",
+                      "tag-MZd7i",
+                      "tag-ppc3q",
+                      "tag-kLqGj",
+                      "tag-gTkZh",
+                      "tag-nHWr1"
+                    ],
+                    "flags": {
+                      "enabled": true,
+                      "verified": true,
+                      "archived": false
+                    }
+                  },
+                  "config": {
+                    "setting1": "ZK4UXcjISO",
+                    "setting2": 86,
+                    "setting3": false,
+                    "setting4": 26.488435002486167,
+                    "nested": {
+                      "deep1": "ywlYrvri",
+                      "deep2": 40,
+                      "deep3": false,
+                      "deep4": {
+                        "veryDeep1": "ojJQKXfQKHjY",
+                        "veryDeep2": [
+                          89,
+                          14,
+                          72,
+                          33
+                        ],
+                        "veryDeep3": {
+                          "ultraDeep1": "gDRQA8",
+                          "ultraDeep2": false
+                        }
+                      }
+                    },
+                    "advanced": {
+                      "timeout": 8056,
+                      "retries": 1,
+                      "batch": true,
+                      "compression": "none"
+                    }
+                  },
+                  "tags": [
+                    "tag-JBEbH",
+                    "tag-RQH8i",
+                    "tag-nZfIw",
+                    "tag-s95Cm",
+                    "tag-BtsJT",
+                    "tag-31K9N",
+                    "tag-OZcPt"
+                  ],
+                  "numbers": [
+                    604,
+                    71,
+                    487,
+                    983,
+                    827,
+                    630,
+                    631,
+                    444,
+                    151,
+                    179,
+                    399,
+                    817
+                  ],
+                  "floats": [
+                    75.14999155125129,
+                    7.3754305975206265,
+                    18.9164624983711,
+                    42.61347426138683,
+                    88.30694851544969,
+                    24.078091357008613
+                  ],
+                  "flags": [
+                    "flag-xU5P",
+                    "flag-VWFA",
+                    "flag-6uNK",
+                    "flag-xdLN",
+                    "flag-2pc7"
+                  ],
+                  "items": [
+                    {
+                      "itemId": 0,
+                      "itemName": "Item-0",
+                      "itemValue": 71.72546839620915,
+                      "itemEnabled": false,
+                      "itemPriority": 7,
+                      "itemMetadata": {
+                        "created": 1762051315706,
+                        "category": "cat-4"
+                      }
+                    },
+                    {
+                      "itemId": 1,
+                      "itemName": "Item-1",
+                      "itemValue": 61.81445650340834,
+                      "itemEnabled": false,
+                      "itemPriority": 6,
+                      "itemMetadata": {
+                        "created": 1762038607965,
+                        "category": "cat-2"
+                      }
+                    },
+                    {
+                      "itemId": 2,
+                      "itemName": "Item-2",
+                      "itemValue": 58.34212166963642,
+                      "itemEnabled": true,
+                      "itemPriority": 3,
+                      "itemMetadata": {
+                        "created": 1762004949059,
+                        "category": "cat-1"
+                      }
+                    },
+                    {
+                      "itemId": 3,
+                      "itemName": "Item-3",
+                      "itemValue": 68.77266419624365,
+                      "itemEnabled": true,
+                      "itemPriority": 10,
+                      "itemMetadata": {
+                        "created": 1762089160213,
+                        "category": "cat-3"
+                      }
+                    },
+                    {
+                      "itemId": 4,
+                      "itemName": "Item-4",
+                      "itemValue": 36.68936133583968,
+                      "itemEnabled": false,
+                      "itemPriority": 5,
+                      "itemMetadata": {
+                        "created": 1762016827552,
+                        "category": "cat-4"
+                      }
+                    },
+                    {
+                      "itemId": 5,
+                      "itemName": "Item-5",
+                      "itemValue": 80.73056706821798,
+                      "itemEnabled": false,
+                      "itemPriority": 4,
+                      "itemMetadata": {
+                        "created": 1762035533400,
+                        "category": "cat-5"
+                      }
+                    },
+                    {
+                      "itemId": 6,
+                      "itemName": "Item-6",
+                      "itemValue": 93.26384212545531,
+                      "itemEnabled": false,
+                      "itemPriority": 9,
+                      "itemMetadata": {
+                        "created": 1762075177926,
+                        "category": "cat-4"
+                      }
+                    },
+                    {
+                      "itemId": 7,
+                      "itemName": "Item-7",
+                      "itemValue": 21.62241635012075,
+                      "itemEnabled": false,
+                      "itemPriority": 2,
+                      "itemMetadata": {
+                        "created": 1762006898648,
+                        "category": "cat-4"
+                      }
+                    }
+                  ],
+                  "records": [
+                    {
+                      "recordId": "record-0",
+                      "recordValue": 6406.179447761433,
+                      "recordActive": true,
+                      "recordType": "secondary",
+                      "recordPriority": 7,
+                      "recordMetadata": {
+                        "created": 1761397808964,
+                        "category": "category-2",
+                        "subcategory": "subcategory-16",
+                        "tags": [
+                          "tag-mcRJ",
+                          "tag-Zmw9",
+                          "tag-jNtf"
+                        ],
+                        "extra": {
+                          "field1": "UYTaqrrkXg",
+                          "field2": 118,
+                          "field3": 54.22503088945664,
+                          "nested": {
+                            "deep1": "4f53h6MT",
+                            "deep2": 78,
+                            "deep3": true
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "recordId": "record-1",
+                      "recordValue": 9675.755640299205,
+                      "recordActive": true,
+                      "recordType": "primary",
+                      "recordPriority": 10,
+                      "recordMetadata": {
+                        "created": 1761333482901,
+                        "category": "category-5",
+                        "subcategory": "subcategory-13",
+                        "tags": [
+                          "tag-kpoO",
+                          "tag-pJad",
+                          "tag-sUEU",
+                          "tag-kBY6",
+                          "tag-GVaQ"
+                        ],
+                        "extra": {
+                          "field1": "Q52gQKpf1o",
+                          "field2": 515,
+                          "field3": 38.85470235966659,
+                          "nested": {
+                            "deep1": "zXg715kV",
+                            "deep2": 96,
+                            "deep3": true
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "recordId": "record-2",
+                      "recordValue": 5855.343223434589,
+                      "recordActive": false,
+                      "recordType": "tertiary",
+                      "recordPriority": 9,
+                      "recordMetadata": {
+                        "created": 1761276589124,
+                        "category": "category-9",
+                        "subcategory": "subcategory-13",
+                        "tags": [
+                          "tag-kX8H",
+                          "tag-MN6g",
+                          "tag-5vCF",
+                          "tag-94eu",
+                          "tag-pIVS"
+                        ],
+                        "extra": {
+                          "field1": "PWpgFb50Z3",
+                          "field2": 987,
+                          "field3": 22.648486566371155,
+                          "nested": {
+                            "deep1": "nJ3TWCJO",
+                            "deep2": 57,
+                            "deep3": true
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "recordId": "record-3",
+                      "recordValue": 5563.2979351598215,
+                      "recordActive": false,
+                      "recordType": "secondary",
+                      "recordPriority": 3,
+                      "recordMetadata": {
+                        "created": 1761122384795,
+                        "category": "category-2",
+                        "subcategory": "subcategory-14",
+                        "tags": [
+                          "tag-R0Mp",
+                          "tag-WqOG",
+                          "tag-SdcF",
+                          "tag-WSrz"
+                        ],
+                        "extra": {
+                          "field1": "ZvRhl8pfJ3",
+                          "field2": 981,
+                          "field3": 70.55446970249965,
+                          "nested": {
+                            "deep1": "FqKvfPkE",
+                            "deep2": 96,
+                            "deep3": true
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "recordId": "record-4",
+                      "recordValue": 2286.9630035429886,
+                      "recordActive": true,
+                      "recordType": "tertiary",
+                      "recordPriority": 4,
+                      "recordMetadata": {
+                        "created": 1761608899814,
+                        "category": "category-3",
+                        "subcategory": "subcategory-19",
+                        "tags": [
+                          "tag-zexI",
+                          "tag-lMw7",
+                          "tag-KCiR",
+                          "tag-r0tz"
+                        ],
+                        "extra": {
+                          "field1": "ptEhq5XBwN",
+                          "field2": 726,
+                          "field3": 20.845785249343734,
+                          "nested": {
+                            "deep1": "vdHr7Pmj",
+                            "deep2": 21,
+                            "deep3": false
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "recordId": "record-5",
+                      "recordValue": 9475.278718759051,
+                      "recordActive": true,
+                      "recordType": "secondary",
+                      "recordPriority": 8,
+                      "recordMetadata": {
+                        "created": 1761487981855,
+                        "category": "category-10",
+                        "subcategory": "subcategory-8",
+                        "tags": [
+                          "tag-Jc7L",
+                          "tag-toZR",
+                          "tag-lVj4",
+                          "tag-zDOA"
+                        ],
+                        "extra": {
+                          "field1": "aPPPb5PRWZ",
+                          "field2": 133,
+                          "field3": 89.00829426857403,
+                          "nested": {
+                            "deep1": "SWOBthZA",
+                            "deep2": 82,
+                            "deep3": false
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "recordId": "record-6",
+                      "recordValue": 5377.061475283569,
+                      "recordActive": false,
+                      "recordType": "tertiary",
+                      "recordPriority": 10,
+                      "recordMetadata": {
+                        "created": 1761395500193,
+                        "category": "category-2",
+                        "subcategory": "subcategory-19",
+                        "tags": [
+                          "tag-8Xzs",
+                          "tag-KFKE"
+                        ],
+                        "extra": {
+                          "field1": "MLglqUndfN",
+                          "field2": 406,
+                          "field3": 88.74111330097179,
+                          "nested": {
+                            "deep1": "DQ5wpINC",
+                            "deep2": 50,
+                            "deep3": false
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "recordId": "record-7",
+                      "recordValue": 7026.378279897811,
+                      "recordActive": true,
+                      "recordType": "primary",
+                      "recordPriority": 8,
+                      "recordMetadata": {
+                        "created": 1762039277402,
+                        "category": "category-9",
+                        "subcategory": "subcategory-5",
+                        "tags": [
+                          "tag-B1nb",
+                          "tag-jGkc",
+                          "tag-Pxop"
+                        ],
+                        "extra": {
+                          "field1": "u5fvHBJD29",
+                          "field2": 829,
+                          "field3": 56.095510925303856,
+                          "nested": {
+                            "deep1": "Yn2EHFiG",
+                            "deep2": 68,
+                            "deep3": true
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "recordId": "record-8",
+                      "recordValue": 244.15212353512865,
+                      "recordActive": false,
+                      "recordType": "secondary",
+                      "recordPriority": 9,
+                      "recordMetadata": {
+                        "created": 1761418485502,
+                        "category": "category-1",
+                        "subcategory": "subcategory-8",
+                        "tags": [
+                          "tag-1CL0",
+                          "tag-e1FO"
+                        ],
+                        "extra": {
+                          "field1": "0AqjgnwyuP",
+                          "field2": 244,
+                          "field3": 11.402090018027124,
+                          "nested": {
+                            "deep1": "1yf0BdCV",
+                            "deep2": 63,
+                            "deep3": true
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "child1": {
+                    "id": "root-c1-c1-c1-c1-c1-c1-c1-c1-c1",
+                    "name": "Node-root-c1-c1-c1-c1-c1-c1-c1-c1-c1",
+                    "depth": 10,
+                    "value": 5634,
+                    "score": 929.7105676626106,
+                    "active": true,
+                    "type": "branch",
+                    "timestamp": 1761581400478,
+                    "metadata": {
+                      "created": 1761161618385,
+                      "updated": 1761999960989,
+                      "version": 9,
+                      "author": "user-29",
+                      "checksum": "0txjrE805TlsXsbmiTxiUQaUZ66Guhvu",
+                      "tags": [
+                        "tag-8vFQ0",
+                        "tag-zgJkD",
+                        "tag-C4WwV",
+                        "tag-UFOpC",
+                        "tag-x4Kb8"
+                      ],
+                      "flags": {
+                        "enabled": true,
+                        "verified": true,
+                        "archived": true
+                      }
+                    },
+                    "config": {
+                      "setting1": "mEkxjYAIt2",
+                      "setting2": 13,
+                      "setting3": false,
+                      "setting4": 6.912077083210477,
+                      "nested": {
+                        "deep1": "jZW6gMp0",
+                        "deep2": 48,
+                        "deep3": true,
+                        "deep4": {
+                          "veryDeep1": "egs0i0nUgowO",
+                          "veryDeep2": [
+                            61,
+                            14,
+                            99
+                          ],
+                          "veryDeep3": {
+                            "ultraDeep1": "oy2r5H",
+                            "ultraDeep2": true
+                          }
+                        }
+                      },
+                      "advanced": {
+                        "timeout": 8103,
+                        "retries": 1,
+                        "batch": false,
+                        "compression": "none"
+                      }
+                    },
+                    "tags": [
+                      "tag-5Z8sN",
+                      "tag-Sf1rh",
+                      "tag-5evqD",
+                      "tag-lflkO",
+                      "tag-Ew2dJ",
+                      "tag-kgzUJ"
+                    ],
+                    "numbers": [
+                      882,
+                      337,
+                      484,
+                      814,
+                      364,
+                      705,
+                      769,
+                      113,
+                      840,
+                      843,
+                      473
+                    ],
+                    "floats": [
+                      48.2060830887831,
+                      57.83103384643028,
+                      37.91824050533514,
+                      85.01194923868002,
+                      49.52350586910558,
+                      18.318695273014928,
+                      13.831406239895028
+                    ],
+                    "flags": [
+                      "flag-dkYQ",
+                      "flag-afOh",
+                      "flag-7Zn6",
+                      "flag-9pZg",
+                      "flag-oe48",
+                      "flag-BPX0"
+                    ],
+                    "items": [
+                      {
+                        "itemId": 0,
+                        "itemName": "Item-0",
+                        "itemValue": 10.414656457050492,
+                        "itemEnabled": true,
+                        "itemPriority": 10,
+                        "itemMetadata": {
+                          "created": 1762033078615,
+                          "category": "cat-3"
+                        }
+                      },
+                      {
+                        "itemId": 1,
+                        "itemName": "Item-1",
+                        "itemValue": 10.718906079357062,
+                        "itemEnabled": false,
+                        "itemPriority": 10,
+                        "itemMetadata": {
+                          "created": 1762012321378,
+                          "category": "cat-5"
+                        }
+                      },
+                      {
+                        "itemId": 2,
+                        "itemName": "Item-2",
+                        "itemValue": 16.37803788335541,
+                        "itemEnabled": true,
+                        "itemPriority": 6,
+                        "itemMetadata": {
+                          "created": 1762019152134,
+                          "category": "cat-3"
+                        }
+                      },
+                      {
+                        "itemId": 3,
+                        "itemName": "Item-3",
+                        "itemValue": 45.80328241376924,
+                        "itemEnabled": true,
+                        "itemPriority": 7,
+                        "itemMetadata": {
+                          "created": 1762069026889,
+                          "category": "cat-3"
+                        }
+                      },
+                      {
+                        "itemId": 4,
+                        "itemName": "Item-4",
+                        "itemValue": 81.30601148638964,
+                        "itemEnabled": true,
+                        "itemPriority": 6,
+                        "itemMetadata": {
+                          "created": 1762040884499,
+                          "category": "cat-5"
+                        }
+                      }
+                    ],
+                    "records": [
+                      {
+                        "recordId": "record-0",
+                        "recordValue": 6071.757322885969,
+                        "recordActive": false,
+                        "recordType": "tertiary",
+                        "recordPriority": 6,
+                        "recordMetadata": {
+                          "created": 1761208439226,
+                          "category": "category-5",
+                          "subcategory": "subcategory-5",
+                          "tags": [
+                            "tag-x3mS",
+                            "tag-Uhat",
+                            "tag-ClPk",
+                            "tag-02dR",
+                            "tag-ZFf7"
+                          ],
+                          "extra": {
+                            "field1": "ZuVkCAfC3z",
+                            "field2": 356,
+                            "field3": 19.108995878501545,
+                            "nested": {
+                              "deep1": "qW6hibTj",
+                              "deep2": 61,
+                              "deep3": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "recordId": "record-1",
+                        "recordValue": 5769.037476351213,
+                        "recordActive": true,
+                        "recordType": "tertiary",
+                        "recordPriority": 7,
+                        "recordMetadata": {
+                          "created": 1761442079417,
+                          "category": "category-9",
+                          "subcategory": "subcategory-10",
+                          "tags": [
+                            "tag-GTrI",
+                            "tag-FWRe"
+                          ],
+                          "extra": {
+                            "field1": "Sn0HnfGATq",
+                            "field2": 630,
+                            "field3": 27.21474196624469,
+                            "nested": {
+                              "deep1": "9Yll9P3U",
+                              "deep2": 16,
+                              "deep3": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "recordId": "record-2",
+                        "recordValue": 8742.69639042442,
+                        "recordActive": false,
+                        "recordType": "primary",
+                        "recordPriority": 7,
+                        "recordMetadata": {
+                          "created": 1761551591252,
+                          "category": "category-6",
+                          "subcategory": "subcategory-10",
+                          "tags": [
+                            "tag-f7Ys",
+                            "tag-iCZo",
+                            "tag-WrU2"
+                          ],
+                          "extra": {
+                            "field1": "XwyxaNh5eL",
+                            "field2": 616,
+                            "field3": 34.56588901038784,
+                            "nested": {
+                              "deep1": "yNNXpxVE",
+                              "deep2": 31,
+                              "deep3": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "recordId": "record-3",
+                        "recordValue": 8444.378741017215,
+                        "recordActive": true,
+                        "recordType": "secondary",
+                        "recordPriority": 7,
+                        "recordMetadata": {
+                          "created": 1761706743177,
+                          "category": "category-10",
+                          "subcategory": "subcategory-6",
+                          "tags": [
+                            "tag-noAa",
+                            "tag-fs4W",
+                            "tag-SMVB"
+                          ],
+                          "extra": {
+                            "field1": "lYtLA580fo",
+                            "field2": 879,
+                            "field3": 21.735454291679048,
+                            "nested": {
+                              "deep1": "YhPLWXIx",
+                              "deep2": 3,
+                              "deep3": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "recordId": "record-4",
+                        "recordValue": 1285.6103718538022,
+                        "recordActive": true,
+                        "recordType": "primary",
+                        "recordPriority": 10,
+                        "recordMetadata": {
+                          "created": 1761890137647,
+                          "category": "category-0",
+                          "subcategory": "subcategory-11",
+                          "tags": [
+                            "tag-DNLm",
+                            "tag-wOWq"
+                          ],
+                          "extra": {
+                            "field1": "e6zN9Txwuh",
+                            "field2": 327,
+                            "field3": 56.07763213762297,
+                            "nested": {
+                              "deep1": "HE4t5jkW",
+                              "deep2": 80,
+                              "deep3": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "recordId": "record-5",
+                        "recordValue": 4505.086181170304,
+                        "recordActive": false,
+                        "recordType": "tertiary",
+                        "recordPriority": 2,
+                        "recordMetadata": {
+                          "created": 1761675068878,
+                          "category": "category-1",
+                          "subcategory": "subcategory-11",
+                          "tags": [
+                            "tag-YA0a",
+                            "tag-2rAb",
+                            "tag-IiJo",
+                            "tag-tzcq",
+                            "tag-0QUB"
+                          ],
+                          "extra": {
+                            "field1": "N2cR04h55K",
+                            "field2": 440,
+                            "field3": 71.73129669535466,
+                            "nested": {
+                              "deep1": "lhVETZJH",
+                              "deep2": 46,
+                              "deep3": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "recordId": "record-6",
+                        "recordValue": 2096.478453591306,
+                        "recordActive": true,
+                        "recordType": "primary",
+                        "recordPriority": 7,
+                        "recordMetadata": {
+                          "created": 1761150417478,
+                          "category": "category-3",
+                          "subcategory": "subcategory-19",
+                          "tags": [
+                            "tag-Afyw",
+                            "tag-66nE"
+                          ],
+                          "extra": {
+                            "field1": "znvNu2hMVd",
+                            "field2": 938,
+                            "field3": 54.646775065111214,
+                            "nested": {
+                              "deep1": "NIKSGKUk",
+                              "deep2": 2,
+                              "deep3": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "recordId": "record-7",
+                        "recordValue": 4683.250941800254,
+                        "recordActive": false,
+                        "recordType": "primary",
+                        "recordPriority": 3,
+                        "recordMetadata": {
+                          "created": 1761288793110,
+                          "category": "category-5",
+                          "subcategory": "subcategory-15",
+                          "tags": [
+                            "tag-aR99",
+                            "tag-ZaHV",
+                            "tag-sdpY",
+                            "tag-dKxW"
+                          ],
+                          "extra": {
+                            "field1": "udSTSWJxca",
+                            "field2": 945,
+                            "field3": 12.283245731060077,
+                            "nested": {
+                              "deep1": "UqV09Uhr",
+                              "deep2": 20,
+                              "deep3": true
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "recordId": "record-8",
+                        "recordValue": 1326.0495098214988,
+                        "recordActive": false,
+                        "recordType": "primary",
+                        "recordPriority": 3,
+                        "recordMetadata": {
+                          "created": 1761590256205,
+                          "category": "category-10",
+                          "subcategory": "subcategory-0",
+                          "tags": [
+                            "tag-WGqO",
+                            "tag-7B8S",
+                            "tag-K0t1",
+                            "tag-n8Lr"
+                          ],
+                          "extra": {
+                            "field1": "jBb1MwoyEP",
+                            "field2": 980,
+                            "field3": 18.999197938945215,
+                            "nested": {
+                              "deep1": "2h01tXvm",
+                              "deep2": 81,
+                              "deep3": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "recordId": "record-9",
+                        "recordValue": 2451.620832957389,
+                        "recordActive": false,
+                        "recordType": "primary",
+                        "recordPriority": 10,
+                        "recordMetadata": {
+                          "created": 1761416357323,
+                          "category": "category-5",
+                          "subcategory": "subcategory-1",
+                          "tags": [
+                            "tag-RBhQ",
+                            "tag-Tl8I",
+                            "tag-rfyo",
+                            "tag-eEIH",
+                            "tag-DRIT"
+                          ],
+                          "extra": {
+                            "field1": "1oEPP0Qtun",
+                            "field2": 469,
+                            "field3": 47.214945946913765,
+                            "nested": {
+                              "deep1": "4RDHTlp1",
+                              "deep2": 35,
+                              "deep3": false
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "recordId": "record-10",
+                        "recordValue": 8555.664037442968,
+                        "recordActive": true,
+                        "recordType": "primary",
+                        "recordPriority": 9,
+                        "recordMetadata": {
+                          "created": 1761694226162,
+                          "category": "category-1",
+                          "subcategory": "subcategory-19",
+                          "tags": [
+                            "tag-zghS",
+                            "tag-0APy"
+                          ],
+                          "extra": {
+                            "field1": "gKUqvUd5AL",
+                            "field2": 995,
+                            "field3": 79.39607016462648,
+                            "nested": {
+                              "deep1": "wxwLbEBW",
+                              "deep2": 70,
+                              "deep3": true
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "child2": {
+                    "id": "root-c1-c1-c1-c1-c1-c1-c1-c1-c2",
+                    "name": "Node-root-c1-c1-c1-c1-c1-c1-c1-c1-c2",
+                    "depth": 10,
+                    "value": 3484,
+                    "score": 836.6728102635734,
+                    "active": true,
+                    "type": "leaf"
+                  }
+                },
+                "child2": {
+                  "id": "root-c1-c1-c1-c1-c1-c1-c1-c2",
+                  "name": "Node-root-c1-c1-c1-c1-c1-c1-c1-c2",
+                  "depth": 9,
+                  "value": 6489,
+                  "score": 901.4173656834224,
+                  "active": false,
+                  "type": "leaf"
+                }
+              },
+              "child2": {
+                "id": "root-c1-c1-c1-c1-c1-c1-c2",
+                "name": "Node-root-c1-c1-c1-c1-c1-c1-c2",
+                "depth": 8,
+                "value": 9961,
+                "score": 350.12097936750365,
+                "active": false,
+                "type": "leaf"
+              }
+            },
+            "child2": {
+              "id": "root-c1-c1-c1-c1-c1-c2",
+              "name": "Node-root-c1-c1-c1-c1-c1-c2",
+              "depth": 7,
+              "value": 5435,
+              "score": 787.7583690089145,
+              "active": false,
+              "type": "leaf"
+            }
+          },
+          "child2": {
+            "id": "root-c1-c1-c1-c1-c2",
+            "name": "Node-root-c1-c1-c1-c1-c2",
+            "depth": 6,
+            "value": 2123,
+            "score": 13.79293158833972,
+            "active": false,
+            "type": "leaf"
+          }
+        },
+        "child2": {
+          "id": "root-c1-c1-c1-c2",
+          "name": "Node-root-c1-c1-c1-c2",
+          "depth": 5,
+          "value": 2348,
+          "score": 826.5566781930394,
+          "active": true,
+          "type": "leaf"
+        }
+      },
+      "child2": {
+        "id": "root-c1-c1-c2",
+        "name": "Node-root-c1-c1-c2",
+        "depth": 4,
+        "value": 1749,
+        "score": 990.784765684591,
+        "active": true,
+        "type": "leaf"
+      }
+    },
+    "child2": {
+      "id": "root-c1-c2",
+      "name": "Node-root-c1-c2",
+      "depth": 3,
+      "value": 4284,
+      "score": 575.3336085167805,
+      "active": true,
+      "type": "leaf"
+    }
+  },
+  "child2": {
+    "id": "root-c2",
+    "name": "Node-root-c2",
+    "depth": 2,
+    "value": 1219,
+    "score": 688.0989202530506,
+    "active": false,
+    "type": "leaf"
+  },
+  "children": [
+    {
+      "id": "root-ch0",
+      "name": "Node-root-ch0",
+      "depth": 2,
+      "value": 4588,
+      "score": 810.5829795289045,
+      "active": false,
+      "type": "leaf"
+    },
+    {
+      "id": "root-ch1",
+      "name": "Node-root-ch1",
+      "depth": 2,
+      "value": 7021,
+      "score": 266.6549494587391,
+      "active": true,
+      "type": "leaf"
+    },
+    {
+      "id": "root-ch2",
+      "name": "Node-root-ch2",
+      "depth": 2,
+      "value": 2359,
+      "score": 343.800036016501,
+      "active": false,
+      "type": "leaf"
+    }
+  ]
+}
