@@ -16,6 +16,7 @@ import {
   toJS,
 } from "mobx"
 import { failure } from "../error/failure"
+import { getGlobalConfig } from "../globalConfig"
 import { isArray, isObservablePlainStructure, isPrimitive } from "../plainTypes/checks"
 import { Dispose, disposeOnce } from "../utils/disposable"
 import { inDevMode } from "../utils/inDevMode"
@@ -509,6 +510,29 @@ export const node = action(
                   ` If you are moving the node then remove it from the tree first before moving it.` +
                   ` If you are copying the node then use 'clone' to make a clone first.`
               )
+            }
+          }
+
+          // Check if we're trying to create a circular reference
+          // (making a node a child of one of its own descendants)
+          if (getGlobalConfig().checkCircularReferences) {
+            let currentParent: object | undefined = observableStruct
+            const visited = new Set<object>()
+            while (currentParent) {
+              if (visited.has(currentParent)) {
+                // Cycle detected in the parent chain, break to avoid infinite loop
+                break
+              }
+              visited.add(currentParent)
+
+              if (currentParent === n) {
+                throw failure(
+                  `Cannot create a circular reference.` +
+                    ` Trying to assign a node to ${JSON.stringify(buildNodeFullPath(observableStruct, path))},` +
+                    ` but this would make the node an ancestor of itself.`
+                )
+              }
+              currentParent = getParent(currentParent)
             }
           }
         } else {
