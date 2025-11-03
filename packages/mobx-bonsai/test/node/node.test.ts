@@ -1,5 +1,5 @@
 import { configure, isObservable, observable, reaction, runInAction } from "mobx"
-import { isNode, node, nodeType, TNode } from "../../src"
+import { _runDetachingDuplicatedNodes, isNode, node, nodeType, TNode } from "../../src"
 
 it("should convert a plain object into a node", () => {
   const obj = { a: 1, b: { c: 2 } }
@@ -127,4 +127,37 @@ it("setting a plain value of an existing unique node should result in a single r
   } finally {
     configure({ enforceActions: "always" })
   }
+})
+
+test("should detach already-attached node when using runDetachingDuplicatedNodes", () => {
+  // This test covers the detachDuplicatedNodes > 0 branch
+  // This is used when we want to allow a node to appear in multiple places temporarily
+  // during synchronization, and have it automatically detached from the old location
+
+  type TChild = TNode<"child", { id: string; value: number }>
+  using childType = nodeType<TChild>("child").withKey("id")
+
+  type TParent = TNode<"parent", { name: string; child?: TChild }>
+  using parentType = nodeType<TParent>("parent")
+
+  // Create a child node
+  const child = childType({ id: "child-1", value: 100 })
+
+  // Attach it to parent1
+  const parent1 = parentType({ name: "parent1", child })
+  expect(parent1.child).toBe(child)
+
+  // Now try to attach the SAME node instance to parent2
+  // Normally this would throw an error, but with runDetachingDuplicatedNodes
+  // it should automatically detach from parent1
+  const parent2 = parentType({ name: "parent2" })
+
+  _runDetachingDuplicatedNodes(() => {
+    parent2.child = child // Attach the same node instance
+  })
+
+  // The child should now be in parent2
+  expect(parent2.child).toBe(child)
+  // And detached from parent1 (line 521 was executed here)
+  expect(parent1.child).toBeUndefined()
 })
