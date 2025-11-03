@@ -2,6 +2,7 @@
 
 - Optimized a bit snapshot invalidation.
 - `observer` is no longer used for nodes not under `onDeepChange` detection.
+- Added `setGlobalConfig({ checkCircularReferences: boolean })` option to enable/disable circular reference detection when attaching nodes. When enabled (opt-in), throws an error if a node would become an ancestor of itself. Disabled by default for performance reasons.
 
 ## 2.1.1
 

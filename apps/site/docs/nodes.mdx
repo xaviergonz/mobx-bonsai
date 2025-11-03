@@ -417,6 +417,42 @@ setGlobalConfig({
 })
 ```
 
+## Circular Reference Detection
+
+By default, `mobx-bonsai` does not check for circular references when attaching nodes to improve performance. However, circular references in the tree can lead to infinite loops when traversing the tree.
+
+You can enable circular reference detection using the global configuration:
+
+```ts
+import { setGlobalConfig } from 'mobx-bonsai';
+
+setGlobalConfig({
+  checkCircularReferences: true,
+});
+```
+
+When enabled, attempting to create a circular reference will throw an error:
+
+```ts
+setGlobalConfig({ checkCircularReferences: true });
+
+const nodeA = node<{ next?: any }>({ });
+const nodeB = node<{ next?: any }>({ });
+
+nodeA.next = nodeB; // OK
+nodeB.next = nodeA; // ❌ Error: Cannot create a circular reference
+```
+
+**When to enable:**
+- During development to catch potential bugs
+- In applications where circular references are a concern
+- When debugging unexpected behavior related to tree traversal
+
+**Performance impact:**
+- Enabling this check adds overhead to every node attachment operation
+- For most applications, the performance impact is negligible
+- Disabled by default to maximize performance in production
+
 ## Computed Properties
 
 ### Using `computedProp`
@@ -797,7 +833,7 @@ const disposer = onDeepInterceptedChange(myNode, (change) => {
   // This is called BEFORE the change is applied
   console.log("Before:", myNode.value); // Still 5
   console.log("About to change to:", change.newValue); // 10
-  
+
   // Return the change to accept it
   return change;
 });
