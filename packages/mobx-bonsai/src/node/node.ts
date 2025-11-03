@@ -204,6 +204,7 @@ function emitInterceptedChangeToRoot(
 
   return currentChange
 }
+
 function registerListener<TListener>(
   node: object,
   listener: TListener,
