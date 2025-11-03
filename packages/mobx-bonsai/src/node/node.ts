@@ -378,20 +378,9 @@ function decrementAncestorChangeListenerRefCount(node: object): void {
  * Check if a node or any of its ancestors has onChangeListeners
  */
 function shouldHaveChangeListeners(node: object): boolean {
-  let current: object | undefined = node
-
-  while (current) {
-    const data = getNodeData(current)
-    const hasListeners = data.onChangeListeners && data.onChangeListeners.length > 0
-
-    if (hasListeners) {
-      return true
-    }
-
-    current = getParent(current)
-  }
-
-  return false
+  // The ancestorChangeListenerRefCount already tells us if this node
+  // or any ancestor has listeners
+  return getNodeData(node).ancestorChangeListenerRefCount > 0
 }
 
 let detachDuplicatedNodes = 0
