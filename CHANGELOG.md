@@ -1,5 +1,7 @@
 # Change Log
 
+- Fixed Mobx 5 compatibility.
+
 ## 2.2.0
 
 - `observer` is no longer used for nodes not under `onDeepChange` detection.

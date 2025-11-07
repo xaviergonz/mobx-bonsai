@@ -18,10 +18,16 @@ it("should notify listener on object property changes", () => {
     testNode.arr.push(1)
   })
 
-  expect(events).toMatchInlineSnapshot(`
+  // Normalize events by removing MobX version-specific properties
+  const normalizedEvents = events.map((event) => {
+    // biome-ignore lint/correctness/noUnusedVariables: unused to get the rest
+    const { debugObjectName, observableKind, ...rest } = event as any
+    return rest
+  })
+
+  expect(normalizedEvents).toMatchInlineSnapshot(`
 [
   {
-    "debugObjectName": "ObservableObject@1",
     "name": "a",
     "newValue": 2,
     "object": {
@@ -30,7 +36,6 @@ it("should notify listener on object property changes", () => {
         1,
       ],
     },
-    "observableKind": "object",
     "oldValue": 1,
     "type": "update",
   },
@@ -39,12 +44,10 @@ it("should notify listener on object property changes", () => {
       1,
     ],
     "addedCount": 1,
-    "debugObjectName": "ObservableArray@2",
     "index": 0,
     "object": [
       1,
     ],
-    "observableKind": "array",
     "removed": [],
     "removedCount": 0,
     "type": "splice",

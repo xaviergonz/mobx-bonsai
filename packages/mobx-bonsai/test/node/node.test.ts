@@ -153,7 +153,9 @@ test("should detach already-attached node when using runDetachingDuplicatedNodes
   const parent2 = parentType({ name: "parent2" })
 
   _runDetachingDuplicatedNodes(() => {
-    parent2.child = child // Attach the same node instance
+    runInAction(() => {
+      parent2.child = child // Attach the same node instance
+    })
   })
 
   // The child should now be in parent2

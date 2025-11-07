@@ -1,6 +1,7 @@
 import type { Config } from "jest"
 
 const mobxVersion = Number(process.env.MOBX_VERSION || "6") as 4 | 5 | 6
+console.log(`Using mobxVersion=${mobxVersion}`)
 
 const tsconfigFiles = {
   6: "tsconfig.json",

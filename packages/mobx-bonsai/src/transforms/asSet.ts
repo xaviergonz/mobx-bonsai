@@ -7,6 +7,7 @@ import {
   ObservableSet,
   observable,
   observe,
+  runInAction,
   transaction,
   untracked,
 } from "mobx"
@@ -119,9 +120,13 @@ const observableSetBackedByObservableArray = <T>(
       if (getMobxVersion() >= 6) {
         return observable.set(array)
       } else {
+        // In MobX 5, we need to create the set and add items within an action
         const set = observable.set()
-        array.forEach((item) => {
-          set.add(item)
+        // Use action to avoid strict mode errors in MobX 5
+        runInAction(() => {
+          array.forEach((item) => {
+            set.add(item)
+          })
         })
         return set
       }

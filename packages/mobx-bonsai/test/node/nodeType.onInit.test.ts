@@ -1,12 +1,12 @@
 import { runInAction } from "mobx"
 import {
-  node,
-  onDeepChange,
-  nodeType,
-  TNode,
   getNodeTypeId,
   NodeTypeValue,
+  node,
+  nodeType,
+  onDeepChange,
   onInit,
+  TNode,
 } from "../../src"
 
 test("chainable onInit and standaloneOnInit", () => {
@@ -77,12 +77,19 @@ test("should pick up property changes during initialization for deep observation
     })
   })
 
-  expect(events).toMatchInlineSnapshot(`
+  // Normalize the change object by removing MobX version-specific properties
+  const normalizedEvents = events.map((event: any) => {
+    if (typeof event === "string") return event
+    // biome-ignore lint/correctness/noUnusedVariables: unused to get the rest
+    const { debugObjectName, observableKind, ...rest } = event.change as any
+    return { change: rest }
+  })
+
+  expect(normalizedEvents).toMatchInlineSnapshot(`
 [
   "init",
   {
     "change": {
-      "debugObjectName": "ObservableObject@7",
       "name": "child",
       "newValue": {
         "$$type": "1",
@@ -94,7 +101,6 @@ test("should pick up property changes during initialization for deep observation
           "value": 2,
         },
       },
-      "observableKind": "object",
       "type": "add",
     },
   },

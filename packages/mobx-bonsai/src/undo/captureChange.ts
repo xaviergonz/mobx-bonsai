@@ -41,7 +41,11 @@ export function captureChange(change: NodeChange, rootNode: object): UndoableCha
     )
   }
 
-  if (change.observableKind === "object") {
+  // In MobX 5, observableKind doesn't exist, but we can check for the presence of 'name' vs 'index'
+  // to distinguish between object and array changes
+  const isObjectChange = "name" in change
+
+  if (isObjectChange) {
     switch (change.type) {
       case "add": {
         return {
@@ -72,7 +76,7 @@ export function captureChange(change: NodeChange, rootNode: object): UndoableCha
       }
     }
   } else {
-    // observableKind === "array"
+    // Array change - has 'index' property
     switch (change.type) {
       case "splice": {
         return {
