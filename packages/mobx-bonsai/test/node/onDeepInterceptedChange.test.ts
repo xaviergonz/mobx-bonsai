@@ -1,4 +1,4 @@
-import { runInAction } from "mobx"
+import { runInAction, toJS } from "mobx"
 import { type NodeInterceptedChange, node, onDeepInterceptedChange } from "../../src"
 
 describe("onDeepInterceptedChange", () => {
@@ -57,7 +57,8 @@ describe("onDeepInterceptedChange", () => {
 
     // After actions, changes should be applied
     expect(testNode.a).toBe(2)
-    expect(testNode.arr).toEqual([1])
+    // Note: In MobX 4, observable arrays need toJS() for proper comparison
+    expect(toJS(testNode.arr)).toEqual([1])
 
     events.length = 0
     dispose()
@@ -220,13 +221,14 @@ describe("onDeepInterceptedChange", () => {
     runInAction(() => {
       testNode.items.push(4)
     })
-    expect(testNode.items).toEqual([1, 2, 3])
+    // Note: In MobX 4, observable arrays need toJS() for proper comparison
+    expect(toJS(testNode.items)).toEqual([1, 2, 3])
 
     // Add odd number - should succeed
     runInAction(() => {
       testNode.items.push(5)
     })
-    expect(testNode.items).toEqual([1, 2, 3, 5])
+    expect(toJS(testNode.items)).toEqual([1, 2, 3, 5])
 
     expect(events).toHaveLength(2)
 

@@ -1,5 +1,5 @@
-import { runInAction } from "mobx"
-import { node, onChildAttachedTo, nodeType, TNode } from "../../../src"
+import { runInAction, set } from "mobx"
+import { node, nodeType, onChildAttachedTo, TNode } from "../../../src"
 
 it("should fire immediately for current children when fireForCurrentChildren is true", () => {
   const testNode = node({
@@ -39,7 +39,7 @@ it("should fire when a new child is added", () => {
   expect(fired).toStrictEqual([])
 
   runInAction(() => {
-    testNode.child2 = { b: 2 }
+    set(testNode, "child2", { b: 2 }) // use set() for MobX 4 compatibility
   })
   // Allow reaction to run.
   expect(fired).toStrictEqual([testNode.child2])
@@ -90,14 +90,14 @@ it("should stop further notifications after disposer is called", () => {
   // Initial call count.
   expect(callCount).toBe(1)
   runInAction(() => {
-    testNode.child2 = { b: 2 }
+    set(testNode, "child2", { b: 2 }) // use set() for MobX 4 compatibility
   })
   expect(callCount).toBe(2)
 
   disposer(false)
 
   runInAction(() => {
-    testNode.child2 = { b: 3 }
+    set(testNode, "child2", { b: 3 }) // use set() for MobX 4 compatibility
   })
   expect(callCount).toBe(2)
 })
@@ -175,8 +175,8 @@ it("fires callback only for matching node using a selector", () => {
   })
 
   runInAction(() => {
-    testNode.child1 = tMatch.snapshot({ id: 1 })
-    testNode.child2 = tOther.snapshot({ id: 2 })
+    set(testNode, "child1", tMatch.snapshot({ id: 1 })) // use set() for MobX 4 compatibility
+    set(testNode, "child2", tOther.snapshot({ id: 2 })) // use set() for MobX 4 compatibility
   })
 
   // Expect callback only for the matching children.

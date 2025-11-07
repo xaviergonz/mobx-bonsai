@@ -1,5 +1,5 @@
-import { runInAction, reaction } from "mobx"
-import { node, getParentPath, ParentPath, getParent } from "../../../src"
+import { reaction, runInAction, set } from "mobx"
+import { getParent, getParentPath, node, ParentPath } from "../../../src"
 
 describe("getParentPath - object roots", () => {
   it("should return undefined for a root object", () => {
@@ -25,7 +25,7 @@ describe("getParentPath - object roots", () => {
       parent1.child = undefined // detach from parent1
     })
     runInAction(() => {
-      parent2.child2 = child // reattach to parent2
+      set(parent2, "child2", child) // use set() for MobX 4 compatibility - reattach to parent2
     })
     const parentRef = getParentPath(child)
     expect(parentRef!.parent).toBe(parent2)
@@ -57,7 +57,7 @@ describe("getParentPath - object roots", () => {
     parents.length = 0
 
     runInAction(() => {
-      parent2.child2 = child // reattach to parent2
+      set(parent2, "child2", child) // use set() for MobX 4 compatibility - reattach to parent2
     })
     expect(parents).toMatchInlineSnapshot(`
 [

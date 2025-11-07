@@ -1,3 +1,4 @@
+import { isObservableArray, toJS } from "mobx"
 import { _, assert } from "spec.ts"
 import { getSnapshot, isNode, node, nodeType, nodeTypeKey, TNode } from "../../src"
 
@@ -262,7 +263,8 @@ test("node type setters work with readonly arrays", () => {
   const newTodos: readonly string[] = ["Bread", "Cheese", "Apples"]
   tTodoList.setTodos(todoList, newTodos)
 
-  expect(todoList.todos).toEqual(["Bread", "Cheese", "Apples"])
+  // Note: In MobX 4, observable arrays need toJS() for proper comparison
+  expect(toJS(todoList.todos)).toEqual(["Bread", "Cheese", "Apples"])
   expect(todoList.todos).not.toBe(newTodos)
 })
 
@@ -401,7 +403,9 @@ test("node type defaults with arrays", () => {
 
   expect(list.name).toBe("My List")
   expect(list.items).toEqual([])
-  expect(Array.isArray(list.items)).toBe(true)
+  // Note: In MobX 4, observable arrays don't pass Array.isArray() check
+  // In MobX 5+, they do. We use isObservableArray() which works for all versions.
+  expect(isObservableArray(list.items)).toBe(true)
 })
 
 test("node type defaults with complex objects", () => {
@@ -650,10 +654,11 @@ test("node type extends with action override", () => {
 
   // Should have applied the base implementation with doubled amount
   expect(counter.count).toBe(10) // 5 * 2
-  expect(counter.history).toEqual([10])
+  // Note: In MobX 4, observable arrays need toJS() for proper comparison
+  expect(toJS(counter.history)).toEqual([10])
 
   // Should have applied the extended functionality
-  expect(counter.operations).toEqual(["incremented by 10"])
+  expect(toJS(counter.operations)).toEqual(["incremented by 10"])
 
   // Test that the base getter still works
   expect(TEnhancedCounter.getLastEntry(counter)).toBe(10)

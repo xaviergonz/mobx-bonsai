@@ -1,5 +1,5 @@
-import { runInAction, reaction } from "mobx"
-import { node, getRoot } from "../../../src"
+import { reaction, runInAction, set } from "mobx"
+import { getRoot, node } from "../../../src"
 
 it("should return the node itself when it is the root (object)", () => {
   const root = node({ a: 1 })
@@ -37,7 +37,7 @@ it("should update the root when a child node is moved", () => {
     root1.child = undefined // detach child from root1
   })
   runInAction(() => {
-    root2.child = child // reattach child to root2
+    set(root2, "child", child) // use set() for MobX 4 compatibility
   })
   expect(getRoot(child)).toBe(root2)
 })
@@ -66,7 +66,7 @@ it("should react to changes in root assignment", () => {
   childRoots.length = 0
 
   runInAction(() => {
-    root2.child = child // reattach child to root2
+    set(root2, "child", child) // use set() for MobX 4 compatibility
   })
   expect(childRoots).toStrictEqual([root2])
   childRoots.length = 0

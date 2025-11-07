@@ -1,4 +1,4 @@
-import { runInAction } from "mobx"
+import { runInAction, set } from "mobx"
 import {
   getNodeTypeId,
   NodeTypeValue,
@@ -72,9 +72,13 @@ test("should pick up property changes during initialization for deep observation
   })
 
   runInAction(() => {
-    root.child = t1({
-      value: 1,
-    })
+    set(
+      root,
+      "child",
+      t1({
+        value: 1,
+      })
+    ) // use set() for MobX 4 compatibility
   })
 
   // Normalize the change object by removing MobX version-specific properties

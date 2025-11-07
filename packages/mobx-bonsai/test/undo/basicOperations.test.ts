@@ -1,4 +1,4 @@
-import { runInAction } from "mobx"
+import { remove, runInAction, set } from "mobx"
 import { nodeType } from "../../src/node/nodeTypeKey/nodeType"
 import { UndoManager } from "../../src/undo/UndoManager"
 import "../commonSetup"
@@ -184,7 +184,7 @@ describe("UndoManager - Basic Operations", () => {
     const manager = new UndoManager({ rootNode: node })
 
     runInAction(() => {
-      node.newProp = "value"
+      set(node, "newProp", "value") // use set() for MobX 4 compatibility
     })
 
     expect(node.newProp).toBe("value")
@@ -210,7 +210,7 @@ describe("UndoManager - Basic Operations", () => {
     expect(node.existingProp).toBe("initial")
 
     runInAction(() => {
-      delete node.existingProp
+      remove(node, "existingProp") // use remove() for MobX 4 compatibility
     })
 
     expect(node.existingProp).toBeUndefined()

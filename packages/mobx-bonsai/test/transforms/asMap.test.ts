@@ -1,4 +1,4 @@
-import { observable, runInAction } from "mobx"
+import { observable, runInAction, set } from "mobx"
 import { asMap } from "../../src"
 
 for (const isObservable of [true, false]) {
@@ -39,10 +39,15 @@ for (const isObservable of [true, false]) {
 
     test("should iterate over keys, values, and entries correctly", () => {
       const obj: Record<string, any> = createObject()
-      // add extra keys to object
+      // add extra keys to object - use set() for MobX 4 compatibility with observable objects
       runInAction(() => {
-        obj.a = "alpha"
-        obj.b = "bravo"
+        if (isObservable) {
+          set(obj, "a", "alpha")
+          set(obj, "b", "bravo")
+        } else {
+          obj.a = "alpha"
+          obj.b = "bravo"
+        }
       })
       const map = asMap(obj)
 

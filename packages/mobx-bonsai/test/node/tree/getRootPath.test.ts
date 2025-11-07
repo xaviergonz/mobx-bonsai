@@ -1,5 +1,5 @@
-import { runInAction, reaction } from "mobx"
-import { node, getRootPath, RootPath } from "../../../src"
+import { reaction, runInAction, set } from "mobx"
+import { getRootPath, node, RootPath } from "../../../src"
 
 describe("getRootPath", () => {
   it("should return empty path for a root node (object)", () => {
@@ -55,7 +55,7 @@ describe("getRootPath", () => {
       root1.child = undefined // detach child from root1
     })
     runInAction(() => {
-      root2.child2 = child // attach child to root2 under 'child2'
+      set(root2, "child2", child) // use set() for MobX 4 compatibility
     })
     const childPath: RootPath<object> = getRootPath(child)
     expect(childPath.root).toBe(root2)
@@ -81,7 +81,7 @@ describe("getRootPath", () => {
     runInAction(() => {
       // Rename property: detach 'child' and assign it to 'childRenamed'
       root.child = undefined
-      root.childRenamed = child
+      set(root, "childRenamed", child) // use set() for MobX 4 compatibility
     })
     const updated = getRootPath(child)
     expect(updated.path).toEqual(["childRenamed"])
