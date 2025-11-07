@@ -1,55 +1,42 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "tasks": {
-    "mobx-bonsai#build-docs": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "build-docs": {
       "dependsOn": ["build"],
-      "outputs": ["api-docs/**", "../../apps/site/copy-to-build/api/**"]
+      "outputs": ["api-docs/**", "../../apps/site/copy-to-build/api/**"],
+      "inputs": ["src/**", "typedocconfig.js"]
     },
-    "mobx-bonsai#build": {
-      "dependsOn": [],
-      "outputs": ["dist/**"]
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "env": ["MOBX_VERSION"]
     },
-    "mobx-bonsai#test": {
-      "dependsOn": [],
-      "outputs": [],
-      "env": ["MOBX-VERSION"]
-    },
-    "mobx-bonsai#test:ci": {
-      "dependsOn": [],
-      "outputs": [],
-      "env": ["MOBX-VERSION"]
-    },
-    "mobx-bonsai-yjs#build": {
-      "dependsOn": ["mobx-bonsai#build"],
-      "outputs": ["dist/**"]
-    },
-    "mobx-bonsai-yjs#test": {
-      "dependsOn": ["mobx-bonsai#build"],
-      "outputs": [],
-      "env": ["MOBX-VERSION"]
-    },
-    "mobx-bonsai-yjs#test:ci": {
-      "dependsOn": ["mobx-bonsai#build"],
-      "outputs": [],
-      "env": ["MOBX-VERSION"]
+    "test:ci": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "env": ["MOBX_VERSION"]
     },
     "site#build": {
-      "dependsOn": ["mobx-bonsai#build", "mobx-bonsai-yjs#build", "mobx-bonsai#build-docs"],
+      "dependsOn": ["^build", "mobx-bonsai#build-docs"],
       "outputs": ["build/**"]
     },
     "site#serve": {
+      "dependsOn": ["site#build"],
       "cache": false,
-      "dependsOn": ["build"],
-      "outputs": []
+      "persistent": true
     },
     "site#start": {
+      "dependsOn": ["^build", "mobx-bonsai#build-docs"],
       "cache": false,
-      "dependsOn": ["mobx-bonsai#build", "mobx-bonsai-yjs#build", "mobx-bonsai#build-docs"],
-      "outputs": []
+      "persistent": true
     },
     "profiling#profile:node-creation": {
+      "dependsOn": ["^build"],
       "cache": false,
-      "dependsOn": ["mobx-bonsai#build"],
       "outputs": ["out/**"]
     }
   }
