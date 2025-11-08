@@ -13,12 +13,12 @@
     "test": {
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"],
-      "env": ["MOBX-VERSION"]
+      "env": ["MOBX_VERSION"]
     },
     "test:ci": {
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"],
-      "env": ["MOBX-VERSION"]
+      "env": ["MOBX_VERSION"]
     },
     "site#build": {
       "dependsOn": ["^build", "mobx-bonsai#build-docs"],
