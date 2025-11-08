@@ -1,4 +1,4 @@
-import { runInAction } from "mobx"
+import { remove, runInAction, set, toJS } from "mobx"
 import { nodeType, TNode } from "mobx-bonsai"
 import * as Y from "yjs"
 import { convertPlainToYjsValue } from "../../src"
@@ -31,14 +31,14 @@ test("object two-way binding", () => {
   expect(mobxObservable.optionalStrProp).toBe(undefined)
 
   runInAction(() => {
-    mobxObservable.optionalStrProp = "hello"
+    set(mobxObservable, "optionalStrProp", "hello") // use set() for MobX 4 compatibility
   })
   expect(yjsMap.get("optionalStrProp")).toBe("hello")
   yjsMap.set("optionalStrProp", "world")
   expect(mobxObservable.optionalStrProp).toBe("world")
 
   runInAction(() => {
-    delete mobxObservable.optionalStrProp
+    remove(mobxObservable, "optionalStrProp") // use remove() for MobX 4 compatibility
   })
   expect(yjsMap.get("optionalStrProp")).toBe(undefined)
   expect(mobxObservable.optionalStrProp).toBe(undefined)
@@ -48,21 +48,23 @@ test("object two-way binding", () => {
   // simple array
   expect(yjsMap.get("numberArray") instanceof Y.Array).toBe(true)
   expect(yjsMap.get("numberArray").toJSON()).toStrictEqual([1, 2])
-  expect(mobxObservable.numberArray).toStrictEqual([1, 2])
+  // Note: In MobX 4, observable arrays need toJS() for proper comparison
+  expect(toJS(mobxObservable.numberArray)).toStrictEqual([1, 2])
 
   runInAction(() => {
     mobxObservable.numberArray.splice(1, 1, 3, 4)
   })
   expect(yjsMap.get("numberArray").toJSON()).toStrictEqual([1, 3, 4])
   ;(yjsMap.get("numberArray") as Y.Array<number>).delete(1, 1)
-  expect(mobxObservable.numberArray).toStrictEqual([1, 4])
+  // Note: In MobX 4, observable arrays need toJS() for proper comparison
+  expect(toJS(mobxObservable.numberArray)).toStrictEqual([1, 4])
 
   // nested object
   expect(yjsMap.get("nestedObj")).toBe(undefined)
   expect(mobxObservable.nestedObj).toBe(undefined)
 
   runInAction(() => {
-    mobxObservable.nestedObj = { numberProp: 100 }
+    set(mobxObservable, "nestedObj", { numberProp: 100 }) // use set() for MobX 4 compatibility
   })
   const nestedObjRef = mobxObservable.nestedObj
   expect(yjsMap.get("nestedObj")).toBeInstanceOf(Y.Map)
@@ -83,7 +85,8 @@ test("array simple two-way binding", () => {
 
   // initial state
   expect(yjsArray.toJSON()).toStrictEqual([0])
-  expect(mobxObservable).toStrictEqual([0])
+  // Note: In MobX 4, observable arrays need toJS() for proper comparison
+  expect(toJS(mobxObservable)).toStrictEqual([0])
 
   // mobx to yjs
   runInAction(() => {
@@ -94,7 +97,8 @@ test("array simple two-way binding", () => {
 
   // yjs to mobx
   yjsArray.push([30])
-  expect(mobxObservable).toStrictEqual([10, 20, 30])
+  // Note: In MobX 4, observable arrays need toJS() for proper comparison
+  expect(toJS(mobxObservable)).toStrictEqual([10, 20, 30])
 })
 
 test("array with nested object two-way binding", () => {
@@ -106,7 +110,8 @@ test("array with nested object two-way binding", () => {
 
   // initial state
   expect(yjsArray.toJSON()).toStrictEqual(initial)
-  expect(mobxObservable).toStrictEqual(initial)
+  // Note: In MobX 4, observable arrays need toJS() for proper comparison
+  expect(toJS(mobxObservable)).toStrictEqual(initial)
 
   // mobx to yjs
   runInAction(() => {
@@ -120,9 +125,11 @@ test("array with nested object two-way binding", () => {
   newN.set("n", 30)
   yjsArray.push([newN])
   expect(yjsArray.toJSON()).toStrictEqual([{ n: 10 }, { n: 20 }, { n: 30 }])
-  expect(mobxObservable).toStrictEqual(yjsArray.toJSON())
+  // Note: In MobX 4, observable arrays need toJS() for proper comparison
+  expect(toJS(mobxObservable)).toStrictEqual(yjsArray.toJSON())
   newN.set("n", 40)
-  expect(mobxObservable).toStrictEqual([{ n: 10 }, { n: 20 }, { n: 40 }])
+  // Note: In MobX 4, observable arrays need toJS() for proper comparison
+  expect(toJS(mobxObservable)).toStrictEqual([{ n: 10 }, { n: 20 }, { n: 40 }])
 })
 
 test("object with nested unique node object that gets swapped from one prop to another and then back", () => {

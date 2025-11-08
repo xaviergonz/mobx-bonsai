@@ -66,7 +66,8 @@ export function setupYjsToNodeReplication({
             // now y.js and mobx should be in the same target
 
             if (event instanceof Y.YMapEvent) {
-              if (!isObservableObject(mobxTarget)) {
+              // Directly check if it's an array (arrays are objects too)
+              if (Array.isArray(mobxTarget)) {
                 throw failure("mobx target was expected to be an object")
               }
 

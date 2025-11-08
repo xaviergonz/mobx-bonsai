@@ -1,4 +1,4 @@
-import { runInAction } from "mobx"
+import { runInAction, set, toJS } from "mobx"
 import * as Y from "yjs"
 import { bindYjsToNode } from "../../src"
 import { createObjectTestbed } from "./testbed"
@@ -40,19 +40,19 @@ test("transaction edge-cases", () => {
   expect(mobxObservable.numberArray).toBe(undefined)
 
   runInAction(() => {
-    mobxObservable.numberArray = [1, 2]
+    set(mobxObservable, "numberArray", [1, 2]) // use set() for MobX 4 compatibility
     expect(getNumberArray()).toBe(undefined) // not yet
-    mobxObservable.numberArray.push(3)
+    mobxObservable.numberArray!.push(3)
     expect(getNumberArray()).toBe(undefined) // not yet
-    mobxObservable.numberArray = undefined
+    set(mobxObservable, "numberArray", undefined) // use set() for MobX 4 compatibility
     expect(getNumberArray()).toBe(undefined) // not yet
-    mobxObservable.numberArray = [4, 5]
+    set(mobxObservable, "numberArray", [4, 5]) // use set() for MobX 4 compatibility
     expect(getNumberArray()).toBe(undefined) // not yet
   })
   expect(getNumberArray()!.toJSON()).toStrictEqual([4, 5])
 
   runInAction(() => {
-    mobxObservable.numberArray = undefined
+    set(mobxObservable, "numberArray", undefined) // use set() for MobX 4 compatibility
   })
 
   yjsDoc.transact(() => {
@@ -71,7 +71,8 @@ test("transaction edge-cases", () => {
     arr2.insert(0, [4, 5])
     expect(mobxObservable.numberArray).toStrictEqual(undefined) // not yet
   })
-  expect(mobxObservable.numberArray).toStrictEqual([4, 5])
+  // Note: In MobX 4, observable arrays need toJS() for proper comparison
+  expect(toJS(mobxObservable.numberArray)).toStrictEqual([4, 5])
 })
 
 test("transactions with symbol getter function", () => {
