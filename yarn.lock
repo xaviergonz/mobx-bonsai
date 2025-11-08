@@ -19695,6 +19695,8 @@ __metadata:
     "@biomejs/biome": "npm:^2.3.4"
     globals: "npm:^16.5.0"
     mobx: "npm:^6.15.0"
+    mobx-v4: "npm:mobx@^4.15.7"
+    mobx-v5: "npm:mobx@^5.15.7"
     netlify-cli: "npm:^23.10.0"
     turbo: "npm:^2.6.0"
     typescript: "npm:^5.9.3"
