@@ -1,4 +1,4 @@
-import { isObservableArray, isObservableObject, remove, runInAction, set } from "mobx"
+import { isObservableArray, remove, runInAction, set } from "mobx"
 import {
   _isPrimitive,
   _Primitive,
