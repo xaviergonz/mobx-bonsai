@@ -1,4 +1,4 @@
-import { runInAction } from "mobx"
+import { runInAction, set } from "mobx"
 import { nodeType, TNode } from "mobx-bonsai"
 import * as Y from "yjs"
 import { createObjectTestbed } from "./testbed"
@@ -22,7 +22,7 @@ test("should update underlying Y.js structure when onNodeInit increases counter"
   expect(yjsMap.get("counter")).toBe(1)
 
   runInAction(() => {
-    mobxObservable.child = t0.snapshot({ counter: 1 })
+    set(mobxObservable, "child", t0.snapshot({ counter: 1 })) // use set() for MobX 4 compatibility
   })
   expect(mobxObservable.child!.counter).toBe(2)
   expect(yjsMap.get("child")!.get("counter")).toBe(2)

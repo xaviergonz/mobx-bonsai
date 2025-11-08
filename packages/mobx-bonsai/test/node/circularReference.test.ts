@@ -1,4 +1,4 @@
-import { runInAction } from "mobx"
+import { runInAction, set } from "mobx"
 import { node, nodeType, TNode } from "../../src"
 import { setGlobalConfig } from "../../src/globalConfig"
 import "../commonSetup"
@@ -15,13 +15,13 @@ describe("circular reference behavior", () => {
     const nodeB = node<NodeType>({ value: 2 })
 
     runInAction(() => {
-      nodeA.next = nodeB
+      set(nodeA, "next", nodeB) // use set() for MobX 4 compatibility
     })
 
     // Try to create circular reference - should throw
     expect(() => {
       runInAction(() => {
-        nodeB.next = nodeA
+        set(nodeB, "next", nodeA) // use set() for MobX 4 compatibility
       })
     }).toThrow(/Cannot create a circular reference/)
   })
@@ -33,14 +33,14 @@ describe("circular reference behavior", () => {
     const nodeC = node<NodeType>({ value: 3 })
 
     runInAction(() => {
-      nodeA.next = nodeB
-      nodeB.next = nodeC
+      set(nodeA, "next", nodeB) // use set() for MobX 4 compatibility
+      set(nodeB, "next", nodeC) // use set() for MobX 4 compatibility
     })
 
     // Try to close the loop - should throw
     expect(() => {
       runInAction(() => {
-        nodeC.next = nodeA
+        set(nodeC, "next", nodeA) // use set() for MobX 4 compatibility
       })
     }).toThrow(/Cannot create a circular reference/)
   })
@@ -52,7 +52,7 @@ describe("circular reference behavior", () => {
     // Try to make node point to itself - should throw
     expect(() => {
       runInAction(() => {
-        node1.next = node1
+        set(node1, "next", node1) // use set() for MobX 4 compatibility
       })
     }).toThrow(/Cannot create a circular reference/)
   })
@@ -85,7 +85,7 @@ describe("circular reference behavior", () => {
 
     // alice -> bob
     runInAction(() => {
-      alice.friend = bob
+      set(alice, "friend", bob) // use set() for MobX 4 compatibility
     })
 
     // bob is now a child of alice
@@ -94,10 +94,14 @@ describe("circular reference behavior", () => {
     // This would create: alice -> bob -> alice (cycle)
     expect(() => {
       runInAction(() => {
-        bob.friend = TPerson.snapshot({
-          id: "alice",
-          friend: TPerson.snapshot({ id: "bob" }),
-        })
+        set(
+          bob,
+          "friend",
+          TPerson.snapshot({
+            id: "alice",
+            friend: TPerson.snapshot({ id: "bob" }),
+          })
+        ) // use set() for MobX 4 compatibility
       })
     }).toThrow(/Cannot create a circular reference/)
   })
@@ -113,13 +117,13 @@ describe("circular reference behavior", () => {
 
     // alice -> bob
     runInAction(() => {
-      alice.friend = bob
+      set(alice, "friend", bob) // use set() for MobX 4 compatibility
     })
 
     // This should NOT throw because the snapshot { id: "alice" } will cause
     // reconciliation to remove alice.friend, breaking the cycle before attachment
     runInAction(() => {
-      bob.friend = TPerson.snapshot({ id: "alice" })
+      set(bob, "friend", TPerson.snapshot({ id: "alice" })) // use set() for MobX 4 compatibility
     })
 
     // Verify the final state: bob -> alice (no cycle)

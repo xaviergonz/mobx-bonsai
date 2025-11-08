@@ -1,5 +1,8 @@
-import { observable, isObservableArray, runInAction } from "mobx"
+import { isObservableArray, observable, runInAction } from "mobx"
 import { asSet } from "../../src"
+import { getMobxVersion } from "../../src/utils/getMobxVersion"
+
+const mobxVersion = getMobxVersion()
 
 for (const isObs of [true, false]) {
   const createArray = () => {
@@ -99,7 +102,11 @@ for (const isObs of [true, false]) {
       expect(setInstance.size).toBe(arr.length)
     })
 
-    test("should compute union correctly", () => {
+    // ES2025 Set methods are not available in MobX 5
+    // Skip these tests when running with MobX 4/5
+    const testOnMobx6 = mobxVersion >= 6 ? test : test.skip
+
+    testOnMobx6("should compute union correctly", () => {
       const arr = createArray()
       const setInstance = asSet(arr)
       // Ensure duplicate values don't appear
@@ -111,7 +118,7 @@ for (const isObs of [true, false]) {
       expect(Array.from(union).sort((a, b) => a - b)).toStrictEqual([1, 2, 3, 4, 5])
     })
 
-    test("should compute intersection correctly", () => {
+    testOnMobx6("should compute intersection correctly", () => {
       const arr = createArray()
       const setInstance = asSet(arr)
       const other = new Set([2, 3, 4])
@@ -119,7 +126,7 @@ for (const isObs of [true, false]) {
       expect(Array.from(intersection).sort((a, b) => a - b)).toStrictEqual([2, 3])
     })
 
-    test("should compute difference correctly", () => {
+    testOnMobx6("should compute difference correctly", () => {
       const arr = createArray()
       const setInstance = asSet(arr)
       const other = new Set([1, 3])
@@ -127,7 +134,7 @@ for (const isObs of [true, false]) {
       expect(Array.from(difference).sort((a, b) => a - b)).toStrictEqual([2])
     })
 
-    test("should compute symmetric difference correctly", () => {
+    testOnMobx6("should compute symmetric difference correctly", () => {
       const arr = createArray()
       const setInstance = asSet(arr)
       const other = new Set([2, 4])
@@ -135,7 +142,7 @@ for (const isObs of [true, false]) {
       expect(Array.from(symDiff).sort((a, b) => a - b)).toStrictEqual([1, 3, 4])
     })
 
-    test("should verify subset and superset relations", () => {
+    testOnMobx6("should verify subset and superset relations", () => {
       const arr = createArray()
       const setInstance = asSet(arr)
       const subset = new Set([1, 2])
@@ -146,7 +153,7 @@ for (const isObs of [true, false]) {
       expect(setInstance.isSupersetOf(new Set([2, 3]))).toBe(true)
     })
 
-    test("should verify disjoint relation", () => {
+    testOnMobx6("should verify disjoint relation", () => {
       const arr = createArray()
       const setInstance = asSet(arr)
       expect(setInstance.isDisjointFrom(new Set([4, 5]))).toBe(true)

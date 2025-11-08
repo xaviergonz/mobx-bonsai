@@ -1,4 +1,4 @@
-import { runInAction } from "mobx"
+import { runInAction, set } from "mobx"
 import { node, nodeType, onDeepChange, TNode } from "../../src"
 import { getNodeData } from "../../src/node/node"
 import "../commonSetup"
@@ -124,7 +124,7 @@ describe("observe hook optimization", () => {
 
     // Add child
     runInAction(() => {
-      parent.child = { value: 1 }
+      set(parent, "child", { value: 1 }) // use set() for MobX 4 compatibility
     })
 
     const childData = getNodeData(parent.child!)
@@ -241,7 +241,7 @@ describe("observe hook optimization", () => {
     // Move child to tree without listener
     runInAction(() => {
       treeWithListener.child = undefined as any
-      treeWithoutListener.child = child
+      set(treeWithoutListener, "child", child) // use set() for MobX 4 compatibility
     })
 
     // Child should no longer have observe hook
@@ -268,7 +268,7 @@ describe("observe hook optimization", () => {
 
     // Attach to tree1
     runInAction(() => {
-      tree1.child = child
+      set(tree1, "child", child) // use set() for MobX 4 compatibility
     })
 
     expectRefCount(childData, 1)
@@ -276,7 +276,7 @@ describe("observe hook optimization", () => {
     // Move to tree2 (also has listener)
     runInAction(() => {
       tree1.child = undefined
-      tree2.child = child
+      set(tree2, "child", child) // use set() for MobX 4 compatibility
     })
 
     // Should still have listener (from tree2)
@@ -417,7 +417,7 @@ describe("observe hook optimization", () => {
     // Move leaf from branch1 to branch2
     runInAction(() => {
       root.branch1.leaf = undefined as any
-      root.branch2.leaf = leaf
+      set(root.branch2, "leaf", leaf) // use set() for MobX 4 compatibility
     })
 
     // Should still have listener (still under root)
@@ -442,7 +442,7 @@ describe("observe hook optimization", () => {
 
     // Trigger change
     runInAction(() => {
-      parent.child = { value: 1 }
+      set(parent, "child", { value: 1 }) // use set() for MobX 4 compatibility
     })
 
     // Should still have correct ref count
@@ -499,7 +499,7 @@ describe("observe hook optimization", () => {
 
     // Reattach to parent
     runInAction(() => {
-      parent.child = child
+      set(parent, "child", child) // use set() for MobX 4 compatibility
     })
 
     // Should have 2 sources now

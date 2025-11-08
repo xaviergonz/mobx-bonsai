@@ -1,16 +1,20 @@
 # Change Log
 
-## 2.2.0
+## mobx-bonsai 2.2.1 / mobx-bonsai-yjs 2.1.1
+
+- Fixed Mobx 4/5 compatibility.
+
+## mobx-bonsai 2.2.0
 
 - `observer` is no longer used for nodes not under `onDeepChange` detection.
 - Added `setGlobalConfig({ checkCircularReferences: boolean })` option to enable/disable circular reference detection when attaching nodes. When enabled (opt-in), throws an error if a node would become an ancestor of itself. Disabled by default for performance reasons.
 - Optimized a bit snapshot invalidation.
 
-## 2.1.1
+## mobx-bonsai 2.1.1
 
 - Fixed `onDeepInterceptedChange` so it supports returning the change to accept it or returning `null` to cancel it, like mobx `intercept` does.
 
-## 2.1.0
+## mobx-bonsai 2.1.0
 
 - Reduced a bit memory usage per node.
 - Added `onDeepInterceptedChange` to handle changes -before- they happen.
@@ -20,24 +24,24 @@
 
 - `yjsOrigin` parameter in `bindYjsToNode` now accepts either a `symbol` or a `() => symbol` function. When a function is provided, it will be called dynamically to retrieve the current origin symbol for each transaction, allowing for runtime origin symbol selection.
 
-## 2.0.0
+## mobx-bonsai 2.0.0
 
 - Y.js bindings have been moved into a separate `mobx-bonsai-yjs` package. This solves issues when using the Y.js bindings on a ESM module environment.
 - Errors thrown by Y.js bindings will be now of type `MobxBonsaiYjsError` instead of `MobxBonsaiError`.
 
-## 1.1.2
+## mobx-bonsai 1.1.2
 
 - Fix so that reassigning a same value won't invalidate an snapshot.
 
-## 1.1.1
+## mobx-bonsai 1.1.1
 
 - Make Yjs dependency truly optional.
 
-## 1.1.0
+## mobx-bonsai 1.1.0
 
 - Added an `extends` method to node types so that they can extend other node types.
 - `applyPlainObjectToYMap` / `applyPlainArrayToYArray` are no longer wrapped in mobx actions in case they want to track the original values.
 
-## 1.0.0
+## mobx-bonsai 1.0.0
 
 - Initial public release.

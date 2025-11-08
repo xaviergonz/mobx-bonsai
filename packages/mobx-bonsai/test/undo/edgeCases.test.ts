@@ -3,6 +3,9 @@ import { nodeType } from "../../src/node/nodeTypeKey/nodeType"
 import { UndoManager } from "../../src/undo/UndoManager"
 import "../commonSetup"
 import { createUndoStore } from "../../src"
+import { getMobxVersion } from "../../src/utils/getMobxVersion"
+
+const mobxVersion = getMobxVersion()
 
 describe("UndoManager - Edge Cases", () => {
   type Counter = {
@@ -229,9 +232,16 @@ describe("UndoManager - Edge Cases", () => {
 
     const originalOrder = list.items.map((item) => item.id)
 
-    // Sort the array
+    // Sort the array - different approach for MobX 5 vs 6
     runInAction(() => {
-      list.items.sort((a, b) => a.id - b.id)
+      if (mobxVersion >= 6) {
+        // In MobX 6+, sort() works in-place
+        list.items.sort((a, b) => a.id - b.id)
+      } else {
+        // In MobX 5, sort() doesn't modify in place, so we use splice() to replace all items
+        const sorted = list.items.slice().sort((a, b) => a.id - b.id)
+        list.items.splice(0, list.items.length, ...sorted)
+      }
     })
 
     expect(list.items.map((item) => item.id)).toEqual([1, 2, 3])

@@ -1,5 +1,5 @@
-import { node, getChildrenNodes } from "../../../src"
-import { reaction, runInAction } from "mobx"
+import { reaction, runInAction, set } from "mobx"
+import { getChildrenNodes, node } from "../../../src"
 
 it("should return shallow children for an object node", () => {
   const parent = node({
@@ -73,7 +73,7 @@ it("should react when a child is added/removed", () => {
   children.length = 0
 
   runInAction(() => {
-    root.child2 = { b: 2 }
+    set(root, "child2", { b: 2 }) // use set() for MobX 4 compatibility
   })
 
   // Reaction should pick up the change.
@@ -92,7 +92,7 @@ it("should react when a child is added/removed", () => {
   children.length = 0
 
   runInAction(() => {
-    root.child2 = undefined
+    set(root, "child2", undefined) // use set() for MobX 4 compatibility
   })
 
   expect(children).toMatchInlineSnapshot(`

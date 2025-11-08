@@ -1,5 +1,5 @@
 import mitt from "mitt"
-import { action, computed, IComputedValue } from "mobx"
+import { action, computed, IComputedValue, set } from "mobx"
 import { failure } from "../../error/failure"
 import { getGlobalConfig } from "../../globalConfig"
 import { disposeOnce } from "../../utils/disposable"
@@ -293,7 +293,7 @@ function addNodeTypeExtensionMethods<TNode extends object>(
       addKey(
         `set${capitalizedProp}`,
         action((node: TNode, value: any) => {
-          ;(node as any)[prop] = value
+          set(node as any, prop, value) // use set() for MobX 4 compatibility
         })
       )
     }

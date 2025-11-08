@@ -1,4 +1,4 @@
-import { configure, isObservable, observable, reaction, runInAction } from "mobx"
+import { configure, isObservable, observable, reaction, runInAction, set } from "mobx"
 import { _runDetachingDuplicatedNodes, isNode, node, nodeType, TNode } from "../../src"
 
 it("should convert a plain object into a node", () => {
@@ -57,7 +57,7 @@ it("should convert a plain object assigned as a child into a node (changing the 
   const parent = node({} as { child?: { y: number } })
   const plainChild = { y: 100 }
   runInAction(() => {
-    parent.child = plainChild // assign a plain object
+    set(parent, "child", plainChild) // use set() for MobX 4 compatibility
   })
   expect(isObservable(parent.child!)).toBe(true)
   expect(isNode(parent.child!)).toBe(true)
@@ -67,7 +67,7 @@ it("should convert a plain object assigned as a child into a node (changing the 
 it("adding a plain object to an object should be a node", () => {
   const nObj = node<{ child?: { a: number } }>({})
   runInAction(() => {
-    nObj.child = { a: 1 }
+    set(nObj, "child", { a: 1 }) // use set() for MobX 4 compatibility
   })
   expect(isNode(nObj.child!)).toBe(true)
 })
@@ -103,7 +103,7 @@ it("setting a plain value of an existing unique node should result in a single r
     })
     tA2(nodeData2)
 
-    const nParent = node<{ nObj?: typeof nObj1 }>({})
+    const nParent = node<{ nObj?: typeof nObj1 }>({ nObj: undefined }) // Initialize property for MobX 4
 
     const events: any[] = []
     const disposer = reaction(
@@ -113,12 +113,12 @@ it("setting a plain value of an existing unique node should result in a single r
       }
     )
 
-    nParent.nObj = nodeData1
+    set(nParent, "nObj", nodeData1) // use set() for MobX 4 compatibility
 
     expect(events.length).toBe(1)
     events.length = 0
 
-    nParent.nObj = nodeData2
+    set(nParent, "nObj", nodeData2) // use set() for MobX 4 compatibility
 
     expect(events.length).toBe(1)
     events.length = 0
@@ -153,7 +153,9 @@ test("should detach already-attached node when using runDetachingDuplicatedNodes
   const parent2 = parentType({ name: "parent2" })
 
   _runDetachingDuplicatedNodes(() => {
-    parent2.child = child // Attach the same node instance
+    runInAction(() => {
+      set(parent2, "child", child) // use set() for MobX 4 compatibility
+    })
   })
 
   // The child should now be in parent2

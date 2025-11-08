@@ -1,11 +1,11 @@
-import { reaction } from "mobx"
+import { reaction, toJS } from "mobx"
 import { applySnapshot, node, nodeType, nodeTypeKey, TNode } from "../../../src"
 
 test("applies snapshot to an array node", () => {
   const n = node([1, 2, 3])
   const snapshot = [4, 5, 6]
   applySnapshot(n, snapshot)
-  expect(n).toStrictEqual(snapshot)
+  expect(toJS(n)).toStrictEqual(snapshot) // use toJS() for MobX 4 compatibility
 })
 
 test("throws error if snapshot is array but node is not", () => {
@@ -30,7 +30,7 @@ test("applies snapshot to an observable object with matching type and key", () =
     obj: { a: 1 },
   })
   applySnapshot(n, snapshot)
-  expect(n).toStrictEqual(snapshot)
+  expect(toJS(n)).toStrictEqual(snapshot) // use toJS() for MobX 4 compatibility
 })
 
 test("throws error if snapshot changes the type property", () => {

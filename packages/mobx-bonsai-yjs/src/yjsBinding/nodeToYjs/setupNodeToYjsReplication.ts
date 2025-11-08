@@ -54,56 +54,52 @@ export function setupNodeToYjsReplication({
 
               // now y.js and mobx should be in the same target
 
-              switch (change.observableKind) {
-                case "object": {
-                  if (!(yjsTarget instanceof Y.Map)) {
-                    throw failure("yjs target was expected to be a map")
-                  }
-                  const yjsMap = yjsTarget
+              // In MobX 5, observableKind doesn't exist, but we can check for the presence of 'name' vs 'index'
+              // to distinguish between object and array changes
+              const isObjectChange = "name" in change
 
-                  switch (change.type) {
-                    case "add":
-                    case "update":
-                      yjsMap.set(String(change.name), convertPlainToYjsValue(change.newValue))
-                      break
-
-                    case "remove":
-                      yjsMap.delete(String(change.name))
-                      break
-
-                    default:
-                      throw failure(`unsupported mobx object change type`)
-                  }
-                  break
+              if (isObjectChange) {
+                if (!(yjsTarget instanceof Y.Map)) {
+                  throw failure("yjs target was expected to be a map")
                 }
+                const yjsMap = yjsTarget
 
-                case "array": {
-                  if (!(yjsTarget instanceof Y.Array)) {
-                    throw failure("yjs target was expected to be an array")
-                  }
-                  const yjsArray = yjsTarget
+                switch (change.type) {
+                  case "add":
+                  case "update":
+                    yjsMap.set(String(change.name), convertPlainToYjsValue(change.newValue))
+                    break
 
-                  switch (change.type) {
-                    case "update": {
-                      yjsArray.delete(change.index, 1)
-                      yjsArray.insert(change.index, [convertPlainToYjsValue(change.newValue)])
-                      break
-                    }
+                  case "remove":
+                    yjsMap.delete(String(change.name))
+                    break
 
-                    case "splice": {
-                      yjsArray.delete(change.index, change.removedCount)
-                      yjsArray.insert(change.index, change.added.map(convertPlainToYjsValue))
-                      break
-                    }
-
-                    default:
-                      throw failure(`unsupported mobx array change type`)
-                  }
-                  break
+                  default:
+                    throw failure(`unsupported mobx object change type`)
                 }
+              } else {
+                // Array change
+                if (!(yjsTarget instanceof Y.Array)) {
+                  throw failure("yjs target was expected to be an array")
+                }
+                const yjsArray = yjsTarget
 
-                default:
-                  throw failure(`unsupported mobx change`)
+                switch (change.type) {
+                  case "update": {
+                    yjsArray.delete(change.index, 1)
+                    yjsArray.insert(change.index, [convertPlainToYjsValue(change.newValue)])
+                    break
+                  }
+
+                  case "splice": {
+                    yjsArray.delete(change.index, change.removedCount)
+                    yjsArray.insert(change.index, change.added.map(convertPlainToYjsValue))
+                    break
+                  }
+
+                  default:
+                    throw failure(`unsupported mobx array change type`)
+                }
               }
             })
           }, yjsOrigin)
