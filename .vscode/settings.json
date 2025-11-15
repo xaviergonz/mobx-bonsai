@@ -19,5 +19,6 @@
     "titleBar.inactiveBackground": "#2f7b4899",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#2f7b48"
+  "peacock.color": "#2f7b48",
+  "cmake.ignoreCMakeListsMissing": true
 }
