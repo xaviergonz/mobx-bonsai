@@ -1,4 +1,5 @@
 import { configure } from "mobx"
+import { beforeEach } from "vitest"
 import { setGlobalConfig } from "../src/globalConfig"
 
 configure({ enforceActions: "always" })

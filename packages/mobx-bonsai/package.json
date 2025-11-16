@@ -55,8 +55,8 @@
     "quick-build-tests": "tsc -p test",
     "copy-root-files": "shx cp ../../README.md . && shx cp ../../LICENSE . && shx cp ../../CHANGELOG.md . && shx cp ../../logo.png .",
     "build": "yarn quick-build && yarn copy-root-files && shx rm -rf dist && vite build && shx cp dist/mobx-bonsai.esm.mjs dist/mobx-bonsai.esm.js",
-    "test": "jest",
-    "test:ci": "yarn test -i --coverage",
+    "test": "vitest run",
+    "test:ci": "vitest run --coverage",
     "build-docs": "shx rm -rf api-docs && typedoc --options ./typedocconfig.js src/index.ts && shx rm -rf ../../apps/site/copy-to-build/api && shx mkdir -p ../../apps/site/copy-to-build/api && shx cp -R ./api-docs/* ../../apps/site/copy-to-build/api"
   },
   "peerDependencies": {
@@ -64,20 +64,19 @@
   },
   "devDependencies": {
     "@types/deep-freeze": "^0.1.5",
-    "@types/jest": "^30.0.0",
     "@types/node": "^24.10.1",
-    "jest": "^30.2.0",
+    "@vitest/coverage-v8": "^2.1.4",
     "mobx-v4": "npm:mobx@^4.15.7",
     "mobx-v5": "npm:mobx@^5.15.7",
     "shx": "^0.4.0",
     "spec.ts": "^1.1.3",
-    "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "type-fest": "^4.41.0",
     "typedoc": "^0.28.14",
     "typescript": "^5.9.3",
     "vite": "^7.2.2",
-    "vite-plugin-dts": "^4.5.4"
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^2.1.4"
   },
   "dependencies": {
     "deep-freeze": "^0.0.1",

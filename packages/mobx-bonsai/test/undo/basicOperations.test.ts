@@ -1,4 +1,4 @@
-import { remove, runInAction, set } from "mobx"
+import { configure, remove, runInAction, set } from "mobx"
 import { nodeType } from "../../src/node/nodeTypeKey/nodeType"
 import { UndoManager } from "../../src/undo/UndoManager"
 import "../commonSetup"
@@ -224,7 +224,6 @@ describe("UndoManager - Basic Operations", () => {
 
   test("should work with changes outside MobX actions", () => {
     // Temporarily allow changes outside of actions
-    const { configure } = require("mobx")
     configure({ enforceActions: "never" })
 
     try {
