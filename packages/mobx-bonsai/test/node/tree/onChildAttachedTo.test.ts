@@ -1,4 +1,5 @@
 import { runInAction, set } from "mobx"
+import { vi } from "vitest"
 import { node, nodeType, onChildAttachedTo, TNode } from "../../../src"
 
 it("should fire immediately for current children when fireForCurrentChildren is true", () => {
@@ -158,7 +159,7 @@ it("fires callback only for matching node using a selector", () => {
     child2?: TMatch | TOther
   }>({}) // create an empty node
 
-  const onChildAttached1 = jest.fn()
+  const onChildAttached1 = vi.fn()
   const disposer1 = onChildAttachedTo({
     target: () => testNode,
     childNodeType: tMatch,
@@ -166,7 +167,7 @@ it("fires callback only for matching node using a selector", () => {
     fireForCurrentChildren: false,
   })
 
-  const onChildAttached2 = jest.fn()
+  const onChildAttached2 = vi.fn()
   const disposer2 = onChildAttachedTo({
     target: () => testNode,
     childNodeType: tOther,
