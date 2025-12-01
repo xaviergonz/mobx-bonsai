@@ -1,5 +1,9 @@
 # Change Log
 
+## mobx-bonsai 2.2.2
+
+- Fixed undo manager not working with certain decorator modes.
+
 ## mobx-bonsai 2.2.1 / mobx-bonsai-yjs 2.1.1
 
 - Fixed Mobx 4/5 compatibility.

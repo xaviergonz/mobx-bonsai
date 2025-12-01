@@ -331,11 +331,10 @@ export class UndoManager<TAttachedState = unknown> {
       throw failure("cannot call undo() while inside a MobX action")
     }
 
-    this.undoAction()
+    this.#undoAction()
   }
 
-  @action
-  private undoAction(): void {
+  #undoAction = action(() => {
     if (!this.canUndo) {
       throw failure("nothing to undo")
     }
@@ -375,7 +374,7 @@ export class UndoManager<TAttachedState = unknown> {
     if (event.attachedState && this.attachedState) {
       this.attachedState.restore(event.attachedState.beforeEvent as TAttachedState)
     }
-  }
+  })
 
   /**
    * Redoes the last undone change.
@@ -387,11 +386,10 @@ export class UndoManager<TAttachedState = unknown> {
       throw failure("cannot call redo() while inside a MobX action")
     }
 
-    this.redoAction()
+    this.#redoAction()
   }
 
-  @action
-  private redoAction(): void {
+  #redoAction = action(() => {
     if (!this.canRedo) {
       throw failure("nothing to redo")
     }
@@ -431,23 +429,21 @@ export class UndoManager<TAttachedState = unknown> {
     if (event.attachedState && this.attachedState) {
       this.attachedState.restore(event.attachedState.afterEvent as TAttachedState)
     }
-  }
+  })
 
   /**
    * Clears the undo queue.
    */
-  @action
-  clearUndo(): void {
+  clearUndo = action(() => {
     this.store.undoEvents.length = 0
-  }
+  })
 
   /**
    * Clears the redo queue.
    */
-  @action
-  clearRedo(): void {
+  clearRedo = action(() => {
     this.store.redoEvents.length = 0
-  }
+  })
 
   /**
    * Executes a function without recording changes.
