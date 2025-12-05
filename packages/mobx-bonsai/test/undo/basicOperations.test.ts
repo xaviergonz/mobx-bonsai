@@ -2,6 +2,7 @@ import { configure, remove, runInAction, set } from "mobx"
 import { nodeType } from "../../src/node/nodeTypeKey/nodeType"
 import { UndoManager } from "../../src/undo/UndoManager"
 import "../commonSetup"
+import { getSnapshot } from "../../src"
 
 describe("UndoManager - Basic Operations", () => {
   // Define node types for testing
@@ -119,6 +120,29 @@ describe("UndoManager - Basic Operations", () => {
 
     expect(todoList.items.length).toBe(2)
     expect(todoList.items[0].text).toBe("Item 1")
+  })
+
+  test("should handle array length changes (making it shorter)", () => {
+    // Start with X items
+    const snapshot = getSnapshot(todoList)
+    expect(snapshot.items.length).toBe(2)
+
+    // Reduce array length to 0
+    runInAction(() => {
+      todoList.items.length = 0
+    })
+
+    expect(todoList.items.length).toBe(0)
+
+    // Undo should restore the removed items
+    undoManager.undo()
+
+    expect(todoList.items.length).toBe(2)
+
+    // Redo should remove it again
+    undoManager.redo()
+
+    expect(todoList.items.length).toBe(0)
   })
 
   test("should clear redo queue when new change is made", () => {
