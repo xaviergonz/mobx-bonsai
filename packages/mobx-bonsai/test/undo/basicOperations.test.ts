@@ -138,6 +138,7 @@ describe("UndoManager - Basic Operations", () => {
     undoManager.undo()
 
     expect(todoList.items.length).toBe(2)
+    expect(getSnapshot(todoList)).toEqual(snapshot)
 
     // Redo should remove it again
     undoManager.redo()
