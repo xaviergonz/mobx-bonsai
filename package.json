@@ -18,10 +18,6 @@
     "netlify-dev": "pnpm build-netlify && netlify dev",
     "lint": "biome lint"
   },
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
   "dependencies": {
     "mobx": "^6.15.0",
     "mobx-v4": "npm:mobx@^4.15.7",
