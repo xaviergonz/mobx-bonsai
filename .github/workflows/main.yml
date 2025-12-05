@@ -10,25 +10,12 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  NODE_VERSION: "24.3.0"
-  PNPM_VERSION: "10.24.0"
-
 jobs:
   lib-site-build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+      - uses: ./.github/actions/setup
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm site:build
@@ -38,16 +25,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+      - uses: ./.github/actions/setup
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm lib:build
@@ -66,16 +44,7 @@ jobs:
           - 4
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+      - uses: ./.github/actions/setup
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm lib:test:ci
@@ -97,16 +66,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+      - uses: ./.github/actions/setup
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm lib:build
