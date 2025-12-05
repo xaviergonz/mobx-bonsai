@@ -14,14 +14,10 @@
     "site:start": "turbo run site#start",
     "site:build": "turbo run site#build",
     "site:serve": "turbo run site#serve",
-    "build-netlify": "yarn site:build",
-    "netlify-dev": "yarn build-netlify && netlify dev",
+    "build-netlify": "pnpm site:build",
+    "netlify-dev": "pnpm build-netlify && netlify dev",
     "lint": "biome lint"
   },
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
   "dependencies": {
     "mobx": "^6.15.0",
     "mobx-v4": "npm:mobx@^4.15.7",
@@ -37,5 +33,5 @@
     "vite": "^7.2.6",
     "vite-plugin-dts": "^4.5.4"
   },
-  "packageManager": "yarn@4.12.0"
+  "packageManager": "pnpm@10.24.0"
 }

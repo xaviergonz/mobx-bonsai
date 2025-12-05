@@ -10,23 +10,16 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  NODE_VERSION: "24.3.0"
-
 jobs:
   lib-site-build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
-
-      - run: yarn install --immutable
-      - run: yarn site:build
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm site:build
 
 
   lib-build:
@@ -34,15 +27,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
-
-      - run: yarn install --immutable
-      - run: yarn lib:build
-      - run: yarn yjs-lib:build
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lib:build
+      - run: pnpm yjs-lib:build
 
   lib-test:
     name: lib-test (mobx${{ matrix.mobx-version }})
@@ -58,17 +47,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
-
-      - run: yarn install --immutable
-      - run: yarn lib:test:ci
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lib:test:ci
         env:
           MOBX_VERSION: ${{ matrix.mobx-version }}
-      - run: yarn yjs-lib:test:ci
+      - run: pnpm yjs-lib:test:ci
         env:
           MOBX_VERSION: ${{ matrix.mobx-version }}
 
@@ -85,13 +70,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
-
-      - run: yarn install --immutable
-      - run: yarn lib:build
-      - run: yarn build
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lib:build
+      - run: pnpm build
         working-directory: ./apps/benchmark

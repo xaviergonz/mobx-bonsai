@@ -1,0 +1,13 @@
+name: 'Setup Node and pnpm'
+description: 'Setup Node.js and pnpm with caching'
+runs:
+  using: "composite"
+  steps:
+    - uses: pnpm/action-setup@v4
+      with:
+        version: 10.24.0
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24.3.0
+        cache: 'pnpm'
