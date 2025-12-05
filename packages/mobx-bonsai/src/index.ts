@@ -111,7 +111,6 @@ export type {
   UndoableObjectUpdateChange,
   UndoableObjectRemoveChange,
   UndoableArraySpliceChange,
-  UndoableArrayUpdateChange,
 } from "./undo/types"
 
 // utils
