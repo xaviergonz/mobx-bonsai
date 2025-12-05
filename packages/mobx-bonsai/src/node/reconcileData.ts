@@ -2,17 +2,30 @@ import { remove, set } from "mobx"
 import { failure } from "../error/failure"
 import { isArray, isMap, isPrimitive, isSet } from "../plainTypes/checks"
 import { getNodeTypeAndKey } from "./nodeTypeKey/nodeType"
+import { getCachedSnapshot } from "./snapshot/getSnapshot"
 
-function setIfDifferent(target: any, key: PropertyKey, value: unknown) {
+function setIfDifferent(target: any, key: PropertyKey, value: unknown): boolean {
   if (target[key] !== value || !(key in target)) {
     set(target, key, value)
+    return true
   }
+  return false
 }
 
 export function reconcileData<T>(oldValue: any, newValue: T, reconciliationRoot: object): T {
   if (oldValue === newValue) {
     // same value, no need to reconcile
     return oldValue
+  }
+
+  // Optimization: if oldValue is a node and newValue matches its cached snapshot,
+  // we can skip reconciliation entirely
+  if (!isPrimitive(oldValue) && !isPrimitive(newValue)) {
+    const cachedSnapshot = getCachedSnapshot(oldValue)
+    if (cachedSnapshot === newValue) {
+      // The snapshot being applied is exactly the cached snapshot - no changes needed
+      return oldValue
+    }
   }
 
   if (isPrimitive(newValue) || isPrimitive(oldValue)) {
@@ -35,9 +48,12 @@ export function reconcileData<T>(oldValue: any, newValue: T, reconciliationRoot:
     const oldArray = oldValue as any[]
     const newArray = newValue as any[]
 
+    let hasChanges = false
+
     // remove excess items
     if (oldArray.length > newArray.length) {
       oldArray.splice(newArray.length, oldArray.length - newArray.length)
+      hasChanges = true
     }
 
     // reconcile present items
@@ -45,15 +61,21 @@ export function reconcileData<T>(oldValue: any, newValue: T, reconciliationRoot:
       const oldV = oldArray[i]
       const newV = reconcileData(oldV, newArray[i], reconciliationRoot)
 
-      setIfDifferent(oldArray, i, newV)
+      if (setIfDifferent(oldArray, i, newV)) {
+        hasChanges = true
+      }
     }
 
     // add excess items
-    for (let i = oldArray.length; i < newArray.length; i++) {
-      oldArray.push(reconcileData(undefined, newArray[i], reconciliationRoot))
+    if (oldArray.length < newArray.length) {
+      for (let i = oldArray.length; i < newArray.length; i++) {
+        oldArray.push(reconcileData(undefined, newArray[i], reconciliationRoot))
+      }
+      hasChanges = true
     }
 
-    return oldArray as T
+    // Optimization: if no changes were made, return old array to preserve snapshot
+    return (hasChanges ? oldArray : oldValue) as T
   } else if (isMap(newValue)) {
     throw failure("a value must not contain maps")
   } else if (isSet(newValue)) {
@@ -78,6 +100,8 @@ export function reconcileData<T>(oldValue: any, newValue: T, reconciliationRoot:
       return newValue
     }
 
+    let hasChanges = false
+
     // remove excess props
     const oldObjectKeys = Object.keys(oldObject)
     const oldObjectKeysLen = oldObjectKeys.length
@@ -85,6 +109,7 @@ export function reconcileData<T>(oldValue: any, newValue: T, reconciliationRoot:
       const k = oldObjectKeys[i]
       if (!(k in newObject)) {
         remove(oldObject, k)
+        hasChanges = true
       }
     }
 
@@ -98,9 +123,12 @@ export function reconcileData<T>(oldValue: any, newValue: T, reconciliationRoot:
       const oldV = oldObject[k]
       const newV = reconcileData(oldV, v, reconciliationRoot)
 
-      setIfDifferent(oldObject, k, newV)
+      if (setIfDifferent(oldObject, k, newV)) {
+        hasChanges = true
+      }
     }
 
-    return oldObject as T
+    // Optimization: if no changes were made, return old object to preserve snapshot
+    return (hasChanges ? oldObject : oldValue) as T
   }
 }

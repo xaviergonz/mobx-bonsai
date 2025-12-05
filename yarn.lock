@@ -3827,18 +3827,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/ai@npm:0.3.3":
-  version: 0.3.3
-  resolution: "@netlify/ai@npm:0.3.3"
+"@netlify/ai@npm:0.3.4":
+  version: 0.3.4
+  resolution: "@netlify/ai@npm:0.3.4"
   dependencies:
-    "@netlify/api": "npm:^14.0.10"
+    "@netlify/api": "npm:^14.0.11"
   peerDependencies:
-    "@netlify/api": ">=14.0.10"
-  checksum: 10c0/275a67ece4ee06abfe88c5a078dc6a55b4a2a7688db023d1147f6a3cdc12838ec7a9c35dd1a48a955edb3dc392bb2afc5ca9cafec6491b7cd71b4704559283bd
+    "@netlify/api": ">=14.0.11"
+  checksum: 10c0/bd96fd07fa8d2ae8cefac37f66c3e5555ba89793fe7d266dbb4c8835202580b56d36c599c5bf4279b7e06160d109638f112594c24c405aba0f8dc0ecd98ecd1f
   languageName: node
   linkType: hard
 
-"@netlify/api@npm:14.0.11, @netlify/api@npm:^14.0.10, @netlify/api@npm:^14.0.11":
+"@netlify/api@npm:14.0.11, @netlify/api@npm:^14.0.11":
   version: 14.0.11
   resolution: "@netlify/api@npm:14.0.11"
   dependencies:
@@ -14962,12 +14962,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:^23.12.2":
-  version: 23.12.2
-  resolution: "netlify-cli@npm:23.12.2"
+"netlify-cli@npm:^23.12.3":
+  version: 23.12.3
+  resolution: "netlify-cli@npm:23.12.3"
   dependencies:
     "@fastify/static": "npm:7.0.4"
-    "@netlify/ai": "npm:0.3.3"
+    "@netlify/ai": "npm:0.3.4"
     "@netlify/api": "npm:14.0.11"
     "@netlify/blobs": "npm:10.1.0"
     "@netlify/build": "npm:35.5.2"
@@ -15064,7 +15064,7 @@ __metadata:
   bin:
     netlify: bin/run.js
     ntl: bin/run.js
-  checksum: 10c0/dd92e0e9d4eb7ba7a70fdaee596a27efd409b2092243d054e05196a293cb254107e0c9ab3dd7b6fea7e656fda90d9e9f921c725c8196287f50551bc41f899f1b
+  checksum: 10c0/0fb042079c386df7238f0952795f98db5be06fcb7c22521c6c694a84f9c9dcd0676189c56a3e5baf9b4abe7e6bd12d56c15f6a51323d0ef4078802b2ceb94311
   languageName: node
   linkType: hard
 
@@ -18155,8 +18155,8 @@ __metadata:
     mobx: "npm:^6.15.0"
     mobx-v4: "npm:mobx@^4.15.7"
     mobx-v5: "npm:mobx@^5.15.7"
-    netlify-cli: "npm:^23.12.2"
-    turbo: "npm:^2.6.2"
+    netlify-cli: "npm:^23.12.3"
+    turbo: "npm:^2.6.3"
     typescript: "npm:^5.9.3"
     vite: "npm:^7.2.6"
     vite-plugin-dts: "npm:^4.5.4"
@@ -19912,58 +19912,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"turbo-darwin-64@npm:2.6.2":
-  version: 2.6.2
-  resolution: "turbo-darwin-64@npm:2.6.2"
+"turbo-darwin-64@npm:2.6.3":
+  version: 2.6.3
+  resolution: "turbo-darwin-64@npm:2.6.3"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-darwin-arm64@npm:2.6.2":
-  version: 2.6.2
-  resolution: "turbo-darwin-arm64@npm:2.6.2"
+"turbo-darwin-arm64@npm:2.6.3":
+  version: 2.6.3
+  resolution: "turbo-darwin-arm64@npm:2.6.3"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-linux-64@npm:2.6.2":
-  version: 2.6.2
-  resolution: "turbo-linux-64@npm:2.6.2"
+"turbo-linux-64@npm:2.6.3":
+  version: 2.6.3
+  resolution: "turbo-linux-64@npm:2.6.3"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-linux-arm64@npm:2.6.2":
-  version: 2.6.2
-  resolution: "turbo-linux-arm64@npm:2.6.2"
+"turbo-linux-arm64@npm:2.6.3":
+  version: 2.6.3
+  resolution: "turbo-linux-arm64@npm:2.6.3"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo-windows-64@npm:2.6.2":
-  version: 2.6.2
-  resolution: "turbo-windows-64@npm:2.6.2"
+"turbo-windows-64@npm:2.6.3":
+  version: 2.6.3
+  resolution: "turbo-windows-64@npm:2.6.3"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"turbo-windows-arm64@npm:2.6.2":
-  version: 2.6.2
-  resolution: "turbo-windows-arm64@npm:2.6.2"
+"turbo-windows-arm64@npm:2.6.3":
+  version: 2.6.3
+  resolution: "turbo-windows-arm64@npm:2.6.3"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"turbo@npm:^2.6.2":
-  version: 2.6.2
-  resolution: "turbo@npm:2.6.2"
+"turbo@npm:^2.6.3":
+  version: 2.6.3
+  resolution: "turbo@npm:2.6.3"
   dependencies:
-    turbo-darwin-64: "npm:2.6.2"
-    turbo-darwin-arm64: "npm:2.6.2"
-    turbo-linux-64: "npm:2.6.2"
-    turbo-linux-arm64: "npm:2.6.2"
-    turbo-windows-64: "npm:2.6.2"
-    turbo-windows-arm64: "npm:2.6.2"
+    turbo-darwin-64: "npm:2.6.3"
+    turbo-darwin-arm64: "npm:2.6.3"
+    turbo-linux-64: "npm:2.6.3"
+    turbo-linux-arm64: "npm:2.6.3"
+    turbo-windows-64: "npm:2.6.3"
+    turbo-windows-arm64: "npm:2.6.3"
   dependenciesMeta:
     turbo-darwin-64:
       optional: true
@@ -19979,7 +19979,7 @@ __metadata:
       optional: true
   bin:
     turbo: bin/turbo
-  checksum: 10c0/7ff4b4ca5bf2ab8e332c6a8161eeed4b5a728c56168fd8797a1277190aa553d27845ace87495edca42295660dd7458231f6f0a58710dbd0ed6c553d7cf7e2795
+  checksum: 10c0/3dab627a4e0f855c2ea2cc5e7d3d7abed01a7abace1197983c55e0563c413dfe45c80c121e5fa25d2cca013d895bde457d5cdf3a3d47000dc7d432a4cb68e78f
   languageName: node
   linkType: hard
 

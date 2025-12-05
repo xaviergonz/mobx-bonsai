@@ -1,5 +1,11 @@
 # Change Log
 
+## mobx-bonsai 2.3.0
+
+- Data reconciliation optimizations (e.g. `applySnapshot`):
+  - If a snapshot of a sub-object is passed to reconcile with such sub-object then reconciliation will be skipped for that sub-tree.
+- If an object is not updated after a reconciliation then the snapshot will be kept stable.
+
 ## mobx-bonsai 2.2.2
 
 - Fixed undo manager not working with certain decorator modes.

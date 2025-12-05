@@ -1,5 +1,5 @@
 import { reaction, toJS } from "mobx"
-import { applySnapshot, node, nodeType, nodeTypeKey, TNode } from "../../../src"
+import { applySnapshot, getSnapshot, node, nodeType, nodeTypeKey, TNode } from "../../../src"
 
 test("applies snapshot to an array node", () => {
   const n = node([1, 2, 3])
@@ -113,6 +113,66 @@ test("can swap unique objects around", () => {
   })
 
   expect(n).toStrictEqual({ a: n1, b: n2 })
+})
+
+test("preserves snapshot references when applying the same snapshot", () => {
+  const n = node({
+    value: 10,
+    nested: { x: 5 },
+    items: [{ a: 1 }, { a: 2 }],
+  })
+
+  // Get the initial snapshots to cache them
+  const snapshot = getSnapshot(n)
+  const nestedSnapshot = snapshot.nested
+  const itemsSnapshot = snapshot.items
+
+  // Apply the same snapshot
+  applySnapshot(n, snapshot)
+  expect(getSnapshot(n)).toBe(snapshot)
+
+  // Apply same sub-snapshot to nested and item
+  applySnapshot(n, { value: 15, nested: nestedSnapshot, items: itemsSnapshot })
+  expect(getSnapshot(n)).not.toBe(snapshot) // root snapshot changes due to value change
+  expect(getSnapshot(n.nested)).toBe(nestedSnapshot)
+  expect(getSnapshot(n.items)).toBe(itemsSnapshot)
+
+  // Apply a different snapshot
+  applySnapshot(n, { value: 20, nested: { x: 15 }, items: [{ a: 3 }] })
+  expect(getSnapshot(n)).not.toBe(snapshot)
+  expect(getSnapshot(n.nested)).not.toBe(nestedSnapshot)
+})
+
+test("preserves snapshot when applying structurally equivalent data (structuredClone)", () => {
+  const n = node({
+    value: 10,
+    nested: { x: 5, y: { z: 3 } },
+    items: [{ a: 1 }, { a: 2 }],
+    primitives: [1, 2, 3],
+  })
+
+  // Get the initial snapshots
+  const snapshot = getSnapshot(n)
+  const nestedSnapshot = getSnapshot(n.nested)
+  const itemsSnapshot = getSnapshot(n.items)
+  const primitivesSnapshot = getSnapshot(n.primitives)
+
+  // Apply a structuredClone of the snapshot (different reference but same structure)
+  applySnapshot(n, structuredClone(snapshot))
+
+  // All snapshots should be preserved because data is structurally equivalent
+  expect(getSnapshot(n)).toBe(snapshot)
+
+  // Apply a structuredClone with partial changes
+  const modifiedSnapshot = structuredClone(snapshot)
+  modifiedSnapshot.value = 20
+  applySnapshot(n, modifiedSnapshot)
+
+  // Root snapshot should change, but nested/items/primitives should be preserved
+  expect(getSnapshot(n)).not.toBe(snapshot)
+  expect(getSnapshot(n.nested)).toBe(nestedSnapshot)
+  expect(getSnapshot(n.items)).toBe(itemsSnapshot)
+  expect(getSnapshot(n.primitives)).toBe(primitivesSnapshot)
 })
 
 test("preserves object reference when applying snapshot to nested object", () => {

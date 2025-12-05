@@ -7,6 +7,15 @@ import { getParentPath } from "../tree/getParentPath"
 const snapshots = new WeakMap<object, object>()
 const snapshotAtoms = new WeakMap<object, IAtom>()
 
+/**
+ * Gets the cached snapshot for a node without creating one if it doesn't exist.
+ * Returns undefined if no snapshot has been cached yet.
+ * @internal
+ */
+export function getCachedSnapshot<T extends object>(node: T): T | undefined {
+  return snapshots.get(node) as T | undefined
+}
+
 export const invalidateSnapshotTreeToRoot = action((node: object): void => {
   assertIsNode(node, "node")
 
