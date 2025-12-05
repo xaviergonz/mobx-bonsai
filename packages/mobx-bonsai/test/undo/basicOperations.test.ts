@@ -2,7 +2,7 @@ import { configure, remove, runInAction, set } from "mobx"
 import { nodeType } from "../../src/node/nodeTypeKey/nodeType"
 import { UndoManager } from "../../src/undo/UndoManager"
 import "../commonSetup"
-import { getSnapshot } from "../../src"
+import { getSnapshot, node, TNode } from "../../src"
 
 describe("UndoManager - Basic Operations", () => {
   // Define node types for testing
@@ -277,5 +277,78 @@ describe("UndoManager - Basic Operations", () => {
       // Restore original configuration
       configure({ enforceActions: "always" })
     }
+  })
+
+  test("should NOT reuse object references after undo (uses snapshots)", () => {
+    type Container = {
+      nested?: { value: number }
+    }
+
+    const state = node<Container>({ nested: { value: 1 } })
+    const manager = new UndoManager({ rootNode: state })
+
+    const originalRef = state.nested!
+
+    runInAction(() => {
+      state.nested = undefined
+    })
+
+    manager.undo()
+
+    // After undo, state.nested should be recreated from snapshot, not reusing originalRef
+    expect(state.nested).not.toBe(originalRef)
+    expect(state.nested!.value).toBe(1)
+
+    // Since we have a new object, modifying the originalRef should not affect state.nested
+    runInAction(() => {
+      originalRef.value = 2
+    })
+    expect(state.nested!.value).toBe(1)
+
+    manager.dispose()
+  })
+
+  test("should reuse object references after undo with typed nodes with key", () => {
+    type Entity = TNode<
+      "entity",
+      {
+        id: string
+        value: number
+      }
+    >
+
+    type Container = TNode<
+      "container",
+      {
+        nested?: Entity
+      }
+    >
+
+    const TEntity = nodeType<Entity>("entity").withKey("id")
+    const TContainer = nodeType<Container>("container")
+
+    const state = TContainer({ nested: TEntity({ id: "e1", value: 1 }) })
+    const manager = new UndoManager({ rootNode: state })
+
+    const originalRef = state.nested!
+
+    runInAction(() => {
+      state.nested = undefined
+    })
+
+    manager.undo()
+
+    // After undo, state.nested ref will be the same as originalRef, since keyed nodes are reused
+    expect(state.nested).toBe(originalRef)
+    // But the contents should be restored correctly
+    expect(state.nested!.value).toBe(1)
+
+    // Since they are the same ref, modifying originalRef will affect state.nested
+    runInAction(() => {
+      originalRef.value = 2
+    })
+    expect(state.nested!.value).toBe(2)
+
+    manager.dispose()
   })
 })
