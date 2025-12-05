@@ -23,10 +23,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
 
-      - run: yarn install --immutable
-      - run: yarn site:build
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.24.0
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm site:build
 
 
   lib-build:
@@ -38,11 +41,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
 
-      - run: yarn install --immutable
-      - run: yarn lib:build
-      - run: yarn yjs-lib:build
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.24.0
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lib:build
+      - run: pnpm yjs-lib:build
 
   lib-test:
     name: lib-test (mobx${{ matrix.mobx-version }})
@@ -62,13 +68,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
 
-      - run: yarn install --immutable
-      - run: yarn lib:test:ci
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.24.0
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lib:test:ci
         env:
           MOBX_VERSION: ${{ matrix.mobx-version }}
-      - run: yarn yjs-lib:test:ci
+      - run: pnpm yjs-lib:test:ci
         env:
           MOBX_VERSION: ${{ matrix.mobx-version }}
 
@@ -89,9 +98,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: "yarn"
 
-      - run: yarn install --immutable
-      - run: yarn lib:build
-      - run: yarn build
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.24.0
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lib:build
+      - run: pnpm build
         working-directory: ./apps/benchmark

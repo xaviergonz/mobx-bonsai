@@ -4,9 +4,9 @@ redirects = [
 ]
 
 [build]
-  command = "yarn build-netlify"
+  command = "pnpm build-netlify"
   publish = "apps/site/build"
-  environment = { NODE_VERSION = "23.11.0", YARN_VERSION = "4.12.0" }
+  environment = { NODE_VERSION = "23.11.0", PNPM_VERSION = "10.24.0" }
 
 [dev]
   publish = "apps/site/build"

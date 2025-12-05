@@ -54,7 +54,7 @@
     "quick-build": "tsc",
     "quick-build-tests": "tsc -p test",
     "copy-root-files": "shx cp ../../README.md . && shx cp ../../LICENSE . && shx cp ../../CHANGELOG.md . && shx cp ../../logo.png .",
-    "build": "yarn quick-build && yarn copy-root-files && shx rm -rf dist && vite build && shx cp dist/mobx-bonsai.esm.mjs dist/mobx-bonsai.esm.js",
+    "build": "pnpm quick-build && pnpm copy-root-files && shx rm -rf dist && vite build && shx cp dist/mobx-bonsai.esm.mjs dist/mobx-bonsai.esm.js",
     "test": "vitest run",
     "test:ci": "vitest run --coverage",
     "build-docs": "shx rm -rf api-docs && typedoc --options ./typedocconfig.js src/index.ts && shx rm -rf ../../apps/site/copy-to-build/api && shx mkdir -p ../../apps/site/copy-to-build/api && shx cp -R ./api-docs/* ../../apps/site/copy-to-build/api"

@@ -49,8 +49,12 @@ Core package:
 
 > `yarn add mobx-bonsai`
 
+> `pnpm add mobx-bonsai`
+
 For Y.js integration (optional):
 
 > `npm install mobx-bonsai-yjs yjs`
 
 > `yarn add mobx-bonsai-yjs yjs`
+
+> `pnpm add mobx-bonsai-yjs yjs`

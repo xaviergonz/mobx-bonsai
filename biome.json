@@ -14,9 +14,7 @@
       "!apps/site/build/**",
       "!apps/site/copy-to-build/**",
       "!apps/site/static/api/**",
-      "!apps/site/docs/examples/**",
-      "!**/.yarn/**",
-      "!**/.pnp.*"
+      "!apps/site/docs/examples/**"
     ]
   },
   "formatter": {
