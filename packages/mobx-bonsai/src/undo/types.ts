@@ -50,6 +50,7 @@ export type UndoableObjectChange =
 
 /**
  * Represents splicing elements into/from an array.
+ * Note: When added.length === removed.length, this represents element updates.
  */
 export type UndoableArraySpliceChange = Readonly<
   UndoableChangeBase & {
@@ -61,21 +62,9 @@ export type UndoableArraySpliceChange = Readonly<
 >
 
 /**
- * Represents updating an element in an array.
- */
-export type UndoableArrayUpdateChange = Readonly<
-  UndoableChangeBase & {
-    operation: "array-update"
-    index: number
-    oldValue: unknown
-    newValue: unknown
-  }
->
-
-/**
  * Union of all array change types.
  */
-export type UndoableArrayChange = UndoableArraySpliceChange | UndoableArrayUpdateChange
+export type UndoableArrayChange = UndoableArraySpliceChange
 
 /**
  * Union of all undoable change types.

@@ -59,14 +59,22 @@ export const applyChange = action(
           )
           break
         case "array-splice":
-          target.splice(
-            change.index,
-            change.added.length,
-            ...change.removed.map((val: any) => reconcileData(undefined, val, target))
-          )
-          break
-        case "array-update":
-          set(target, change.index, reconcileData(target[change.index], change.oldValue, target))
+          // Special case: when added.length === removed.length, use consecutive set operations
+          if (change.added.length === change.removed.length) {
+            for (let i = 0; i < change.removed.length; i++) {
+              set(
+                target,
+                change.index + i,
+                reconcileData(target[change.index + i], change.removed[i], target)
+              )
+            }
+          } else {
+            target.splice(
+              change.index,
+              change.added.length,
+              ...change.removed.map((val: any) => reconcileData(undefined, val, target))
+            )
+          }
           break
       }
     } else {
@@ -86,14 +94,22 @@ export const applyChange = action(
           )
           break
         case "array-splice":
-          target.splice(
-            change.index,
-            change.removed.length,
-            ...change.added.map((val: any) => reconcileData(undefined, val, target))
-          )
-          break
-        case "array-update":
-          set(target, change.index, reconcileData(target[change.index], change.newValue, target))
+          // Special case: when added.length === removed.length, use consecutive set operations
+          if (change.added.length === change.removed.length) {
+            for (let i = 0; i < change.added.length; i++) {
+              set(
+                target,
+                change.index + i,
+                reconcileData(target[change.index + i], change.added[i], target)
+              )
+            }
+          } else {
+            target.splice(
+              change.index,
+              change.removed.length,
+              ...change.added.map((val: any) => reconcileData(undefined, val, target))
+            )
+          }
           break
       }
     }

@@ -89,12 +89,13 @@ export function captureChange(change: NodeChange, rootNode: object): UndoableCha
       }
 
       case "update": {
+        // Convert update to splice with 1 remove and 1 add
         return {
-          operation: "array-update",
+          operation: "array-splice",
           path,
           index: change.index,
-          oldValue: captureValue(change.oldValue),
-          newValue: captureValue(change.newValue),
+          added: [captureValue(change.newValue)],
+          removed: [captureValue(change.oldValue)],
         }
       }
     }
