@@ -1,20 +1,20 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.6/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true, "defaultBranch": "master" },
   "files": {
     "includes": [
       "**",
-      "!**/node_modules/**",
-      "!**/dist/**",
-      "!packages/mobx-bonsai/coverage/**",
-      "!packages/mobx-bonsai/api-docs/**",
-      "!packages/mobx-bonsai-yjs/coverage/**",
-      "!packages/mobx-bonsai-yjs/api-docs/**",
-      "!apps/site/.docusaurus/**",
-      "!apps/site/build/**",
-      "!apps/site/copy-to-build/**",
-      "!apps/site/static/api/**",
-      "!apps/site/docs/examples/**"
+      "!**/node_modules",
+      "!**/dist",
+      "!packages/mobx-bonsai/coverage",
+      "!packages/mobx-bonsai/api-docs",
+      "!packages/mobx-bonsai-yjs/coverage",
+      "!packages/mobx-bonsai-yjs/api-docs",
+      "!apps/site/.docusaurus",
+      "!apps/site/build",
+      "!apps/site/copy-to-build",
+      "!apps/site/static/api",
+      "!apps/site/docs/examples"
     ]
   },
   "formatter": {

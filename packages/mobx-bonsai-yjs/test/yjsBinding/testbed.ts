@@ -43,6 +43,8 @@ export function createArrayTestbed<T extends any[]>(initialData: T) {
 }
 
 afterEach(() => {
-  disposers.forEach((dispose) => dispose())
+  disposers.forEach((dispose) => {
+    dispose()
+  })
   disposers.length = 0
 })
