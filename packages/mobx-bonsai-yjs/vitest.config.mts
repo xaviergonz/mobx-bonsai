@@ -69,7 +69,7 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./test/commonSetup.ts"],
     alias: {
-      mobx: path.resolve(dirname, "../../node_modules", mobxModuleName),
+      mobx: mobxModuleName,
       "mobx-bonsai": path.resolve(dirname, "../mobx-bonsai/src/index.ts"),
     },
     coverage: {

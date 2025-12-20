@@ -1,4 +1,4 @@
-import { runInAction, toJS } from "mobx"
+import { runInAction, set, toJS } from "mobx"
 import { nodeType, TNode } from "mobx-bonsai"
 import { describe, expect, test } from "vitest"
 import * as Y from "yjs"
@@ -20,7 +20,7 @@ describe("stress tests", () => {
     const yjsMap = yjsObject as Y.Map<any>
 
     const checkSync = () => {
-      expect(yjsMap.toJSON().root).toEqual(mobxObservable.root)
+      expect(yjsMap.toJSON().root).toEqual(toJS(mobxObservable.root))
     }
 
     // Array operations
@@ -42,7 +42,7 @@ describe("stress tests", () => {
     // Object property deletion and updates
     runInAction(() => {
       mobxObservable.root.d.e = undefined
-      mobxObservable.root.d.f.h = 5
+      set(mobxObservable.root.d.f, "h", 5)
       mobxObservable.root.a = { new: "object" }
     })
     checkSync()
@@ -67,17 +67,17 @@ describe("stress tests", () => {
     runInAction(() => {
       const subObj = mobxObservable.root.d.f
       mobxObservable.root.d.f = undefined
-      mobxObservable.root.copy = subObj
+      set(mobxObservable.root, "copy", subObj)
 
       const subArr = mobxObservable.root.b
       mobxObservable.root.b = []
-      mobxObservable.root.arrayCopy = subArr
+      set(mobxObservable.root, "arrayCopy", subArr)
     })
     checkSync()
 
     // Deeply nested updates on moved nodes
     runInAction(() => {
-      mobxObservable.root.copy.newProp = "changed"
+      set(mobxObservable.root.copy, "newProp", "changed")
     })
     checkSync()
 
@@ -94,7 +94,7 @@ describe("stress tests", () => {
 
     // Multiple levels of nesting
     runInAction(() => {
-      mobxObservable.root.deep = { level1: { level2: { level3: "end" } } }
+      set(mobxObservable.root, "deep", { level1: { level2: { level3: "end" } } })
       mobxObservable.root.deep.level1.level2.level3 = toJS(mobxObservable.root.copy)
     })
     checkSync()
@@ -160,7 +160,7 @@ describe("stress tests", () => {
     runInAction(() => {
       const shared = mobxObservable.root.shared
       mobxObservable.root.shared = undefined
-      mobxObservable.root.left = shared
+      set(mobxObservable.root, "left", shared)
     })
 
     expect(mobxObservable.root.shared).toBeUndefined()
@@ -171,7 +171,7 @@ describe("stress tests", () => {
     runInAction(() => {
       const left = mobxObservable.root.left
       mobxObservable.root.left = undefined
-      mobxObservable.root.right = left
+      set(mobxObservable.root, "right", left)
     })
 
     expect(mobxObservable.root.left).toBeUndefined()
