@@ -2,7 +2,7 @@ import { runInAction } from "mobx"
 import { nodeType, TNode } from "mobx-bonsai"
 import { describe, expect, test } from "vitest"
 import * as Y from "yjs"
-import { createObjectTestbed } from "./testbed"
+import { createArrayTestbed, createObjectTestbed } from "./testbed"
 
 function isYjsValueDeleted(yjsValue: Y.AbstractType<any>): boolean {
   return !!(yjsValue as any)._item?.deleted || !!yjsValue.doc?.isDestroyed
@@ -134,5 +134,27 @@ describe("detached Yjs structures", () => {
     const yjsArray = yjsObject.get("arr") as Y.Array<any>
     expect(yjsArray.length).toBe(2)
     expect(yjsArray.get(1)).toBe(newYjsSub)
+  })
+
+  test("internal array move (start to end)", () => {
+    const { mobxObservable, getYjsValueForNode } = createArrayTestbed<any[]>([
+      { id: 1 },
+      { id: 2 },
+      { id: 3 },
+    ])
+
+    const node1 = mobxObservable[0]
+    const yjs1 = getYjsValueForNode(node1)
+
+    runInAction(() => {
+      const item = mobxObservable.shift()
+      mobxObservable.push(item)
+    })
+
+    expect(mobxObservable[2]).toBe(node1)
+    const newYjs1 = getYjsValueForNode(node1)
+    expect(newYjs1).not.toBe(yjs1)
+    expect(isYjsValueDeleted(yjs1)).toBe(true)
+    expect(newYjs1.toJSON()).toEqual({ id: 1 })
   })
 })

@@ -6,7 +6,7 @@ import { YjsStructure } from "../yjsTypes/types"
 export function resolveYjsStructurePath(
   yjsObject: YjsStructure,
   path: readonly (string | number)[]
-): unknown {
+): YjsStructure {
   let target = yjsObject
   assertIsYjsStructure(target)
 
