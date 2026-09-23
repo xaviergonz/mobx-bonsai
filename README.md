@@ -1,3 +1,5 @@
+
+
 <p align="center">
   <img src="./logo.png" height="128" />
   <h1 align="center">mobx-bonsai</h1>
@@ -42,6 +44,8 @@ By using `mobx-bonsai`, you get:
 - **Seamless Y.js binding:** Two-way binding between `Y.js` state trees and `mobx-bonsai` reactive trees available via the `mobx-bonsai-yjs` package.
 
 ### Installation
+
+`mobx` is a peer dependency of `mobx-bonsai` and `mobx-bonsai-yjs`, so install it alongside the package you use.
 
 Core package:
 
