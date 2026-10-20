@@ -16,6 +16,12 @@ This repository is a `pnpm` + Turbo monorepo for:
 - Lint/format: Biome (`pnpm lint`; auto-fix with `pnpm exec biome check --write .`)
 - CI runtime: Node `25.6.1`
 
+## Skills
+
+- Skills live in `.agents/skills/<name>/SKILL.md` (read by Codex, Copilot and Antigravity); edit them there.
+- Claude Code only reads `.claude/skills`, so each skill also needs a symlink there: `ln -s ../../.agents/skills/<name> .claude/skills/<name>`.
+- `release-tag-version`: release workflow for `mobx-bonsai` / `mobx-bonsai-yjs` (changelog, version bump, MobX matrix tests, commit, tag, push, `npm publish` handoff).
+
 ## Monorepo map (source of truth)
 
 - `packages/mobx-bonsai`: Core library. Main entry `packages/mobx-bonsai/src/index.ts`. Tests in `packages/mobx-bonsai/test`.
