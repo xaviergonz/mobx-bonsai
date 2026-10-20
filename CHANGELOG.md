@@ -1,8 +1,10 @@
 # Change Log
 
-## Unreleased
+## mobx-bonsai 2.4.0 / mobx-bonsai-yjs 2.2.0
 
 - Added MobX 7 support (`mobx-bonsai` and `mobx-bonsai-yjs` now accept `mobx@^7.0.0` as a peer dependency). MobX 6, 5 and 4 remain supported.
+- `mobx-bonsai` undo manager: undoing/redoing an array splice that removes and adds the same number of elements now sets those indexes in place instead of splicing, so the existing nodes at those positions are reconciled rather than replaced.
+- `mobx-bonsai` undo manager: array element updates are now recorded as `array-splice` changes (with one removed and one added element). The `"array-update"` operation and the `UndoableArrayUpdateChange` type were removed; this only affects code that inspects undo events directly.
 
 ## mobx-bonsai 2.3.0
 
