@@ -1,5 +1,7 @@
 # Change Log
 
+## Unreleased
+
 ## mobx-bonsai 2.4.0 / mobx-bonsai-yjs 2.2.0
 
 - Added MobX 7 support (`mobx-bonsai` and `mobx-bonsai-yjs` now accept `mobx@^7.0.0` as a peer dependency). MobX 6, 5 and 4 remain supported.
