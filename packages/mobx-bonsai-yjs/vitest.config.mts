@@ -3,17 +3,19 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { defineConfig } from "vitest/config"
 
-const mobxVersion = Number(process.env.MOBX_VERSION || "6") as 4 | 5 | 6
+const mobxVersion = Number(process.env.MOBX_VERSION || "7") as 4 | 5 | 6 | 7
 console.log(`Using mobxVersion=${mobxVersion}`)
 
 const tsconfigFiles = {
+  7: "tsconfig.json",
   6: "tsconfig.json",
   5: "tsconfig.mobx5.json",
   4: "tsconfig.mobx4.json",
 } as const
 
 const mobxModuleNames = {
-  6: "mobx",
+  7: "mobx",
+  6: "mobx-v6",
   5: "mobx-v5",
   4: "mobx-v4",
 } as const

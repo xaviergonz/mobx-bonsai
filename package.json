@@ -20,9 +20,10 @@
     "upgrade-interactive": "pnpm -r up -i --latest"
   },
   "dependencies": {
-    "mobx": "^6.15.0",
+    "mobx": "^7.0.6",
     "mobx-v4": "npm:mobx@^4.15.7",
     "mobx-v5": "npm:mobx@^5.15.7",
+    "mobx-v6": "npm:mobx@^6.16.1",
     "yjs": "^13.6.29"
   },
   "devDependencies": {

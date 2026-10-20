@@ -92,7 +92,7 @@ CI currently runs:
 
 1. `pnpm site:build`
 2. `pnpm lib:build` and `pnpm yjs-lib:build`
-3. `pnpm lib:test:ci` and `pnpm yjs-lib:test:ci` for each `MOBX_VERSION={6,5,4}`
+3. `pnpm lib:test:ci` and `pnpm yjs-lib:test:ci` for each `MOBX_VERSION={7,6,5,4}`
 4. `pnpm lib:build` and benchmark build in `apps/benchmark`
 
 `pnpm lint` is not part of CI. Run it manually before finishing.
@@ -100,7 +100,7 @@ CI currently runs:
 When touching MobX-compat-sensitive behavior, run at least the reduced matrix locally:
 
 ```bash
-for mobx in 6 5 4; do
+for mobx in 7 6 5 4; do
   MOBX_VERSION="$mobx" pnpm lib:test:ci
   MOBX_VERSION="$mobx" pnpm yjs-lib:test:ci
 done
@@ -121,12 +121,12 @@ Prefer root turbo commands so dependency ordering is handled automatically.
 
 Core and Yjs vitest configs use one environment variable:
 
-- `MOBX_VERSION` (default `6`): selects MobX version `6`, `5`, or `4`.
+- `MOBX_VERSION` (default `7`): selects MobX version `7`, `6`, `5`, or `4`.
 
 This is used to:
 
-- Pick `test/tsconfig*.json` (`tsconfig.json`, `tsconfig.mobx5.json`, `tsconfig.mobx4.json`).
-- Alias `mobx` imports to `mobx`, `mobx-v5`, or `mobx-v4`.
+- Pick `test/tsconfig*.json` (`tsconfig.json` for MobX 7/6, `tsconfig.mobx5.json`, `tsconfig.mobx4.json`).
+- Alias `mobx` imports to `mobx` (v7), `mobx-v6`, `mobx-v5`, or `mobx-v4`.
 - Load package setup from `test/commonSetup.ts`.
 
 Yjs tests additionally alias `mobx-bonsai` to workspace source for local package integration.

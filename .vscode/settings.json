@@ -14,7 +14,8 @@
     "titleBar.activeBackground": "#2f7b48",
     "titleBar.activeForeground": "#e7e7e7",
     "titleBar.inactiveBackground": "#2f7b4899",
-    "titleBar.inactiveForeground": "#e7e7e799"
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "commandCenter.foreground": "#e7e7e7"
   },
   "peacock.color": "#2f7b48",
   "cmake.ignoreCMakeListsMissing": true

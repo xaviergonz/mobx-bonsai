@@ -12,13 +12,13 @@
     "bench": "pnpm build && pnpm bench-only"
   },
   "peerDependencies": {
-    "mobx": "^6.0.0"
+    "mobx": "^7.0.0"
   },
   "dependencies": {
     "benchmark": "^2.1.4",
     "chalk": "^5.6.2",
     "mobx-bonsai": "workspace:*",
-    "mobx-state-tree": "^7.0.2",
+    "mobx-state-tree": "^8.0.0",
     "tslib": "^2.8.1"
   },
   "devDependencies": {

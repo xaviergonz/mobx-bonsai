@@ -1,7 +1,7 @@
 import { observable } from "mobx"
 import { getSnapshot } from "mobx-bonsai"
 import { applyPlainObjectToYMap, bindYjsToNode } from "mobx-bonsai-yjs"
-import { observer } from "mobx-react"
+import { observer } from "mobx-react-lite"
 import { useState } from "react"
 import { WebrtcProvider } from "y-webrtc"
 import * as Y from "yjs"

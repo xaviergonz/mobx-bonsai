@@ -11,13 +11,14 @@
     "profile:node-creation": "pnpm build && node dist/profile-node-creation.js"
   },
   "peerDependencies": {
-    "mobx": "^6.0.0"
+    "mobx": "^7.0.0"
   },
   "dependencies": {
     "mobx-bonsai": "workspace:*"
   },
   "devDependencies": {
-    "mobx": "^6.15.0",
+    "@types/node": "^25.2.3",
+    "mobx": "^7.0.6",
     "typescript": "^5.9.3"
   }
 }

@@ -41,6 +41,7 @@ jobs:
       fail-fast: false
       matrix:
         mobx-version:
+          - 7
           - 6
           - 5
           - 4
@@ -59,7 +60,7 @@ jobs:
 
       - uses: codecov/codecov-action@v5
         name: Upload codecov report
-        if: matrix.mobx-version == '6'
+        if: matrix.mobx-version == '7'
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: ./packages/mobx-bonsai/coverage

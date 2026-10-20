@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+- Added MobX 7 support (`mobx-bonsai` and `mobx-bonsai-yjs` now accept `mobx@^7.0.0` as a peer dependency). MobX 6, 5 and 4 remain supported.
+
 ## mobx-bonsai 2.3.0
 
 - Data reconciliation optimizations (e.g. `applySnapshot`):
